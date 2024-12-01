@@ -1,11 +1,13 @@
 export const routes = {
   home: "/",
-  search: "/recherche",
+  events: "/evenements",
+  createEvent: "/evenements/creer",
 
-  faq: "/foires-aux-questions",
-  contact: "/contact",
-  terms: "/conditions-utilisation",
-  privacy: "/politique-de-confidentialite",
+  help: {
+    findTicket: "aide/trouver-billet",
+    buyTicket: "aide/acheter-billet",
+    contactOrganizer: "aide/contact-organisateur",
+  },
 
   auth: {
     signUp: "/auth/inscription",
@@ -16,6 +18,13 @@ export const routes = {
     congratulations: "/auth/reinitialiser-mot-de-passe/félicitations",
     otp: "/auth/otp",
   },
+
+  search: "/recherche",
+
+  faq: "/foires-aux-questions",
+  contact: "/contact",
+  terms: "/conditions-utilisation",
+  privacy: "/politique-de-confidentialite",
 
   // Inactive Routes
 

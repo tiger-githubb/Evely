@@ -1,4 +1,14 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Evely - La Plateforme d'Événements au Togo
+
+Evely est une plateforme innovante de gestion d'événements destinée à révolutionner la manière dont les événements sont organisés et réservés au Togo. Inspirée d'Eventbrite, notre solution permet aux utilisateurs de découvrir, organiser et réserver des événements de manière simple et rapide.
+
+## Technologies
+
+Ce projet est construit avec:
+
+- [Next.js](https://nextjs.org) pour le frontend
+- ElysiaJS pour le backend
+- [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) pour l'optimisation des polices
 
 ## Getting Started
 

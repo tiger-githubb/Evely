@@ -11,9 +11,7 @@ export const Hero = () => (
           <Badge variant="outline">Créez, partagez, vivez.</Badge>
         </div>
         <div className="flex gap-4 flex-col">
-          <h1 className="text-5xl md:text-6xl max-w-lg tracking-tighter text-left font-semibold">
-            Pour ceux qui aiment vivre l&apos;instant.
-          </h1>
+          <h1 className=" tracking-tighter text-left font-semibold">Pour ceux qui aiment vivre l&apos;instant.</h1>
         </div>
         <div className="flex flex-row gap-4">
           <Button size="lg" className="gap-4">

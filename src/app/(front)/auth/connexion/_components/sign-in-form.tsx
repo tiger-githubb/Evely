@@ -40,7 +40,7 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid gap-2">
+        <div className="grid gap-4">
           <div className="grid gap-1">
             <Label htmlFor="email">Email</Label>
             <Input

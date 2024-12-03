@@ -76,10 +76,10 @@ export const MainHeader = () => {
         <div className="flex justify-end w-full gap-4">
           <div className="border-r hidden md:inline"></div>
           <Link href={routes.auth.signIn}>
-            <Button variant="outline">Sign in</Button>
+            <Button variant="outline">Connexion</Button>
           </Link>
           <Link href={routes.auth.signUp}>
-            <Button>Get started</Button>
+            <Button>Inscription</Button>
           </Link>
         </div>
         <div className="flex w-12 shrink lg:hidden items-end justify-end">

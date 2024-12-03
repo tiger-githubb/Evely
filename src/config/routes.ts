@@ -3,6 +3,11 @@ export const routes = {
   events: "/evenements",
   createEvent: "/evenements/creer",
 
+  board: {
+    dashboard: "/tableau-de-bord",
+    profile: "/tableau-de-bord/profil",
+    myevents: "/tableau-de-bord/mes-evenements",
+  },
   help: {
     findTicket: "aide/trouver-billet",
     buyTicket: "aide/acheter-billet",

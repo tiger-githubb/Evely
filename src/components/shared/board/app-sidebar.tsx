@@ -1,20 +1,10 @@
 "use client";
 
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react";
+import { AudioWaveform, BookOpen, Command, Frame, GalleryVerticalEnd, Map, PieChart, Settings2 } from "lucide-react";
 import * as React from "react";
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
+import { routes } from "@/config/routes";
 import { NavMain } from "./nav-main";
 import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
@@ -46,64 +36,22 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Tableau de Board",
       url: "#",
-      icon: SquareTerminal,
+      icon: BookOpen,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Accueil",
+          url: routes.board.dashboard,
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Profil",
+          url: routes.board.profile,
         },
         {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          title: "Mes événements",
+          url: routes.board.myevents,
         },
       ],
     },
@@ -122,10 +70,6 @@ const data = {
         },
         {
           title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
           url: "#",
         },
       ],

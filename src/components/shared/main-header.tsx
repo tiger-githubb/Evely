@@ -14,6 +14,7 @@ import { routes } from "@/config/routes";
 import { Menu, MoveRight, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { PiCheersDuotone } from "react-icons/pi";
 
 export const MainHeader = () => {
   const [isOpen, setOpen] = useState(false);
@@ -67,7 +68,10 @@ export const MainHeader = () => {
           </NavigationMenu>
         </div>
         <div className="flex lg:justify-center">
-          <p className="font-semibold">Evely</p>
+          <Link href={routes.home} className="flex items-center gap-2">
+            <PiCheersDuotone className="h-6 w-6" />
+            <p className="font-bold">Evely</p>
+          </Link>
         </div>
         <div className="flex justify-end w-full gap-4">
           <div className="border-r hidden md:inline"></div>

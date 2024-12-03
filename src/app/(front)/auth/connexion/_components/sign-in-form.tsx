@@ -2,15 +2,18 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { PiGoogleLogoDuotone, PiSpinnerGapDuotone } from "react-icons/pi";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { routes } from "@/config/routes";
 import { cn } from "@/lib/utils";
 import type { signInSchema as SignInType } from "@/schemas/sign-in.schema";
 import { signInSchema } from "@/schemas/sign-in.schema";
+import { signIn } from "next-auth/react";
+import { toast } from "sonner";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -25,17 +28,37 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
     },
   });
 
-  async function onSubmit(data: SignInType) {
+  // async function onSubmit(data: SignInType) {
+  //   setIsLoading(true);
+  //   try {
+  //     // Implement your sign in logic here
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }
+
+  const onSubmit: SubmitHandler<signInSchema> = async (data) => {
     setIsLoading(true);
     try {
-      // Implement your sign in logic here
-      console.log(data);
-    } catch (error) {
-      console.error(error);
+      const result = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        console.error(result.error);
+        toast.error("Email ou mot de passe incorrect");
+      } else {
+        toast.success("Connexion réussie , vous allez être redirigé vers la page d'accueil");
+        window.location.href = routes.home;
+      }
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>

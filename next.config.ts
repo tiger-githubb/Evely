@@ -2,7 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["loremflickr.com", "cloudflare-ipfs.com", "avatars.githubusercontent.com"],
+    remotePatterns: [
+      { hostname: "loremflickr.com" },
+      { hostname: "cloudflare-ipfs.com" },
+      { hostname: "avatars.githubusercontent.com" },
+    ],
   },
 };
 

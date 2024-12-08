@@ -1,27 +1,31 @@
 "use client";
 
-import { signUpFormSchema } from "@/schemas/sign-up.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as React from "react";
-import { useForm } from "react-hook-form";
-import type { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { routes } from "@/config/routes";
 import { cn } from "@/lib/utils";
+import { signUpFormSchema } from "@/schemas/sign-up.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import * as React from "react";
+import { useForm } from "react-hook-form";
 import { PiGoogleLogoDuotone, PiSpinnerGapDuotone } from "react-icons/pi";
+import type { z } from "zod";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 type FormData = z.infer<typeof signUpFormSchema>;
 
 export function SignUpForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<FormData>({
     resolver: zodResolver(signUpFormSchema),
   });
@@ -29,10 +33,24 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
   async function onSubmit(data: FormData) {
     setIsLoading(true);
     try {
-      // Handle form submission here
-      console.log(data);
+      const result = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        action: "signup",
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("root", { message: "Erreur lors de l'inscription" });
+        return;
+      }
+
+      router.push(routes.board.dashboard);
     } catch (error) {
       console.error(error);
+      setError("root", { message: "Une erreur est survenue" });
     } finally {
       setIsLoading(false);
     }
@@ -42,6 +60,34 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-4">
+          <div className="grid grid-cols-2 gap-2">
+            <div className="grid gap-2">
+              <Label htmlFor="firstName">Prénom</Label>
+              <Input
+                {...register("firstName")}
+                id="firstName"
+                placeholder="John"
+                autoCapitalize="none"
+                autoCorrect="off"
+                disabled={isLoading}
+              />
+              {errors.firstName && <p className="text-sm text-red-500">{errors.firstName.message}</p>}
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="lastName">Nom</Label>
+              <Input
+                {...register("lastName")}
+                id="lastName"
+                placeholder="Doe"
+                autoCapitalize="none"
+                autoCorrect="off"
+                disabled={isLoading}
+              />
+              {errors.lastName && <p className="text-sm text-red-500">{errors.lastName.message}</p>}
+            </div>
+          </div>
+
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -75,8 +121,10 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
             {errors.password_confirmation && <p className="text-sm text-red-500">{errors.password_confirmation.message}</p>}
           </div>
 
+          {errors.root && <p className="text-sm text-red-500">{errors.root.message}</p>}
+
           <Button className="w-full" disabled={isLoading}>
-            {isLoading && <span className="mr-2 h-4 w-4 animate-spin">⌛</span>}
+            {isLoading && <PiSpinnerGapDuotone className="mr-2 h-4 w-4 animate-spin" />}
             S&apos;inscrire
           </Button>
         </div>

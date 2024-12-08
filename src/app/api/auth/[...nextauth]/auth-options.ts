@@ -1,4 +1,4 @@
-import { signInUser } from "@/server/services/auth.service";
+import { signInUser, signUpUser } from "@/server/services/auth.service";
 import { Session, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { pagesOptions } from "./pages-options";
@@ -32,11 +32,26 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
-      credentials: {},
-      async authorize(credentials: Record<string, string> | undefined) {
-        if (credentials?.email && credentials?.password) {
+      credentials: {
+        email: { type: "text" },
+        password: { type: "password" },
+        firstName: { type: "text" },
+        lastName: { type: "text" },
+        action: { type: "text" },
+      },
+      async authorize(credentials) {
+        if (!credentials) return null;
+
+        // Si c'est une demande d'inscription
+        if (credentials.action === "signup") {
+          return await signUpUser(credentials.email, credentials.password, credentials.firstName, credentials.lastName);
+        }
+
+        // Si c'est une demande de connexion
+        if (credentials.email && credentials.password) {
           return await signInUser(credentials.email, credentials.password);
         }
+
         return null;
       },
     }),

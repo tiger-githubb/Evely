@@ -8,6 +8,8 @@ export default withAuth({
 });
 
 export const config = {
-  // restricted routes
-  matcher: ["/"],
+  matcher: [
+    "/tableau-de-bord",
+    "/tableau-de-bord/:path*", // Protège toutes les sous-routes du tableau de bord
+  ],
 };

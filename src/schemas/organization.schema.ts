@@ -17,4 +17,4 @@ export const createOrganizationSchema = z.object({
   website: z.string().url("L'URL n'est pas valide").optional(),
 });
 
-export type CreateOrganizationSchema = z.infer<typeof createOrganizationSchema>;
+export type CreateOrganizationType = z.infer<typeof createOrganizationSchema>;

@@ -5,7 +5,7 @@ import { CustomButton } from "@/components/ui/custom/custom-button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { CreateOrganizationSchema, createOrganizationSchema } from "@/schemas/organization.schema";
+import { createOrganizationSchema, CreateOrganizationType } from "@/schemas/organization.schema";
 import { createOrganization } from "@/server/services/organizations.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { ImageUpload } from "./image-upload";
 
 export function OrganizationForm() {
-  const form = useForm<CreateOrganizationSchema>({
+  const form = useForm<CreateOrganizationType>({
     resolver: zodResolver(createOrganizationSchema),
     defaultValues: {
       name: "",
@@ -26,7 +26,7 @@ export function OrganizationForm() {
 
   const { isSubmitting } = form.formState;
 
-  const onSubmit: SubmitHandler<CreateOrganizationSchema> = async (values) => {
+  const onSubmit: SubmitHandler<CreateOrganizationType> = async (values) => {
     try {
       await createOrganization(values);
       toast.success("Organisation créée avec succès");

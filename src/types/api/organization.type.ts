@@ -1,18 +1,19 @@
-export interface CreateOrganizationDto {
-  name: string;
-  logo: File;
-  coverImage: File;
-  description: string;
-  website?: string;
-}
+import { Role } from "./role.type";
 
 export interface Organization {
-  id: string;
+  id: number;
   name: string;
   logo: string;
   coverImage: string;
   description: string;
   website?: string;
   createdAt: string;
-  updatedAt: string;
+  _count: {
+    users: number;
+  };
+  roles: OrganizationRole[];
+}
+
+interface OrganizationRole {
+  role: Role;
 }

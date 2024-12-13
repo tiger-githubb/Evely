@@ -23,7 +23,7 @@ export function TableSkeleton({ columns = 5, rows = 5 }: TableSkeletonProps) {
             <div key={i} className="flex border-b last:border-0">
               {Array.from({ length: columns }).map((_, j) => (
                 <div key={j} className="p-2 w-full">
-                  <Skeleton className="h-4" />
+                  <Skeleton className="h-8" />
                 </div>
               ))}
             </div>

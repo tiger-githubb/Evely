@@ -27,6 +27,7 @@ export default function Organizationstable() {
       rowsPerPage={10}
       noResultsMessage="Aucune organisation trouvée"
       totalLabel="ligne(s)"
+      totalItems={data?.total}
     />
   );
 }

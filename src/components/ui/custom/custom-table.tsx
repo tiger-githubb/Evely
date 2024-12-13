@@ -104,6 +104,17 @@ export function CustomDataTable<TData, TValue>({
     "table-normal [&_td]:py-3 [&_th]:py-3": tableDensity === "normal",
     "table-spacious [&_td]:py-4 [&_th]:py-4": tableDensity === "spacious",
   });
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const container = tableContainerRef.current;
+    if (container) {
+      const totalColumnsWidth = columns.reduce((acc, col) => acc + (col.size || 150), 0);
+      if (totalColumnsWidth > container.clientWidth) {
+        container.style.overflowX = "auto";
+      }
+    }
+  }, [columns]);
 
   return (
     <div className="w-full">
@@ -142,82 +153,89 @@ export function CustomDataTable<TData, TValue>({
             </DropdownMenuContent>
           </DropdownMenu>
         )}
-
         {/* Density toggle */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm">
-              Density <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuCheckboxItem checked={tableDensity === "compact"} onCheckedChange={() => setTableDensity("compact")}>
-              Compact
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem checked={tableDensity === "normal"} onCheckedChange={() => setTableDensity("normal")}>
-              Normal
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem checked={tableDensity === "spacious"} onCheckedChange={() => setTableDensity("spacious")}>
-              Spacious
-            </DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {!density && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm">
+                Density <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuCheckboxItem checked={tableDensity === "compact"} onCheckedChange={() => setTableDensity("compact")}>
+                Compact
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked={tableDensity === "normal"} onCheckedChange={() => setTableDensity("normal")}>
+                Normal
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked={tableDensity === "spacious"} onCheckedChange={() => setTableDensity("spacious")}>
+                Spacious
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
 
-      <div className="rounded-md border overflow-x-auto">
-        <Table className={tableStyles}>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className="whitespace-nowrap">
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {error ? (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-32 text-center">
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <p className="text-lg font-medium">⚠️</p>
-                    <p className="text-muted-foreground">{errorMessage}</p>
-                    <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="mt-2">
-                      Réessayer
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ) : isLoading ? (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="p-0">
-                  {customSkeleton || <TableSkeleton columns={columns.length} rows={5} />}
-                </TableCell>
-              </TableRow>
-            ) : table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="whitespace-nowrap">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
+      <div ref={tableContainerRef} className="rounded-md border max-w-[calc(100vw-4rem)]">
+        <div className="overflow-x-auto">
+          <Table className={tableStyles}>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead
+                      key={header.id}
+                      className="whitespace-nowrap"
+                      style={{ width: header.column.columnDef.size ? `${header.column.columnDef.size}px` : "auto" }}
+                    >
+                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                    </TableHead>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-32 text-center">
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <p className="text-lg font-medium">🔍</p>
-                    <p className="text-muted-foreground">{noResultsMessage}</p>
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {error ? (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="h-32 text-center">
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <p className="text-lg font-medium">⚠️</p>
+                      <p className="text-muted-foreground">{errorMessage}</p>
+                      <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="mt-2">
+                        Réessayer
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ) : isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="p-0">
+                    {customSkeleton || <TableSkeleton columns={columns.length} rows={5} />}
+                  </TableCell>
+                </TableRow>
+              ) : table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="whitespace-nowrap">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="h-32 text-center">
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <p className="text-lg font-medium">🔍</p>
+                      <p className="text-muted-foreground">{noResultsMessage}</p>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
 
       {showPagination && (

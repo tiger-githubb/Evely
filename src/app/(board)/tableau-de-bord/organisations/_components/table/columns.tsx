@@ -16,6 +16,7 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 export const columns: ColumnDef<Organization>[] = [
   {
     accessorKey: "name",
+    size: 900,
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -28,14 +29,17 @@ export const columns: ColumnDef<Organization>[] = [
   {
     accessorKey: "description",
     header: "Description",
+    size: 900,
   },
   {
     accessorKey: "website",
     header: "Site web",
+    size: 900,
   },
   {
     accessorKey: "_count.users",
     header: "Membres",
+    size: 900,
   },
   {
     accessorKey: "createdAt",

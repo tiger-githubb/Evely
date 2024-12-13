@@ -7,6 +7,10 @@ export const routes = {
     dashboard: "/tableau-de-bord",
     profile: "/tableau-de-bord/profil",
     myevents: "/tableau-de-bord/mes-evenements",
+    organization: {
+      all: "/tableau-de-bord/organisations",
+      add: "/tableau-de-bord/organisations/ajouter",
+    },
   },
   help: {
     findTicket: "aide/trouver-billet",

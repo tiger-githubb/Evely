@@ -1,20 +1,36 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { CustomDataTable } from "@/components/ui/custom/custom-table";
-import { getOrganizations } from "@/server/services/organizations.service";
+import { getOrganizations, deleteOrganization } from "@/server/services/organizations.service";
 import { columns } from "./columns";
+import { toast } from "sonner";
 
-export default function Organizationstable() {
+export default function OrganizationsTable() {
+  const queryClient = useQueryClient();
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["organizations"],
     queryFn: getOrganizations,
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: deleteOrganization,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["organizations"] });
+      toast.success("Organisation supprimée avec succès");
+    },
+    onError: () => {
+      toast.error("Une erreur est survenue lors de la suppression de l'organisation");
+    },
+  });
+
   return (
     <CustomDataTable
-      columns={columns}
+      columns={columns({
+        onDelete: deleteMutation.mutate,
+        isDeleting: deleteMutation.isPending,
+      })}
       data={data?.data || []}
       isLoading={isLoading}
       error={error}

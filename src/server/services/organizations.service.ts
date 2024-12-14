@@ -46,3 +46,12 @@ export const createOrganization = async (organizationData: CreateOrganizationTyp
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la création de l'organisation");
   }
 };
+
+export const deleteOrganization = async (organizationId: number): Promise<void> => {
+  try {
+    const headers = await getAuthHeaders();
+    await api.delete(`/organizations/${organizationId}`, { headers });
+  } catch (error) {
+    return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la suppression de l'organisation");
+  }
+};

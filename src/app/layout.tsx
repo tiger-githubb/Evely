@@ -1,5 +1,6 @@
 import { Toaster } from "@/components/ui/sonner";
 import ReactQueryProvider from "@/utils/providers/ReactQueryProvider";
+import { ThemeProvider } from "@/utils/providers/theme-provider";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import localFont from "next/font/local";
@@ -31,14 +32,16 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ReactQueryProvider>
-          <AuthProvider session={session}>
-            {children}
-            <Toaster richColors />
-          </AuthProvider>
-        </ReactQueryProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <ReactQueryProvider>
+            <AuthProvider session={session}>
+              {children}
+              <Toaster richColors />
+            </AuthProvider>
+          </ReactQueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

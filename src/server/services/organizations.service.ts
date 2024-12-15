@@ -4,7 +4,7 @@ import { ApiErrorHandler } from "@/utils/api-error";
 import { getAuthHeaders } from "@/utils/auth-utils";
 import api from "@/utils/axios-instance";
 
-export interface OrganizationResponse {
+export interface OrganizationsResponse {
   data: Organization[];
   total: number;
   page: number;
@@ -12,13 +12,31 @@ export interface OrganizationResponse {
   pages: number;
 }
 
-export const getOrganizations = async (): Promise<OrganizationResponse> => {
+export interface OrganizationResponse {
+  data: Organization;
+}
+
+export const getOrganizations = async (): Promise<OrganizationsResponse> => {
   try {
     const headers = await getAuthHeaders();
     const { data } = await api.get("/organizations", { headers });
     return data;
   } catch (error) {
-    return ApiErrorHandler.handle<OrganizationResponse>(error, "Une erreur est survenue lors de la récupération des organisations");
+    return ApiErrorHandler.handle<OrganizationsResponse>(error, "Une erreur est survenue lors de la récupération des organisations");
+  }
+};
+export const getOrganization = async (id: string): Promise<OrganizationResponse> => {
+  try {
+    const headers = await getAuthHeaders();
+    const { data } = await api.get<OrganizationResponse>(`/organizations/${id}`, {
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+    });
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle<OrganizationResponse>(error, "Une erreur est survenue lors de la récupération de l'organisation");
   }
 };
 

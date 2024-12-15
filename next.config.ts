@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       { hostname: "loremflickr.com" },
       { hostname: "cloudflare-ipfs.com" },
       { hostname: "avatars.githubusercontent.com" },
+      { hostname: "minio.100visagesls.xyz" },
     ],
   },
 };

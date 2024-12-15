@@ -1,4 +1,3 @@
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 interface DateCellProps {
@@ -22,15 +21,8 @@ export function DateCell({ date, className, showTime = true, format }: DateCellP
   const uniqueKey = `date-${dateObj.getTime()}`;
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger key={uniqueKey} className={cn("text-sm", className)}>
-          {formattedDate}
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{dateObj.toISOString()}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <span key={uniqueKey} className={cn("text-sm", className)}>
+      {formattedDate}
+    </span>
   );
 }

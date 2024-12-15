@@ -10,6 +10,8 @@ export const routes = {
     organization: {
       all: "/tableau-de-bord/organisations",
       add: "/tableau-de-bord/organisations/ajouter",
+      show: (slug: string) => `/tableau-de-bord/organisations/${slug}`,
+      edit: (slug: string) => `/tableau-de-bord/organisations/${slug}/modifier`,
     },
   },
   help: {

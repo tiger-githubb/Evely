@@ -3,13 +3,16 @@
 import { BadgeCell } from "@/components/shared/table/badge-cell";
 import { DateCell } from "@/components/shared/table/date-cell";
 import { OrganizationDetailsSkeleton } from "@/components/shared/ui-skeletons";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { routes } from "@/config/routes";
 import { getOrganization } from "@/server/services/organizations.service";
 import { getImageUrl } from "@/utils/image-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Building2, Calendar, ExternalLink, Shield, Users, XCircle } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface OrganizationDetailsDialogProps {
   organizationId: string;
@@ -35,6 +38,12 @@ export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Profil de l&apos;organisation</DialogTitle>
+
+          <Link href={routes.board.organization.show(organizationId)} rel="noopener noreferrer">
+            <Button variant="link" className="text-muted-foreground m-0 p-0">
+              Ouvrir la page de l&apos;organisation <ExternalLink className="h-4 w-4" />
+            </Button>
+          </Link>
         </DialogHeader>
 
         {isLoading ? (

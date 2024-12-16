@@ -10,6 +10,7 @@ export interface Organization {
   createdAt: string;
   _count: {
     users: number;
+    followers: number;
   };
   roles: OrganizationRole[];
 }

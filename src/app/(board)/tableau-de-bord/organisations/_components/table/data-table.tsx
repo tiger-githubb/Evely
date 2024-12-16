@@ -1,17 +1,17 @@
 "use client";
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { CustomDataTable } from "@/components/ui/custom/custom-table";
-import { getOrganizations, deleteOrganization } from "@/server/services/organizations.service";
-import { columns } from "./columns";
+import { deleteOrganization, fetchOrganizations } from "@/server/services/organizations.service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { columns } from "./columns";
 
 export default function OrganizationsTable() {
   const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["organizations"],
-    queryFn: getOrganizations,
+    queryFn: fetchOrganizations,
   });
 
   const deleteMutation = useMutation({
@@ -39,7 +39,7 @@ export default function OrganizationsTable() {
       filterPlaceholder="Filtrer par nom..."
       showColumnVisibility={true}
       showPagination={true}
-      density="normal"
+      density="spacious"
       rowsPerPage={10}
       noResultsMessage="Aucune organisation trouvée"
       totalLabel="ligne(s)"

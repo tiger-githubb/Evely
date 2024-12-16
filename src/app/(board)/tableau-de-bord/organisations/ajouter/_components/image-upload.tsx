@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { getImageUrl } from "@/utils/image-utils";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
@@ -9,7 +10,7 @@ import { PiArrowsCounterClockwiseDuotone } from "react-icons/pi";
 import { toast } from "sonner";
 
 interface ImageUploadProps {
-  value?: File;
+  value?: File | string;
   onChange: (file: File) => void;
   className?: string;
 }
@@ -19,13 +20,15 @@ export function ImageUpload({ value, onChange, className }: ImageUploadProps) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    if (value) {
+    if (value instanceof File) {
       const url = URL.createObjectURL(value);
       setImageUrl(url);
       return () => {
         URL.revokeObjectURL(url);
         setImageUrl(null);
       };
+    } else if (typeof value === "string") {
+      setImageUrl(getImageUrl(value));
     } else {
       setImageUrl(null);
     }
@@ -53,7 +56,7 @@ export function ImageUpload({ value, onChange, className }: ImageUploadProps) {
       "image/webp": [],
     },
     maxFiles: 1,
-    maxSize: 5 * 1024 * 1024, // 5 MB
+    maxSize: 5 * 1024 * 1024,
     onDragEnter: () => setIsDragging(true),
     onDragLeave: () => setIsDragging(false),
   });
@@ -72,7 +75,13 @@ export function ImageUpload({ value, onChange, className }: ImageUploadProps) {
       <input {...getInputProps()} />
       {imageUrl ? (
         <div className="group relative h-full w-full">
-          <Image src={imageUrl} alt="Preview" fill className="object-cover" />
+          <Image
+            src={imageUrl}
+            alt="Preview"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
           <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
             <PiArrowsCounterClockwiseDuotone className="h-6 w-6 text-white" />
           </div>

@@ -73,8 +73,8 @@ export const boardNavigationItems = {
       icon: Settings2,
       items: [
         {
-          title: "Organisation",
-          url: "#",
+          title: "Organisations",
+          url: routes.board.organization.all,
         },
         {
           title: "Compte",

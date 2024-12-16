@@ -30,6 +30,10 @@ export function OrganizationNav({ organizationId }: OrganizationNavProps) {
       title: "Rôles",
       href: routes.board.organization.roles(organizationId),
     },
+    {
+      title: "Followers",
+      href: routes.board.organization.followers(organizationId),
+    },
   ];
 
   return (

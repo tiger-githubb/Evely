@@ -70,9 +70,24 @@ export const updateOrganization = async (id: string, organizationData: CreateOrg
     const formData = new FormData();
     formData.append("name", organizationData.name);
     formData.append("description", organizationData.description);
-    if (organizationData.logo) formData.append("logo", organizationData.logo);
-    if (organizationData.coverImage) formData.append("coverImage", organizationData.coverImage);
-    if (organizationData.website) formData.append("website", organizationData.website);
+
+    // Only append logo if it's a File object
+    if (organizationData.logo instanceof File) {
+      formData.append("logo", organizationData.logo);
+    } else if (typeof organizationData.logo === "string") {
+      formData.append("logo", organizationData.logo);
+    }
+
+    // Only append coverImage if it's a File object
+    if (organizationData.coverImage instanceof File) {
+      formData.append("coverImage", organizationData.coverImage);
+    } else if (typeof organizationData.coverImage === "string") {
+      formData.append("coverImage", organizationData.coverImage);
+    }
+
+    if (organizationData.website) {
+      formData.append("website", organizationData.website);
+    }
 
     const headers = await getAuthHeaders();
     const { data } = await api.put(`/organizations/${id}`, formData, {

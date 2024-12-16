@@ -26,8 +26,8 @@ export function OrganizationForm({ organisation }: OrganizationFormProps) {
       name: organisation?.name || "",
       description: organisation?.description || "",
       website: organisation?.website || "",
-      logo: null as unknown as File,
-      coverImage: null as unknown as File,
+      logo: organisation?.logo || (null as unknown as File),
+      coverImage: organisation?.coverImage || (null as unknown as File),
     },
   });
 

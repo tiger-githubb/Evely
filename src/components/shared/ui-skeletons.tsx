@@ -38,12 +38,6 @@ export function OrganizationDetailsSkeleton() {
   return (
     <div className="space-y-8">
       {/* Cover and Avatar Skeleton */}
-      <div className="relative h-48 w-full rounded-xl ">
-        <Skeleton className="h-full w-full" />
-        <div className="absolute -bottom-16 left-8 ">
-          <Skeleton className="h-32 w-32 rounded-full border-4 border-background" />
-        </div>
-      </div>
 
       {/* Content Grid */}
       <div className="pt-16 grid grid-cols-1 md:grid-cols-3 gap-6">

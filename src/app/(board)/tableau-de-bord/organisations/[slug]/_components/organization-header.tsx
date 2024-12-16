@@ -12,7 +12,7 @@ interface OrganizationHeaderProps {
 
 export function OrganizationHeader({ organization }: OrganizationHeaderProps) {
   return (
-    <div className="mt-0">
+    <div className="mt-0 ">
       <div className="relative -mx-4 h-36 sm:h-40 md:h-48 lg:-mx-6 lg:h-52 xl:h-60 2xl:h-72">
         {organization.coverImage ? (
           <Image src={getImageUrl(organization.coverImage)} alt="Cover" fill className="object-cover" priority />

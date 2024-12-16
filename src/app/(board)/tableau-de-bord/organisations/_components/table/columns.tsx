@@ -21,6 +21,7 @@ export const columns = ({ onDelete, isDeleting }: DeleteActions): ColumnDef<Orga
   {
     id: "name",
     accessorKey: "name",
+    size: 400,
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -59,6 +60,7 @@ export const columns = ({ onDelete, isDeleting }: DeleteActions): ColumnDef<Orga
     cell: ({ row }) => <DateCell date={row.original.createdAt} />,
   },
   {
+    size: 30,
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => <ActionCell organization={row.original} onDelete={onDelete} isDeleting={isDeleting} />,

@@ -5,6 +5,7 @@ import OrganizationNotFound from "./_components/organization-not-found";
 
 export default async function OrganizationLayout({ children, params }: { children: React.ReactNode; params: { slug: string } }) {
   const organizationResponse = await fetchOrganization(params.slug);
+  //TODO: Move Update Organisation Out of the layout
 
   if (!organizationResponse?.data) {
     return <OrganizationNotFound />;

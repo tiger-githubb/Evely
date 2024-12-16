@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { routes } from "@/config/routes";
-import { getOrganization } from "@/server/services/organizations.service";
+import { fetchOrganization } from "@/server/services/organizations.service";
 import { getImageUrl } from "@/utils/image-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Building2, Calendar, ExternalLink, Shield, Users, XCircle } from "lucide-react";
@@ -27,7 +27,7 @@ export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }
     error,
   } = useQuery({
     queryKey: ["organization", organizationId],
-    queryFn: () => getOrganization(organizationId),
+    queryFn: () => fetchOrganization(organizationId),
     enabled: open,
   });
 

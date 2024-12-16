@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomDataTable } from "@/components/ui/custom/custom-table";
-import { deleteOrganization, getOrganizations } from "@/server/services/organizations.service";
+import { deleteOrganization, fetchOrganizations } from "@/server/services/organizations.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { columns } from "./columns";
@@ -11,7 +11,7 @@ export default function OrganizationsTable() {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["organizations"],
-    queryFn: getOrganizations,
+    queryFn: fetchOrganizations,
   });
 
   const deleteMutation = useMutation({

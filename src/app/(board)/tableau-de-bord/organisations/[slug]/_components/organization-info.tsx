@@ -1,7 +1,7 @@
 import { DateCell } from "@/components/shared/table/date-cell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Organization } from "@/types/api/organization.type";
-import { Building2, Calendar, Shield } from "lucide-react";
+import { Building2, Calendar } from "lucide-react";
 
 interface OrganizationInfoProps {
   organization: Organization;
@@ -29,7 +29,7 @@ export function OrganizationInfo({ organization }: OrganizationInfoProps) {
         </CardContent>
       </Card>
 
-      <Card className="shadow-sm">
+      {/* <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 ">
             <Shield className="h-5 w-5 text-gray-500" />
@@ -46,7 +46,7 @@ export function OrganizationInfo({ organization }: OrganizationInfoProps) {
             ))}
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 }

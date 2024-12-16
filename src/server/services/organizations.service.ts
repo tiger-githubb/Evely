@@ -16,7 +16,7 @@ export interface OrganizationResponse {
   data: Organization;
 }
 
-export const getOrganizations = async (): Promise<OrganizationsResponse> => {
+export const fetchOrganizations = async (): Promise<OrganizationsResponse> => {
   try {
     const headers = await getAuthHeaders();
     const { data } = await api.get("/organizations", { headers });
@@ -25,7 +25,7 @@ export const getOrganizations = async (): Promise<OrganizationsResponse> => {
     return ApiErrorHandler.handle<OrganizationsResponse>(error, "Une erreur est survenue lors de la récupération des organisations");
   }
 };
-export const getOrganization = async (id: string): Promise<OrganizationResponse> => {
+export const fetchOrganization = async (id: string): Promise<OrganizationResponse> => {
   try {
     const headers = await getAuthHeaders();
     const { data } = await api.get<OrganizationResponse>(`/organizations/${id}`, {

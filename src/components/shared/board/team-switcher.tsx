@@ -1,6 +1,6 @@
 "use client";
 
-import { getOrganizations } from "@/server/services/organizations.service";
+import { fetchOrganizations } from "@/server/services/organizations.service";
 import { getImageUrl } from "@/utils/image-utils";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronsUpDown, Plus } from "lucide-react";
@@ -24,7 +24,7 @@ export function TeamSwitcher() {
   const { isMobile } = useSidebar();
   const { data: organizationsResponse } = useQuery({
     queryKey: ["organizations"],
-    queryFn: getOrganizations,
+    queryFn: fetchOrganizations,
   });
 
   const organizations = React.useMemo(() => organizationsResponse?.data || [], [organizationsResponse]);

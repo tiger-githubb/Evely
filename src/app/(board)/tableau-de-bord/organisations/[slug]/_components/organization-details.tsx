@@ -1,7 +1,7 @@
 "use client";
 
 import { OrganizationDetailsSkeleton } from "@/components/shared/ui-skeletons";
-import { getOrganization } from "@/server/services/organizations.service";
+import { fetchOrganization } from "@/server/services/organizations.service";
 import { useQuery } from "@tanstack/react-query";
 import { OrganizationHeader } from "./organization-header";
 import { OrganizationInfo } from "./organization-info";
@@ -14,7 +14,7 @@ interface OrganizationDetailsProps {
 export function OrganizationDetails({ organizationId }: OrganizationDetailsProps) {
   const { data: organizationResponse, isLoading } = useQuery({
     queryKey: ["organization", organizationId],
-    queryFn: () => getOrganization(organizationId),
+    queryFn: () => fetchOrganization(organizationId),
   });
 
   const organization = organizationResponse?.data;

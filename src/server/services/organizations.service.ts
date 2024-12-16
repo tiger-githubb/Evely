@@ -1,9 +1,11 @@
+import { CreateOrganizationInvitationType } from "@/schemas/organization-invitation.schema";
 import { CreateOrganizationType } from "@/schemas/organization.schema";
 import { OrganizationInvitation } from "@/types/api/organization-invitation.type";
 import { OrganizationUser } from "@/types/api/organization-user.type";
 import { Organization } from "@/types/api/organization.type";
 import { ApiErrorHandler } from "@/utils/api-error";
 import { getAuthHeaders } from "@/utils/auth-utils";
+
 import api from "@/utils/axios-instance";
 
 export interface OrganizationsResponse {
@@ -133,7 +135,7 @@ export const deleteOrganization = async (organizationId: number): Promise<void> 
 export const fetchOrganizationUsers = async (organizationId: string): Promise<OrganizationUsersResponse> => {
   try {
     const headers = await getAuthHeaders();
-    const { data } = await api.get(`/organizations/${organizationId}/users`, { headers });
+    const { data } = await api.get(`/organizations/users/${organizationId}`, { headers });
     return data;
   } catch (error) {
     return ApiErrorHandler.handle<OrganizationUsersResponse>(error, "Une erreur est survenue lors de la récupération des membres");
@@ -143,7 +145,7 @@ export const fetchOrganizationUsers = async (organizationId: string): Promise<Or
 export const deleteOrganizationUser = async (organizationId: string, userId: number): Promise<void> => {
   try {
     const headers = await getAuthHeaders();
-    await api.delete(`/organizations/${organizationId}/users/${userId}`, { headers });
+    await api.delete(`/organizations/users/${organizationId}/${userId}`, { headers });
   } catch (error) {
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la suppression du membre");
   }
@@ -152,7 +154,7 @@ export const deleteOrganizationUser = async (organizationId: string, userId: num
 export const fetchOrganizationInvitations = async (organizationId: string): Promise<OrganizationInvitationsResponse> => {
   try {
     const headers = await getAuthHeaders();
-    const { data } = await api.get(`/organizations/${organizationId}/invitations`, { headers });
+    const { data } = await api.get(`/organizations/invitations/${organizationId}`, { headers });
     return data;
   } catch (error) {
     return ApiErrorHandler.handle<OrganizationInvitationsResponse>(
@@ -162,12 +164,10 @@ export const fetchOrganizationInvitations = async (organizationId: string): Prom
   }
 };
 
-import { CreateOrganizationInvitationType } from "@/schemas/organization-invitation.schema";
-
 export const sendOrganizationInvitation = async (organizationId: string, invitationData: CreateOrganizationInvitationType) => {
   try {
     const headers = await getAuthHeaders();
-    const { data } = await api.post(`/organizations/${organizationId}/invitations`, invitationData, {
+    const { data } = await api.post(`/organizations/invitations/${organizationId}`, invitationData, {
       headers: {
         ...headers,
         "Content-Type": "application/json",
@@ -181,7 +181,7 @@ export const sendOrganizationInvitation = async (organizationId: string, invitat
 export const deleteOrganizationInvitation = async (organizationId: string, invitationId: number): Promise<void> => {
   try {
     const headers = await getAuthHeaders();
-    await api.delete(`/organizations/${organizationId}/invitations/${invitationId}`, { headers });
+    await api.delete(`/organizations/invitations/${organizationId}/${invitationId}`, { headers });
   } catch (error) {
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la suppression de l'invitation");
   }

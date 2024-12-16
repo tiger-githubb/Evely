@@ -6,6 +6,7 @@ interface OrganizationPageProps {
   };
 }
 
-export default function OrganizationPage({ params }: OrganizationPageProps) {
-  return <OrganizationDetails organizationId={params.slug} />;
+export default async function OrganizationPage({ params }: OrganizationPageProps) {
+  const { slug } = await params;
+  return <OrganizationDetails organizationId={slug} />;
 }

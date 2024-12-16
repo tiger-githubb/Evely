@@ -133,9 +133,9 @@ export function CustomDataTable<TData, TValue>({
   }, [debouncedFilterValue, filterColumn, table]);
 
   const tableStyles = cn("w-full", {
-    "table-compact [&_td]:py-1 [&_th]:py-1": tableDensity === "compact",
-    "table-normal [&_td]:py-3 [&_th]:py-3": tableDensity === "normal",
-    "table-spacious [&_td]:py-4 [&_th]:py-4": tableDensity === "spacious",
+    "table-compact": tableDensity === "compact",
+    "table-normal": tableDensity === "normal",
+    "table-spacious": tableDensity === "spacious",
   });
 
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
@@ -300,7 +300,7 @@ export function CustomDataTable<TData, TValue>({
                   table.getRowModel().rows.map((row) => (
                     <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} role="row">
                       {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id} className="whitespace-nowrap" role="cell">
+                        <TableCell key={cell.id} className="whitespace-normal h-auto" role="cell">
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </TableCell>
                       ))}

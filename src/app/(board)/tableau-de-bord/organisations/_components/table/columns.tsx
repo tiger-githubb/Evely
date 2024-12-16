@@ -1,9 +1,9 @@
 "use client";
 
 import { ActionButtons } from "@/components/shared/table/action-buttons";
-import { AvatarCell } from "@/components/shared/table/avatar-cell";
 import { BadgeCell } from "@/components/shared/table/badge-cell";
 import { DateCell } from "@/components/shared/table/date-cell";
+import InfoCard from "@/components/shared/table/info-cell";
 import { Button } from "@/components/ui/button";
 import { Organization } from "@/types/api/organization.type";
 import { getImageUrl } from "@/utils/image-utils";
@@ -29,16 +29,10 @@ export const columns = ({ onDelete, isDeleting }: DeleteActions): ColumnDef<Orga
       );
     },
     cell: ({ row }) => (
-      <div className="flex items-center gap-x-2 justify-center ">
-        <AvatarCell image={getImageUrl(row.original.logo)} name={row.original.name} description={row.original.description} />
-      </div>
+      <InfoCard imageSrc={getImageUrl(row.original.logo)} name={row.original.name} description={row.original.description} />
     ),
   },
-  {
-    id: "description",
-    accessorKey: "description",
-    header: "Description",
-  },
+
   {
     id: "website",
     accessorKey: "website",
@@ -54,6 +48,7 @@ export const columns = ({ onDelete, isDeleting }: DeleteActions): ColumnDef<Orga
     id: "members",
     accessorKey: "_count.users",
     header: "Membres",
+    size: 30,
     cell: ({ row }) => <BadgeCell value={row.original._count.users} variant="secondary" />,
   },
   {

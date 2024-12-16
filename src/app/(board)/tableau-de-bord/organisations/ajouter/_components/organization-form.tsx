@@ -6,41 +6,69 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createOrganizationSchema, CreateOrganizationType } from "@/schemas/organization.schema";
-import { createOrganization } from "@/server/services/organizations.service";
+import { createOrganization, updateOrganization } from "@/server/services/organizations.service";
+import { Organization } from "@/types/api/organization.type";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { ImageUpload } from "./image-upload";
+interface OrganizationFormProps {
+  organisation?: Organization;
+}
 
-export function OrganizationForm() {
+export function OrganizationForm({ organisation }: OrganizationFormProps) {
+  const queryClient = useQueryClient();
+
   const form = useForm<CreateOrganizationType>({
     resolver: zodResolver(createOrganizationSchema),
     defaultValues: {
-      name: "",
-      description: "",
-      website: "",
+      name: organisation?.name || "",
+      description: organisation?.description || "",
+      website: organisation?.website || "",
       logo: null as unknown as File,
       coverImage: null as unknown as File,
     },
   });
 
-  const { isSubmitting } = form.formState;
-
-  const onSubmit: SubmitHandler<CreateOrganizationType> = async (values) => {
-    try {
-      await createOrganization(values);
+  const createMutation = useMutation({
+    mutationFn: createOrganization,
+    onSuccess: () => {
       toast.success("Organisation créée avec succès");
       form.reset();
-    } catch (error) {
-      console.error(error);
+      queryClient.invalidateQueries({ queryKey: ["organizations"] });
+    },
+    onError: () => {
       toast.error("Une erreur est survenue lors de la création de l'organisation");
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: (values: CreateOrganizationType) => updateOrganization(organisation!.id.toString(), values),
+    onSuccess: () => {
+      toast.success("Organisation modifiée avec succès");
+      queryClient.invalidateQueries({
+        queryKey: ["organizations", organisation?.id.toString()],
+      });
+    },
+    onError: () => {
+      toast.error("Une erreur est survenue lors de la modification de l'organisation");
+    },
+  });
+
+  const onSubmit: SubmitHandler<CreateOrganizationType> = (values) => {
+    if (organisation) {
+      updateMutation.mutate(values);
+    } else {
+      createMutation.mutate(values);
     }
   };
+  const isSubmitting = createMutation.isPending || updateMutation.isPending;
 
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>Créer une organisation</CardTitle>
+        <CardTitle> {organisation ? "Modifier l'organisation" : "Créer une organisation"}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -121,8 +149,8 @@ export function OrganizationForm() {
               )}
             />
 
-            <CustomButton type="submit" className="w-full text-white font-semibold" isLoading={isSubmitting}>
-              Créer l&apos;organisation
+            <CustomButton type="submit" className="w-full text-white font-semibold" isLoading={isSubmitting} disabled={isSubmitting}>
+              {organisation ? "Modifier l'organisation" : "Créer l'organisation"}
             </CustomButton>
           </form>
         </Form>

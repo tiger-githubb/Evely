@@ -65,6 +65,29 @@ export const createOrganization = async (organizationData: CreateOrganizationTyp
   }
 };
 
+export const updateOrganization = async (id: string, organizationData: CreateOrganizationType) => {
+  try {
+    const formData = new FormData();
+    formData.append("name", organizationData.name);
+    formData.append("description", organizationData.description);
+    if (organizationData.logo) formData.append("logo", organizationData.logo);
+    if (organizationData.coverImage) formData.append("coverImage", organizationData.coverImage);
+    if (organizationData.website) formData.append("website", organizationData.website);
+
+    const headers = await getAuthHeaders();
+    const { data } = await api.put(`/organizations/${id}`, formData, {
+      headers: {
+        ...headers,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la modification de l'organisation");
+  }
+};
+
 export const deleteOrganization = async (organizationId: number): Promise<void> => {
   try {
     const headers = await getAuthHeaders();

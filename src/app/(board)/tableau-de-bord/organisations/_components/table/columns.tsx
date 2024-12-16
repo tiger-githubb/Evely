@@ -66,7 +66,6 @@ export const columns = ({ onDelete, isDeleting }: DeleteActions): ColumnDef<Orga
     cell: ({ row }) => <ActionCell organization={row.original} onDelete={onDelete} isDeleting={isDeleting} />,
   },
 ];
-
 function ActionCell({
   organization,
   onDelete,

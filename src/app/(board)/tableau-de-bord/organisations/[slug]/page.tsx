@@ -1,9 +1,9 @@
 import { OrganizationDetails } from "./_components/organization-details";
 
 interface OrganizationPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function OrganizationPage({ params }: OrganizationPageProps) {

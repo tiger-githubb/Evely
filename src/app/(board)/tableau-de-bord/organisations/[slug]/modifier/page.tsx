@@ -1,9 +1,9 @@
 import EditOrganizationForm from "./edit-form";
 
 interface EditOrganizationPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function EditOrganizationPage({ params }: EditOrganizationPageProps) {

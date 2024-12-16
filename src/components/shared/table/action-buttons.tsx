@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import Link from "next/link";
 import { PiEye, PiPencilSimple, PiSpinner, PiTrash } from "react-icons/pi";
 
 interface ActionButtonsProps {
-  onView?: () => void;
-  onEdit?: () => void;
+  onView?: (() => void) | string;
+  onEdit?: (() => void) | string;
   onDelete?: () => void;
   isDeleting?: boolean;
   viewLabel?: string;
@@ -13,7 +14,6 @@ interface ActionButtonsProps {
   deleteLabel?: string;
   deleteMessage?: string;
 }
-
 export function ActionButtons({
   onView,
   onEdit,
@@ -30,9 +30,17 @@ export function ActionButtons({
         {onView && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" onClick={onView}>
-                <PiEye className="h-4 w-4" />
-              </Button>
+              {typeof onView === "string" ? (
+                <Button variant="ghost" size="icon" asChild>
+                  <Link href={onView}>
+                    <PiEye className="h-4 w-4" />
+                  </Link>
+                </Button>
+              ) : (
+                <Button variant="ghost" size="icon" onClick={onView}>
+                  <PiEye className="h-4 w-4" />
+                </Button>
+              )}
             </TooltipTrigger>
             <TooltipContent>
               <p>{viewLabel}</p>
@@ -43,16 +51,23 @@ export function ActionButtons({
         {onEdit && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" onClick={onEdit}>
-                <PiPencilSimple className="h-4 w-4" />
-              </Button>
+              {typeof onEdit === "string" ? (
+                <Button variant="ghost" size="icon" asChild>
+                  <Link href={onEdit}>
+                    <PiPencilSimple className="h-4 w-4" />
+                  </Link>
+                </Button>
+              ) : (
+                <Button variant="ghost" size="icon" onClick={onEdit}>
+                  <PiPencilSimple className="h-4 w-4" />
+                </Button>
+              )}
             </TooltipTrigger>
             <TooltipContent>
               <p>{editLabel}</p>
             </TooltipContent>
           </Tooltip>
         )}
-
         {onDelete && (
           <Tooltip>
             <TooltipTrigger asChild>

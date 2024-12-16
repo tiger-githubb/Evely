@@ -5,6 +5,7 @@ import { BadgeCell } from "@/components/shared/table/badge-cell";
 import { DateCell } from "@/components/shared/table/date-cell";
 import InfoCard from "@/components/shared/table/info-cell";
 import { Button } from "@/components/ui/button";
+import { routes } from "@/config/routes";
 import { Organization } from "@/types/api/organization.type";
 import { getImageUrl } from "@/utils/image-utils";
 import { ColumnDef } from "@tanstack/react-table";
@@ -79,7 +80,7 @@ function ActionCell({
     <>
       <ActionButtons
         onView={() => setShowDetails(true)}
-        onEdit={() => console.log("Edit", organization.id)}
+        onEdit={routes.board.organization.edit(organization.id.toString())}
         onDelete={() => onDelete(organization.id)}
         isDeleting={isDeleting}
         deleteMessage="Êtes-vous sûr de vouloir supprimer cette organisation ?"

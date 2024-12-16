@@ -1,4 +1,6 @@
 import { CreateOrganizationType } from "@/schemas/organization.schema";
+import { OrganizationInvitation } from "@/types/api/organization-invitation.type";
+import { OrganizationUser } from "@/types/api/organization-user.type";
 import { Organization } from "@/types/api/organization.type";
 import { ApiErrorHandler } from "@/utils/api-error";
 import { getAuthHeaders } from "@/utils/auth-utils";
@@ -14,6 +16,22 @@ export interface OrganizationsResponse {
 
 export interface OrganizationResponse {
   data: Organization;
+}
+
+export interface OrganizationUsersResponse {
+  data: OrganizationUser[];
+  total: number;
+  page: number;
+  perPage: number;
+  pages: number;
+}
+
+export interface OrganizationInvitationsResponse {
+  data: OrganizationInvitation[];
+  total: number;
+  page: number;
+  perPage: number;
+  pages: number;
 }
 
 export const fetchOrganizations = async (): Promise<OrganizationsResponse> => {
@@ -109,5 +127,62 @@ export const deleteOrganization = async (organizationId: number): Promise<void> 
     await api.delete(`/organizations/${organizationId}`, { headers });
   } catch (error) {
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la suppression de l'organisation");
+  }
+};
+
+export const fetchOrganizationUsers = async (organizationId: string): Promise<OrganizationUsersResponse> => {
+  try {
+    const headers = await getAuthHeaders();
+    const { data } = await api.get(`/organizations/${organizationId}/users`, { headers });
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle<OrganizationUsersResponse>(error, "Une erreur est survenue lors de la récupération des membres");
+  }
+};
+
+export const deleteOrganizationUser = async (organizationId: string, userId: number): Promise<void> => {
+  try {
+    const headers = await getAuthHeaders();
+    await api.delete(`/organizations/${organizationId}/users/${userId}`, { headers });
+  } catch (error) {
+    return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la suppression du membre");
+  }
+};
+
+export const fetchOrganizationInvitations = async (organizationId: string): Promise<OrganizationInvitationsResponse> => {
+  try {
+    const headers = await getAuthHeaders();
+    const { data } = await api.get(`/organizations/${organizationId}/invitations`, { headers });
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle<OrganizationInvitationsResponse>(
+      error,
+      "Une erreur est survenue lors de la récupération des invitations"
+    );
+  }
+};
+
+import { CreateOrganizationInvitationType } from "@/schemas/organization-invitation.schema";
+
+export const sendOrganizationInvitation = async (organizationId: string, invitationData: CreateOrganizationInvitationType) => {
+  try {
+    const headers = await getAuthHeaders();
+    const { data } = await api.post(`/organizations/${organizationId}/invitations`, invitationData, {
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+    });
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle(error, "Une erreur est survenue lors de l'envoi de l'invitation");
+  }
+};
+export const deleteOrganizationInvitation = async (organizationId: string, invitationId: number): Promise<void> => {
+  try {
+    const headers = await getAuthHeaders();
+    await api.delete(`/organizations/${organizationId}/invitations/${invitationId}`, { headers });
+  } catch (error) {
+    return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la suppression de l'invitation");
   }
 };

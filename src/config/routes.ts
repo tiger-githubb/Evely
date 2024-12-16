@@ -14,6 +14,7 @@ export const routes = {
       edit: (slug: string) => `/tableau-de-bord/organisations/${slug}/modifier`,
       members: (slug: string) => `/tableau-de-bord/organisations/${slug}/membres`,
       invitations: (slug: string) => `/tableau-de-bord/organisations/${slug}/invitations`,
+      roles: (slug: string) => `/tableau-de-bord/organisations/${slug}/roles`,
     },
   },
   help: {

@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 
 interface TableSkeletonProps {
   columns: number;
@@ -85,5 +86,20 @@ export function OrganizationDetailsSkeleton() {
         </div>
       </div>
     </div>
+  );
+}
+export function TeamSwitcherSkeleton() {
+  return (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <SidebarMenuButton size="lg">
+          <div className="flex aspect-square size-8 items-center justify-center rounded-lg animate-pulse bg-muted" />
+          <div className="grid flex-1 gap-1">
+            <div className="h-4 w-24 animate-pulse rounded bg-muted" />
+            <div className="h-3 w-16 animate-pulse rounded bg-muted" />
+          </div>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    </SidebarMenu>
   );
 }

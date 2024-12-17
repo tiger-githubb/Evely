@@ -17,26 +17,41 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { routes } from "@/config/routes";
-import { Organization } from "@/types/api/organization.type";
+import { useOrganizationStore } from "@/stores/organization-store";
 import Link from "next/link";
-
+import { TeamSwitcherSkeleton } from "../ui-skeletons";
 export function TeamSwitcher() {
   const { isMobile } = useSidebar();
-  const { data: organizationsResponse } = useQuery({
+  const { activeOrganization, setActiveOrganization } = useOrganizationStore();
+
+  const {
+    data: organizationsResponse,
+    isError,
+    isLoading,
+  } = useQuery({
     queryKey: ["organizations"],
     queryFn: fetchOrganizations,
   });
 
   const organizations = React.useMemo(() => organizationsResponse?.data || [], [organizationsResponse]);
-  const [activeOrganization, setActiveOrganization] = React.useState<Organization | null>(null);
 
   React.useEffect(() => {
     if (organizations.length > 0 && !activeOrganization) {
       setActiveOrganization(organizations[0]);
     }
-  }, [organizations, activeOrganization]);
+  }, [organizations, activeOrganization, setActiveOrganization]);
 
-  if (!activeOrganization) return null;
+  if (isLoading) {
+    return <TeamSwitcherSkeleton />;
+  }
+
+  if (isError) {
+    return <div className="p-4 text-sm text-destructive">Une erreur est survenue lors du chargement des organisations</div>;
+  }
+
+  if (organizations.length === 0) {
+    return <AddOrganizationButton />;
+  }
 
   return (
     <SidebarMenu>
@@ -49,7 +64,7 @@ export function TeamSwitcher() {
             >
               {activeOrganization && (
                 <>
-                  <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-accent text-sidebar-primary-foreground">
                     <Image
                       src={getImageUrl(activeOrganization.logo)}
                       alt={activeOrganization.name}
@@ -95,6 +110,25 @@ export function TeamSwitcher() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  );
+}
+function AddOrganizationButton() {
+  return (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <Link href={routes.board.organization.add}>
+          <SidebarMenuButton size="lg" className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+              <Plus className="size-4" />
+            </div>
+            <div className="grid flex-1 text-left text-sm leading-tight">
+              <span className="truncate font-semibold ">Nouvelle organisation</span>
+              <span className="truncate text-xs text-muted-foreground">Créer une organisation</span>
+            </div>
+          </SidebarMenuButton>
+        </Link>
       </SidebarMenuItem>
     </SidebarMenu>
   );

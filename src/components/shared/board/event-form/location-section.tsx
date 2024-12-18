@@ -22,7 +22,7 @@ export default function LocationSection({ form }: LocationSectionProps) {
             <FormItem className="sm:col-span-3">
               <FormLabel>Nom du lieu</FormLabel>
               <FormControl>
-                <Input placeholder="Nom du lieu de l'événement" {...field} />
+                <Input placeholder="Nom du lieu de l'événement" {...field} value={field.value || ""} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -36,7 +36,7 @@ export default function LocationSection({ form }: LocationSectionProps) {
             <FormItem>
               <FormLabel>Latitude</FormLabel>
               <FormControl>
-                <Input placeholder="Latitude" {...field} />
+                <Input placeholder="Latitude" {...field} value={field.value || ""} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -50,7 +50,7 @@ export default function LocationSection({ form }: LocationSectionProps) {
             <FormItem>
               <FormLabel>Longitude</FormLabel>
               <FormControl>
-                <Input placeholder="Longitude" {...field} />
+                <Input placeholder="Longitude" {...field} value={field.value || ""} />
               </FormControl>
               <FormMessage />
             </FormItem>

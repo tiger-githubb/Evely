@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { FileIcon, ImageIcon, X } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 
@@ -22,7 +22,7 @@ export function FileUploader({
   onChange,
   className,
   maxFiles = 5,
-  maxSize = 5 * 1024 * 1024, // 5MB
+  maxSize = 5 * 1024 * 1024,
   accept = {
     "image/*": [],
     "video/*": [],
@@ -30,10 +30,6 @@ export function FileUploader({
   preview = true,
 }: FileUploaderProps) {
   const [files, setFiles] = useState<(File | string)[]>(value);
-
-  useEffect(() => {
-    setFiles(value);
-  }, [value]);
 
   const onDrop = useCallback(
     (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {

@@ -1,16 +1,10 @@
 "use client";
 
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
-import { fr } from "date-fns/locale";
-import { UseFormReturn } from "react-hook-form";
+
+import { DatePicker } from "@/components/ui/custom/date-picker";
 import type { CreateEventType } from "@/schemas/event.schema";
+import { UseFormReturn } from "react-hook-form";
 
 interface DateTimeSectionProps {
   form: UseFormReturn<CreateEventType>;
@@ -26,27 +20,12 @@ export default function DateTimeSection({ form }: DateTimeSectionProps) {
           control={form.control}
           name="date"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem>
               <FormLabel>Date</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button variant="outline" className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
-                      {field.value ? format(field.value, "PPP", { locale: fr }) : <span>Choisir une date</span>}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+
+              <FormControl>
+                <DatePicker date={field.value} onSelect={field.onChange} variant="date" disablePastDates={true} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -55,11 +34,15 @@ export default function DateTimeSection({ form }: DateTimeSectionProps) {
         <FormField
           control={form.control}
           name="startTime"
-          render={({ field }) => (
+          render={({ field: { value, onChange } }) => (
             <FormItem>
               <FormLabel>Heure de début</FormLabel>
               <FormControl>
-                <Input type="time" {...field} />
+                <DatePicker
+                  date={value ? new Date(value) : undefined}
+                  onSelect={(date) => onChange(date.toISOString())}
+                  variant="time"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -69,11 +52,15 @@ export default function DateTimeSection({ form }: DateTimeSectionProps) {
         <FormField
           control={form.control}
           name="endTime"
-          render={({ field }) => (
+          render={({ field: { value, onChange } }) => (
             <FormItem>
               <FormLabel>Heure de fin</FormLabel>
               <FormControl>
-                <Input type="time" {...field} />
+                <DatePicker
+                  date={value ? new Date(value) : undefined}
+                  onSelect={(date) => onChange(date.toISOString())}
+                  variant="time"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

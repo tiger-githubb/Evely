@@ -1,12 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { UseFormReturn } from "react-hook-form";
-import { X } from "lucide-react";
-import { useState } from "react";
 import type { CreateEventType } from "@/schemas/event.schema";
+import { fetchEventTags } from "@/server/services/event-tags.service";
+import { EventTag } from "@/types/api/event-tag.type";
+import { X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { UseFormReturn } from "react-hook-form";
 
 interface TagsSectionProps {
   form: UseFormReturn<CreateEventType>;
@@ -14,6 +17,17 @@ interface TagsSectionProps {
 
 export default function TagsSection({ form }: TagsSectionProps) {
   const [newTag, setNewTag] = useState("");
+  const [availableTags, setAvailableTags] = useState<EventTag[]>([]);
+
+  useEffect(() => {
+    const loadTags = async () => {
+      const response = await fetchEventTags();
+      if (response.data) {
+        setAvailableTags(response.data);
+      }
+    };
+    loadTags();
+  }, []);
 
   const handleAddTag = () => {
     if (!newTag.trim()) return;
@@ -37,10 +51,41 @@ export default function TagsSection({ form }: TagsSectionProps) {
 
       <FormField
         control={form.control}
+        name="tags"
+        render={() => (
+          <FormItem>
+            <FormLabel>Tags existants</FormLabel>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
+              {availableTags.map((tag) => (
+                <label key={tag.id} className="flex items-center space-x-2">
+                  <Checkbox
+                    checked={form.watch("tags")?.includes(tag.id)}
+                    onCheckedChange={(checked) => {
+                      const currentTags = form.getValues("tags") || [];
+                      if (checked) {
+                        form.setValue("tags", [...currentTags, tag.id]);
+                      } else {
+                        form.setValue(
+                          "tags",
+                          currentTags.filter((id) => id !== tag.id)
+                        );
+                      }
+                    }}
+                  />
+                  <span>{tag.name}</span>
+                </label>
+              ))}
+            </div>
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
         name="newTags"
         render={() => (
           <FormItem>
-            <FormLabel>Ajouter des tags</FormLabel>
+            <FormLabel>Nouveaux tags</FormLabel>
             <div className="space-y-4">
               <div className="flex gap-2">
                 <FormControl>

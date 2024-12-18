@@ -1,9 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { generateEvents } from "@/config/data";
+
+import { EVENT_TYPE } from "@/config/constants";
+import { EventsResponse, fetchEvents } from "@/server/services/events.service";
 import { isToday, isWeekend } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EventCard } from "../shared/sections-ui/event-card";
 import Section from "../ui/custom/section";
 
@@ -26,23 +28,39 @@ const CATEGORIES: Category[] = [
 
 export const EventTable = () => {
   const [categoryFilter, setCategoryFilter] = useState("all");
-  const eventsData = generateEvents(10);
-  const filteredEvents = eventsData.filter((event) => {
+
+  const [events, setEvents] = useState<EventsResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadEvents = async () => {
+      const eventsData = await fetchEvents();
+      setEvents(eventsData);
+      setLoading(false);
+    };
+    loadEvents();
+  }, []);
+
+  const filteredEvents = events?.data.filter((event) => {
     if (categoryFilter === "all") return true;
 
     switch (categoryFilter) {
       case "today":
-        return isToday(event.date);
+        return isToday(new Date(event.date));
       case "weekend":
-        return isWeekend(event.date);
+        return isWeekend(new Date(event.date));
       case "free":
-        return event.price === 0;
+        return false; // Since we don't have price in Event type, default to false
       case "online":
-        return event.location === "En ligne";
+        return event.type.name === EVENT_TYPE.ONLINE;
       default:
-        return event.category.toLowerCase() === categoryFilter;
+        return event.category.name.toLowerCase() === categoryFilter;
     }
   });
+
+  if (loading) {
+    return <div>Chargement des événements...</div>;
+  }
 
   return (
     <Section>
@@ -60,7 +78,7 @@ export const EventTable = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredEvents.map((event) => (
+          {filteredEvents?.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
         </div>

@@ -66,16 +66,16 @@ export default function EventForm() {
     try {
       const eventResponse = await createEventMutation.mutateAsync(data);
       console.log("Event created successfully:", eventResponse);
-      
+
       if (data.covers && data.covers.length > 0) {
         const mediaFormData = new FormData();
-        
+
         data.covers.forEach((file) => {
-          mediaFormData.append('covers[]', file);
+          mediaFormData.append("covers[]", file);
         });
-        
+
         if (data.video instanceof File) {
-          mediaFormData.append('video', data.video);
+          mediaFormData.append("video", data.video);
         }
 
         const mediaResponse = await updateMediaMutation.mutateAsync({
@@ -87,7 +87,6 @@ export default function EventForm() {
 
       toast.success("Événement créé avec succès");
       console.log("Full form data submitted:", data);
-      
     } catch (err) {
       console.error(err);
       toast.error("Une erreur est survenue lors de la création de l'événement");
@@ -97,7 +96,7 @@ export default function EventForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-3xl mx-auto">
         <Card>
           <CardContent className="p-6">
             <div className="space-y-8">

@@ -67,7 +67,7 @@ export default function TagsSection({ form }: TagsSectionProps) {
         name="tags"
         render={() => (
           <FormItem>
-            <FormLabel>Tags</FormLabel>
+            <FormLabel></FormLabel>
             <Combobox
               options={tagOptions}
               selectedValues={selectedTags}

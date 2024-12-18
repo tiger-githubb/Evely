@@ -1,5 +1,7 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 import * as React from "react";
 
@@ -43,12 +45,10 @@ export function Combobox({
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="space-y-3">
       <div className="relative">
-        <input
+        <Input
           ref={inputRef}
-          type="text"
-          className="w-full rounded-md border border-input bg-background px-3 py-2"
           placeholder={placeholder}
           value={search}
           onChange={(e) => {
@@ -60,46 +60,51 @@ export function Combobox({
         />
 
         {showSuggestions && search && (
-          <div className="absolute z-50 w-full rounded-md border bg-popover p-2 shadow-md">
-            <div className="flex flex-wrap gap-2">
+          <div className="absolute z-50 mt-1 w-full rounded-md border bg-popover p-2 shadow-md">
+            <div className="flex flex-wrap gap-1.5">
               {filteredOptions.map((option) => (
-                <span
+                <Badge
                   key={option.value}
+                  className="font-medium"
+                  variant="suggestion"
                   onClick={() => {
                     onSelect(option);
                     setSearch("");
                     setShowSuggestions(false);
                   }}
-                  className="flex cursor-pointer items-center gap-1 rounded-full bg-secondary/50 px-3 py-1 text-sm hover:bg-secondary"
                 >
                   {option.label}
-                </span>
+                </Badge>
               ))}
               {onCreateNew && !filteredOptions.length && (
-                <span
+                <Badge
+                  variant="newTag"
                   onClick={() => {
                     onCreateNew(search);
                     setSearch("");
                     setShowSuggestions(false);
                   }}
-                  className="flex cursor-pointer items-center gap-1 rounded-full bg-primary/20 px-3 py-1 text-sm hover:bg-primary/30"
                 >
                   Créer &ldquo;{search}&ldquo;
-                </span>
+                </Badge>
               )}
             </div>
           </div>
         )}
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-1.5">
         {selectedValues.map((value) => (
-          <span key={value.value} className="flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-sm">
+          <Badge key={value.value} variant="tag" className="flex items-center gap-1  font-medium">
             {value.label}
-            <button type="button" onClick={() => onRemove(value.value)} className="text-muted-foreground hover:text-foreground">
+            <button
+              type="button"
+              onClick={() => onRemove(value.value)}
+              className="ml-1 rounded-full hover:bg-destructive hover:text-destructive-foreground"
+            >
               <X className="h-3 w-3" />
             </button>
-          </span>
+          </Badge>
         ))}
       </div>
     </div>

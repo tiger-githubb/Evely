@@ -7,6 +7,15 @@ export const routes = {
     dashboard: "/tableau-de-bord",
     profile: "/tableau-de-bord/profil",
     myevents: "/tableau-de-bord/mes-evenements",
+    workspace: {
+      home: (slug: string) => `/tableau-de-bord/${slug}`,
+      events: {
+        list: (slug: string) => `/tableau-de-bord/${slug}/evenements`,
+        add: (slug: string) => `/tableau-de-bord/${slug}/evenements/ajouter`,
+        show: (slug: string, eventId: string) => `/tableau-de-bord/${slug}/evenements/${eventId}`,
+        edit: (slug: string, eventId: string) => `/tableau-de-bord/${slug}/evenements/${eventId}/modifier`,
+      },
+    },
     organization: {
       all: "/tableau-de-bord/organisations",
       add: "/tableau-de-bord/organisations/ajouter",

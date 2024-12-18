@@ -90,7 +90,15 @@ export function TeamSwitcher() {
           >
             <DropdownMenuLabel className="text-xs text-muted-foreground">Mes organisations</DropdownMenuLabel>
             {organizations.map((org) => (
-              <DropdownMenuItem key={org.id} onClick={() => setActiveOrganization(org)} className="gap-2 p-2">
+              <DropdownMenuItem
+                key={org.id}
+                onClick={() => {
+                  setActiveOrganization(org);
+                  // Redirect to the organization workspace home
+                  window.location.href = routes.board.workspace.home(org.id.toString());
+                }}
+                className="gap-2 p-2"
+              >
                 <div className="flex size-6 items-center justify-center rounded-sm border">
                   <Image src={getImageUrl(org.logo)} alt={org.name} width={24} height={24} className="rounded-sm object-cover" />
                 </div>

@@ -38,6 +38,8 @@ export const createEventSchema = z.object({
   faq: z.array(eventFAQSchema).optional(),
   agendas: z.array(eventAgendaSchema).optional(),
   location: eventLocationSchema.optional(),
+  covers: z.array(z.instanceof(File)).optional(),
+  video: z.instanceof(File).optional(),
 });
 
 export type CreateEventType = z.infer<typeof createEventSchema>;

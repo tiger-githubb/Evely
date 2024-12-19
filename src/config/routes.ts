@@ -7,6 +7,12 @@ export const routes = {
     create: "/evenements/creer",
   },
 
+  organizations: {
+    details: (slug: string) => `/o/${slug}`,
+    events: (slug: string) => `/o/${slug}/events`,
+    followers: (slug: string) => `/o/${slug}/followers`,
+  },
+
   board: {
     dashboard: "/tableau-de-bord",
     profile: "/tableau-de-bord/profil",

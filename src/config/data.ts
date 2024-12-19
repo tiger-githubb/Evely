@@ -50,6 +50,7 @@ export const generateMockEvents = (count: number = 10): Event[] => {
       organization: {
         id: faker.number.int({ min: 1, max: 10 }),
         name: faker.company.name(),
+        slug: faker.helpers.slugify(faker.company.name()).toLowerCase(),
         logo: faker.image.avatar(),
         coverImage: faker.image.url(),
         description: faker.company.catchPhrase(),
@@ -57,6 +58,7 @@ export const generateMockEvents = (count: number = 10): Event[] => {
         _count: {
           users: faker.number.int({ min: 1, max: 100 }),
           followers: faker.number.int({ min: 1, max: 1000 }),
+          events: faker.number.int({ min: 1, max: 100 }),
         },
         roles: [],
       },
@@ -67,8 +69,9 @@ export const generateMockEvents = (count: number = 10): Event[] => {
       location: {
         id: faker.number.int({ min: 1, max: 10 }),
         name: faker.location.streetAddress(),
-        latitude: faker.location.latitude(),
-        longitude: faker.location.longitude(),
+        lat: faker.location.latitude().toString(),
+        long: faker.location.longitude().toString(),
+        createdAt: faker.date.past().toISOString(),
       },
       faq: Array.from({ length: 3 }, () => ({
         id: faker.number.int(),
@@ -97,4 +100,35 @@ export const generateMockEvents = (count: number = 10): Event[] => {
 export const fetchEventBySlug = (slug: string) => {
   const events = generateMockEvents(12);
   return events.find((event) => event.slug === slug) || events[0];
+};
+
+export const generateMockOrganization = (slug: string) => {
+  return {
+    id: faker.number.int(),
+    name: faker.company.name(),
+    slug,
+    logo: faker.image.avatar(),
+    coverImage: faker.image.url(),
+    description: faker.company.catchPhrase(),
+    website: faker.internet.url(),
+    createdAt: faker.date.past().toISOString(),
+    socialLinks: {
+      facebook: faker.internet.url(),
+      twitter: faker.internet.url(),
+      instagram: faker.internet.url(),
+      linkedin: faker.internet.url(),
+    },
+    _count: {
+      users: faker.number.int({ min: 1, max: 100 }),
+      followers: faker.number.int({ min: 100, max: 10000 }),
+      events: faker.number.int({ min: 5, max: 50 }),
+    },
+    roles: [],
+    upcomingEvents: generateMockEvents(3),
+    pastEvents: generateMockEvents(5),
+  };
+};
+
+export const fetchOrganizationBySlug = (slug: string) => {
+  return generateMockOrganization(slug);
 };

@@ -6,7 +6,7 @@ export default function EventPage({ params }: { params: { slug: string } }) {
   const event = fetchEventBySlug(params.slug);
 
   return (
-    <Section>
+    <Section className="py-16 mt-0">
       <EventDetails event={event} />
     </Section>
   );

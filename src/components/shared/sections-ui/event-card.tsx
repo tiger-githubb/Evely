@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { routes } from "@/config/routes";
 import { Event } from "@/types/api/event.type";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarDays, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { getImageUrl } from "@/utils/image-utils";
 
 interface EventCardProps {
   event: Event;
@@ -21,12 +21,12 @@ const gradients = [
 ];
 
 export const EventCard = ({ event }: EventCardProps) => {
-  const coverImage = event.covers[0] ? getImageUrl(event.covers[0]) : "";
+  const coverImage = event.covers[0] ? event.covers[0] : "";
   const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
-  const organizationLogo = getImageUrl(event.organization.logo) || "/placeholder-avatar.jpg";
+  const organizationLogo = event.organization.logo || "/placeholder-avatar.jpg";
 
   return (
-    <Link href={`/evenements/${event.id}`}>
+    <Link href={routes.events.details(event.slug)}>
       <Card className="group overflow-hidden transition-all hover:shadow-lg">
         <div className="relative aspect-[16/9] overflow-hidden">
           {coverImage ? (

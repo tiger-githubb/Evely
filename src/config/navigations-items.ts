@@ -13,7 +13,7 @@ export const navigationItems = [
     items: [
       {
         title: "Tous les événements",
-        href: routes.events,
+        href: routes.events.list,
       },
       {
         title: "Créer un événement",

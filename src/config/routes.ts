@@ -1,7 +1,17 @@
 export const routes = {
   home: "/",
-  events: "/evenements",
   createEvent: "/evenements/creer",
+  events: {
+    list: "/evenements",
+    details: (slug: string) => `/e/${slug}`,
+    create: "/evenements/creer",
+  },
+
+  organizations: {
+    details: (slug: string) => `/o/${slug}`,
+    events: (slug: string) => `/o/${slug}/events`,
+    followers: (slug: string) => `/o/${slug}/followers`,
+  },
 
   board: {
     dashboard: "/tableau-de-bord",

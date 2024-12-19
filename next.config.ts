@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       { hostname: "cloudflare-ipfs.com" },
       { hostname: "avatars.githubusercontent.com" },
       { hostname: "minio.100visagesls.xyz" },
+      { hostname: "picsum.photos" },
     ],
     //TODO: Check if this is needed and if it is the good config
 

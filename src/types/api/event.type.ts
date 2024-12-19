@@ -11,6 +11,7 @@ import { Organization } from "./organization.type";
 export interface Event {
   id: number;
   title: string;
+  slug: string;
 
   summary: string;
   content: string;

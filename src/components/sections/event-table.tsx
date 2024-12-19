@@ -1,12 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-
 import { EVENT_TYPE } from "@/config/constants";
-import { EventsResponse, fetchEvents } from "@/server/services/events.service";
+import { generateMockEvents } from "@/config/data";
+import { useQuery } from "@tanstack/react-query";
 import { isToday, isWeekend } from "date-fns";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { EventCard } from "../shared/sections-ui/event-card";
+import { EventGridSkeleton } from "../shared/ui-skeletons";
+import { EmptyState, ErrorState } from "../shared/ui-states";
 import Section from "../ui/custom/section";
 
 interface Category {
@@ -29,17 +31,25 @@ const CATEGORIES: Category[] = [
 export const EventTable = () => {
   const [categoryFilter, setCategoryFilter] = useState("all");
 
-  const [events, setEvents] = useState<EventsResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const loadEvents = async () => {
-      const eventsData = await fetchEvents();
-      setEvents(eventsData);
-      setLoading(false);
+  const fetchEvents = async () => {
+    return {
+      data: generateMockEvents(12),
+      meta: {
+        total: 12,
+        page: 1,
+        perPage: 12,
+      },
     };
-    loadEvents();
-  }, []);
+  };
+
+  const {
+    data: events,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["events"],
+    queryFn: fetchEvents,
+  });
 
   const filteredEvents = events?.data.filter((event) => {
     if (categoryFilter === "all") return true;
@@ -50,17 +60,13 @@ export const EventTable = () => {
       case "weekend":
         return isWeekend(new Date(event.date));
       case "free":
-        return false; // Since we don't have price in Event type, default to false
+        return false;
       case "online":
         return event.type.name === EVENT_TYPE.ONLINE;
       default:
         return event.category.name.toLowerCase() === categoryFilter;
     }
   });
-
-  if (loading) {
-    return <div>Chargement des événements...</div>;
-  }
 
   return (
     <Section>
@@ -77,11 +83,22 @@ export const EventTable = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredEvents?.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
-        </div>
+        {isLoading ? (
+          <EventGridSkeleton />
+        ) : isError ? (
+          <ErrorState description="Une erreur est survenue lors du chargement des événements." variant="xl" />
+        ) : filteredEvents?.length === 0 ? (
+          <EmptyState
+            title="Aucun événement trouvé"
+            description="Il n'y a pas d'événements correspondant à vos critères de recherche."
+          />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredEvents?.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        )}
       </div>
     </Section>
   );

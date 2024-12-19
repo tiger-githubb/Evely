@@ -8,37 +8,37 @@ const categories = [
   {
     icon: <Music className="w-8 h-8" />,
     label: "Musique",
-    href: routes.events,
+    href: routes.events.list,
   },
   {
     icon: <Moon className="w-8 h-8" />,
     label: "Vie nocturne",
-    href: routes.events,
+    href: routes.events.list,
   },
   {
     icon: <Ticket className="w-8 h-8" />,
     label: "Arts du spectacle",
-    href: routes.events,
+    href: routes.events.list,
   },
   {
     icon: <Calendar className="w-8 h-8" />,
     label: "Fêtes",
-    href: routes.events,
+    href: routes.events.list,
   },
   {
     icon: <Users className="w-8 h-8" />,
     label: "Rencontres",
-    href: routes.events,
+    href: routes.events.list,
   },
   {
     icon: <Briefcase className="w-8 h-8" />,
     label: "Affaires",
-    href: routes.events,
+    href: routes.events.list,
   },
   {
     icon: <Utensils className="w-8 h-8" />,
     label: "Gastronomie",
-    href: routes.events,
+    href: routes.events.list,
   },
 ];
 

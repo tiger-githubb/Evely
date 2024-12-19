@@ -93,3 +93,8 @@ export const generateMockEvents = (count: number = 10): Event[] => {
     })
   );
 };
+
+export const fetchEventBySlug = (slug: string) => {
+  const events = generateMockEvents(12);
+  return events.find((event) => event.slug === slug) || events[0];
+};

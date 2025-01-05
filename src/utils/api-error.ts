@@ -7,9 +7,9 @@ export class ApiErrorHandler {
     if (error instanceof AxiosError && error.response?.data) {
       const apiError = error.response.data as ApiError;
       toast.error(apiError.message);
-      throw new Error(apiError.message);
+      return null as T;
     }
     toast.error(defaultMessage);
-    throw new Error(defaultMessage);
+    return null as T;
   }
 }

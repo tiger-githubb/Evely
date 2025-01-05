@@ -55,3 +55,17 @@ export async function signInUser(email: string, password: string) {
     return null;
   }
 }
+
+export async function validateEmail(token: string) {
+  try {
+    const { data } = await api.put(`/auth/validate-email/${token}`, null, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}

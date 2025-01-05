@@ -32,7 +32,7 @@ export const generateMockEvents = (count: number = 10): Event[] => {
       id: index + 1,
       title: faker.company.catchPhrase(),
       slug: faker.helpers.slugify(faker.company.catchPhrase()).toLowerCase(),
-      summary: faker.lorem.sentence(),
+      summary: faker.lorem.sentence(30),
       content: faker.lorem.paragraphs(3),
       date: faker.date.future(),
       startTime: faker.date.future().toISOString(),
@@ -131,4 +131,21 @@ export const generateMockOrganization = (slug: string) => {
 
 export const fetchOrganizationBySlug = (slug: string) => {
   return generateMockOrganization(slug);
+};
+
+export const generateDashboardStats = (organizationId: number) => {
+  return {
+    totalEvents: faker.number.int({ min: 10, max: 100 }),
+    totalParticipants: faker.number.int({ min: 100, max: 10000 }),
+    totalRevenue: faker.number.int({ min: 100000, max: 1000000 }),
+    satisfactionRate: faker.number.int({ min: 80, max: 100 }),
+
+    recentEvents: generateMockEvents(3).filter((event) => event.organizationId === organizationId),
+    upcomingEvents: generateMockEvents(3).filter((event) => event.organizationId === organizationId),
+    monthlyRevenue: Array.from({ length: 12 }, () => ({
+      month: faker.date.month(),
+      revenue: faker.number.int({ min: 10000, max: 100000 }),
+      organizationId,
+    })),
+  };
 };

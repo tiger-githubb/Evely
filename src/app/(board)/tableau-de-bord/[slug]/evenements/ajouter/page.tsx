@@ -11,7 +11,7 @@ export default async function CreateEventPage({ params }: CreateEventPageProps) 
 
   return (
     <div className="container">
-      <h1>Create New Event {slug} </h1>
+      <h3>Create New Event {slug} </h3>
       <EventForm />
     </div>
   );

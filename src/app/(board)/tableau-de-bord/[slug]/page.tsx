@@ -1,6 +1,7 @@
 import { OrganizationHeader } from "./_components/organization-header";
 import { OrganizationStats } from "./_components/organization-stats";
 import { RecentEvents } from "./_components/recent-events";
+import { RevenueChart } from "./_components/revenue-chart";
 import { UpcomingEvents } from "./_components/upcoming-events";
 
 interface WorkspacePageProps {
@@ -22,7 +23,7 @@ export default async function OrganizationWorkspacePage({ params }: WorkspacePag
         <UpcomingEvents />
       </div>
 
-      {/* <RevenueChart /> */}
+      <RevenueChart />
     </div>
   );
 }

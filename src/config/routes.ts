@@ -44,9 +44,9 @@ export const routes = {
   },
 
   auth: {
-    signUp: "/auth/inscription",
+    signUp: "/auth/sign-up",
     mailVerifivation: "/auth/mail-verification",
-    signIn: "/auth/connexion",
+    signIn: "/auth/sign-in",
     forgotPassword: "/auth/mot-de-passe-oublie",
     resetPassword: "/auth/reinitialiser-mot-de-passe",
     congratulations: "/auth/reinitialiser-mot-de-passe/félicitations",

@@ -9,6 +9,7 @@ export interface OrganizationInvitation {
   organizationId: number;
   roleId: number;
   invitedById: number;
+  accepted: boolean;
   status: "pending" | "accepted" | "rejected";
   organization: Organization;
   role: Role;

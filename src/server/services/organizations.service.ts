@@ -178,6 +178,25 @@ export const sendOrganizationInvitation = async (organizationId: string, invitat
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de l'envoi de l'invitation");
   }
 };
+
+export const acceptOrganizationInvitation = async (invitationToken: string) => {
+  try {
+    const headers = await getAuthHeaders();
+    const { data } = await api.put(
+      "/organizations/invitations/accept",
+      { invitationToken },
+      {
+        headers: {
+          ...headers,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle(error, "Une erreur est survenue lors de l'acceptation de l'invitation");
+  }
+};
 export const deleteOrganizationInvitation = async (organizationId: string, invitationId: number): Promise<void> => {
   try {
     const headers = await getAuthHeaders();

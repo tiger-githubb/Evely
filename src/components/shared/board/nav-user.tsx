@@ -20,8 +20,6 @@ import { toast } from "sonner";
 
 export function NavUser() {
   const { data: session } = useSession();
-  console.log("Session data:", session); // Add this line to debug
-
   const { isMobile } = useSidebar();
 
   const user = {

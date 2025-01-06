@@ -1,8 +1,9 @@
 "use client";
 
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut } from "lucide-react";
+import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, Info, LogOut } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -19,12 +20,15 @@ import { toast } from "sonner";
 
 export function NavUser() {
   const { data: session } = useSession();
+  console.log("Session data:", session); // Add this line to debug
+
   const { isMobile } = useSidebar();
 
   const user = {
     name: session?.user?.name || "Guest",
     email: session?.user?.email || "",
     avatar: session?.user?.image || "",
+    emailVerified: session?.user?.emailVerified || false,
   };
 
   const handleSignOut = () => {
@@ -36,6 +40,12 @@ export function NavUser() {
 
   return (
     <SidebarMenu>
+      {!user.emailVerified && (
+        <Alert className="mb-4">
+          <Info className="h-4 w-4" />
+          <AlertDescription className="text-destructive">Your email is not verified. Please check your mailbox.</AlertDescription>
+        </Alert>
+      )}
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

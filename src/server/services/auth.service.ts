@@ -14,6 +14,8 @@ function formatUserForAuth(user: AppUser, token: string): User {
     id: String(user.id), // NextAuth expects string ID
     email: user.email,
     name: `${user.firstName} ${user.lastName}`,
+    emailVerified: user.emailVerified, // Add this line
+    active: user.active,
     roleId: user.roleId,
     role: user.role,
     token: token,
@@ -48,6 +50,8 @@ export async function signInUser(email: string, password: string) {
         lastName: data.user.lastName,
         roleId: data.user.roleId,
         role: data.user.role,
+        emailVerified: data.user.emailVerified,
+        active: data.user.active,
       } as AppUser,
       data.token
     );

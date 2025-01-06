@@ -48,11 +48,16 @@ export function NavUser() {
   return (
     <SidebarMenu>
       {!user.emailVerified && (
-        <Alert className="mb-4">
-          <Info className="h-4 w-4" />
-          <AlertDescription className="text-destructive">Your email is not verified. Please check your mailbox.</AlertDescription>
-        </Alert>
+        <SidebarMenuItem>
+          <Alert className="mb-4 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center">
+            <Info className="h-4 w-4 text-destructive" color="red" />
+            <AlertDescription className="text-destructive group-data-[collapsible=icon]:hidden">
+              Your email is not verified. Please check your mailbox.
+            </AlertDescription>
+          </Alert>
+        </SidebarMenuItem>
       )}
+
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

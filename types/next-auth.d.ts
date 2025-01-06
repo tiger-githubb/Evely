@@ -7,6 +7,8 @@ declare module "next-auth" {
       id: number;
       email: string;
       name: string;
+      emailVerified: boolean;
+      active: boolean;
       roleId: number;
       role: {
         createdAt: string;

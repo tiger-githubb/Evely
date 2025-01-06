@@ -1,4 +1,5 @@
 import { AppUser } from "@/types/user.type";
+import { getAuthHeaders } from "@/utils/auth-utils";
 import api from "@/utils/axios-instance";
 import { User } from "next-auth";
 
@@ -13,6 +14,8 @@ function formatUserForAuth(user: AppUser, token: string): User {
     id: String(user.id), // NextAuth expects string ID
     email: user.email,
     name: `${user.firstName} ${user.lastName}`,
+    emailVerified: user.emailVerified, // Add this line
+    active: user.active,
     roleId: user.roleId,
     role: user.role,
     token: token,
@@ -47,6 +50,8 @@ export async function signInUser(email: string, password: string) {
         lastName: data.user.lastName,
         roleId: data.user.roleId,
         role: data.user.role,
+        emailVerified: data.user.emailVerified,
+        active: data.user.active,
       } as AppUser,
       data.token
     );
@@ -56,13 +61,19 @@ export async function signInUser(email: string, password: string) {
   }
 }
 
-export async function validateEmail(token: string) {
+export async function validateEmail(userId: number, verificationToken: string) {
   try {
-    const { data } = await api.put(`/auth/validate-email/${token}`, null, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const headers = await getAuthHeaders();
+    const { data } = await api.put(
+      `/auth/validate-email/${userId}`,
+      { verificationToken },
+      {
+        headers: {
+          ...headers,
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return data;
   } catch (error) {
     console.error(error);

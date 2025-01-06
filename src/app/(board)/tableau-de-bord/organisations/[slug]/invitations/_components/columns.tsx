@@ -36,7 +36,7 @@ export const columns = ({ onDelete, isDeleting }: DeleteActions): ColumnDef<Orga
     id: "status",
     accessorKey: "status",
     header: "Statut",
-    cell: ({ row }) => <BadgeCell value={row.original.status} variant="secondary" />,
+    cell: ({ row }) => <BadgeCell value={row.original.accepted ? "Accepted" : "Pending"} variant="secondary" />,
   },
   {
     id: "createdAt",

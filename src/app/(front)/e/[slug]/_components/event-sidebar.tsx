@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Event } from "@/types/api/event.type";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { routes } from "@/config/routes";
+import { Event } from "@/types/api/event.type";
 import Link from "next/link";
+import { OrganizationActions } from "../../../o/[slug]/_components/organization-actions";
 
 export function EventSidebar({ event }: { event: Event }) {
   return (
@@ -37,9 +37,9 @@ export function EventSidebar({ event }: { event: Event }) {
               </div>
             </div>
           </Link>
-          <Button variant="outline" className="w-full mt-4">
-            Suivre l&apos;organisateur
-          </Button>
+          <div className="mt-4">
+            <OrganizationActions organization={event.organization} />
+          </div>
         </CardContent>
       </Card>
     </div>

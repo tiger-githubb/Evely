@@ -36,17 +36,6 @@ export const columns = ({ onDelete, isDeleting }: DeleteActions): ColumnDef<Orga
   },
 
   {
-    id: "website",
-    accessorKey: "website",
-    header: "Site web",
-    cell: ({ row }) =>
-      row.original.website && (
-        <a href={row.original.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-          {row.original.website}
-        </a>
-      ),
-  },
-  {
     id: "members",
     accessorKey: "_count.users",
     header: "Membres",

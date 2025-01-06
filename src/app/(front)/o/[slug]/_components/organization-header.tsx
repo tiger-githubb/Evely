@@ -1,7 +1,8 @@
-import { Organization } from "@/types/api/organization.type";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Users, Share2 } from "lucide-react";
+import { Organization } from "@/types/api/organization.type";
+import { Users } from "lucide-react";
+import Image from "next/image";
+import { OrganizationActions } from "./organization-actions";
 
 export function OrganizationHeader({ organization }: { organization: Organization }) {
   return (
@@ -45,16 +46,7 @@ export function OrganizationHeader({ organization }: { organization: Organizatio
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex items-center gap-3 mb-4 sm:ml-auto">
-              <Button size="lg" className="flex-1 sm:flex-none">
-                Suivre
-              </Button>
-              <Button variant="outline" size="lg" className="flex-1 sm:flex-none">
-                <Share2 className="h-4 w-4 mr-2" />
-                Partager
-              </Button>
-            </div>
+            <OrganizationActions organization={organization} />
           </div>
 
           {/* Navigation */}

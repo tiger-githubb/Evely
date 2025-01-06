@@ -1,4 +1,5 @@
 import { AppUser } from "@/types/user.type";
+import { getAuthHeaders } from "@/utils/auth-utils";
 import api from "@/utils/axios-instance";
 import { User } from "next-auth";
 
@@ -56,13 +57,19 @@ export async function signInUser(email: string, password: string) {
   }
 }
 
-export async function validateEmail(token: string) {
+export async function validateEmail(userId: number, verificationToken: string) {
   try {
-    const { data } = await api.put(`/auth/validate-email/${token}`, null, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const headers = await getAuthHeaders();
+    const { data } = await api.put(
+      `/auth/validate-email/${userId}`,
+      { verificationToken },
+      {
+        headers: {
+          ...headers,
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return data;
   } catch (error) {
     console.error(error);

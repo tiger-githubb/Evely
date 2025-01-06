@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
+import { routes } from "@/config/routes";
 import { toast } from "sonner";
 
 export function NavUser() {
@@ -27,7 +28,7 @@ export function NavUser() {
   };
 
   const handleSignOut = () => {
-    signOut({ callbackUrl: "/" });
+    signOut({ callbackUrl: routes.auth.signIn });
     toast.success("Déconnexion réussie", {
       description: "À bientôt sur Evely!",
     });

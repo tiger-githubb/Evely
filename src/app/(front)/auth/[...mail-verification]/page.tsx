@@ -1,5 +1,7 @@
 "use client";
+import { routes } from "@/config/routes";
 import { validateEmail } from "@/server/services/auth.service";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -7,21 +9,23 @@ export default function EmailVerificationPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  const { data: session } = useSession();
   const [status, setStatus] = useState<"verifying" | "success" | "error">("verifying");
 
   useEffect(() => {
     const verifyEmail = async () => {
-      if (!token) {
+      if (!token || !session?.user?.id) {
         setStatus("error");
         return;
       }
 
       try {
-        const result = await validateEmail(token);
+        const result = await validateEmail(Number(session.user.id), token);
         if (result) {
           setStatus("success");
           setTimeout(() => {
-            router.push("/auth/login");
+            signOut();
+            router.push(routes.auth.signIn);
           }, 3000);
         } else {
           setStatus("error");
@@ -32,7 +36,7 @@ export default function EmailVerificationPage() {
     };
 
     verifyEmail();
-  }, [token, router]);
+  }, [token, router, session]);
 
   return (
     <div className="flex min-h-screen items-center justify-center">

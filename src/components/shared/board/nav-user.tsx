@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, Info, LogOut } from "lucide-react";
+import { ChevronsUpDown, Info } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -15,12 +15,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
+import { userNavigationItems } from "@/config/navigations-items";
 import { routes } from "@/config/routes";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 
 export function NavUser() {
   const { data: session } = useSession();
   const { isMobile } = useSidebar();
+  const pathname = usePathname();
 
   const user = {
     name: session?.user?.name || "Guest",
@@ -34,6 +39,10 @@ export function NavUser() {
     toast.success("Déconnexion réussie", {
       description: "À bientôt sur Evely!",
     });
+  };
+
+  const isActiveLink = (url: string) => {
+    return pathname === url || pathname.startsWith(url);
   };
 
   return (
@@ -81,26 +90,27 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
+              {userNavigationItems.map((item) => (
+                <DropdownMenuItem
+                  key={item.title}
+                  asChild
+                  className={cn(isActiveLink(item.url) && "bg-accent text-accent-foreground")}
+                >
+                  {item.action === "signOut" ? (
+                    <button onClick={handleSignOut} className="w-full">
+                      <item.icon className="mr-2 h-4 w-4" />
+                      {item.title}
+                    </button>
+                  ) : (
+                    <Link href={item.url} className="w-full">
+                      <item.icon className="mr-2 h-4 w-4" />
+                      {item.title}
+                    </Link>
+                  )}
+                </DropdownMenuItem>
+              ))}
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleSignOut}>
-              <LogOut />
-              Log out
-            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

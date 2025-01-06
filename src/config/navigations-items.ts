@@ -1,4 +1,4 @@
-import { BookOpen, Settings2 } from "lucide-react";
+import { BadgeCheck, Bell, Building, CreditCard, Home, LogOut, Settings2, SquareChartGantt } from "lucide-react";
 import { routes } from "./routes";
 
 export const navigationItems = [
@@ -48,38 +48,21 @@ export const navigationItems = [
 export const boardNavigationItems = {
   navMain: [
     {
-      title: "Tableau de Board",
-      url: "#",
-      icon: BookOpen,
-      isActive: true,
-      items: [
-        {
-          title: "Accueil",
-          url: routes.board.dashboard,
-        },
-        {
-          title: "Profil",
-          url: routes.board.profile,
-        },
-        {
-          title: "Mes événements",
-          url: routes.board.myevents,
-        },
-      ],
+      title: "Accueil",
+      url: routes.board.dashboard,
+      icon: Home,
     },
+    {
+      title: "Mes événements",
+      url: routes.board.myevents,
+      icon: SquareChartGantt,
+    },
+
     {
       title: "Paramètres",
       url: "#",
       icon: Settings2,
       items: [
-        {
-          title: "Organisations",
-          url: routes.board.organization.all,
-        },
-        {
-          title: "Compte",
-          url: "#",
-        },
         {
           title: "Ticket Fees",
           url: "#",
@@ -89,19 +72,38 @@ export const boardNavigationItems = {
   ],
   projects: [
     // {
-    //   name: "Design Engineering",
-    //   url: "#",
-    //   icon: Frame,
-    // },
-    // {
     //   name: "Sales & Marketing",
     //   url: "#",
     //   icon: PieChart,
     // },
-    // {
-    //   name: "Travel",
-    //   url: "#",
-    //   icon: Map,
-    // },
   ],
 };
+
+export const userNavigationItems = [
+  {
+    title: "Account",
+    url: routes.board.profile,
+    icon: BadgeCheck,
+  },
+  {
+    title: "Organisations",
+    url: routes.board.organization.all,
+    icon: Building,
+  },
+  {
+    title: "Billing",
+    url: routes.board.profile,
+    icon: CreditCard,
+  },
+  {
+    title: "Notifications",
+    url: routes.board.profile,
+    icon: Bell,
+  },
+  {
+    title: "Log out",
+    url: "#",
+    icon: LogOut,
+    action: "signOut",
+  },
+];

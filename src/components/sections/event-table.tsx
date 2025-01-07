@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { EVENT_TYPE } from "@/config/constants";
-import { generateMockEvents } from "@/config/data";
+import { fetchEvents } from "@/server/services/events.service";
 import { useQuery } from "@tanstack/react-query";
 import { isToday, isWeekend } from "date-fns";
 import { useState } from "react";
@@ -31,17 +31,6 @@ const CATEGORIES: Category[] = [
 export const EventTable = () => {
   const [categoryFilter, setCategoryFilter] = useState("all");
 
-  const fetchEvents = async () => {
-    return {
-      data: generateMockEvents(12),
-      meta: {
-        total: 12,
-        page: 1,
-        perPage: 12,
-      },
-    };
-  };
-
   const {
     data: events,
     isLoading,
@@ -50,6 +39,11 @@ export const EventTable = () => {
     queryKey: ["events"],
     queryFn: fetchEvents,
   });
+
+  if (events?.data.length === 0)
+    return (
+      <EmptyState title="Aucun événement trouvé" description="Il n'y a pas d'événements correspondant à vos critères de recherche." />
+    );
 
   const filteredEvents = events?.data.filter((event) => {
     if (categoryFilter === "all") return true;

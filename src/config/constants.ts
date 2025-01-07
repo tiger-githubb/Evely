@@ -4,8 +4,8 @@ import slider2 from "@public/images/sliders/evenement-mode.jpeg";
 
 export const signInSlides = [
   {
-    quote: "Evely simplifie l'organisation et la découverte d'événements au Togo. Rejoignez notre communauté!",
-    author: "L'équipe Evely",
+    quote: "Yala simplifie l'organisation et la découverte d'événements au Togo. Rejoignez notre communauté!",
+    author: "L'équipe Yala",
     image: slider1.src,
   },
   {

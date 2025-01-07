@@ -69,13 +69,13 @@ export const EventTable = () => {
   });
 
   return (
-    <Section>
+    <Section className="md:my-8">
       <div className="w-full">
         <div className="flex gap-2 overflow-x-auto pb-4">
           {CATEGORIES.map((category) => (
             <Button
               key={category.value}
-              variant={categoryFilter === category.value ? "default" : "outline"}
+              variant={categoryFilter === category.value ? "link" : "ghost"}
               onClick={() => setCategoryFilter(category.value)}
             >
               {category.label}

@@ -92,35 +92,35 @@ export default {
     plugin(function ({ addBase, theme }) {
       addBase({
         h1: {
-          fontSize: theme("fontSize.6xl"),
+          fontSize: theme("fontSize.4xl"),
           fontWeight: "800",
           lineHeight: "1",
           color: theme("colors.primary.DEFAULT"),
           letterSpacing: theme("letterSpacing.tight"),
         },
         h2: {
-          fontSize: theme("fontSize.5xl"),
+          fontSize: theme("fontSize.3xl"),
           fontWeight: "700",
           lineHeight: "1.3",
           color: theme("colors.primary.DEFAULT"),
           letterSpacing: theme("letterSpacing.tight"),
         },
         h3: {
-          fontSize: theme("fontSize.2xl"),
+          fontSize: theme("fontSize.xl"),
           fontWeight: "600",
           lineHeight: "1.4",
           color: theme("colors.primary.DEFAULT"),
           letterSpacing: theme("letterSpacing.tight"),
         },
         h4: {
-          fontSize: theme("fontSize.xl"),
+          fontSize: theme("fontSize.lg"),
           fontWeight: "600",
           lineHeight: "1.5",
           color: theme("colors.secondary.foreground"),
           letterSpacing: theme("letterSpacing.tight"),
         },
         h5: {
-          fontSize: theme("fontSize.lg"),
+          fontSize: theme("fontSize.base"),
           fontWeight: "600",
           lineHeight: "1.6",
           color: theme("colors.destructive.DEFAULT"),

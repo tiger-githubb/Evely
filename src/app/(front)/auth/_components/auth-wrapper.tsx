@@ -33,7 +33,7 @@ export function AuthWrapper({ children, title, description, linkText, linkHref, 
         <div className="relative hidden h-full lg:flex bg-muted">
           <div className="z-20 flex items-center text-lg font-medium p-10 text-white absolute">
             <PiCheersDuotone className="mr-2 h-6 w-6" />
-            Evely
+            Yala
           </div>
           <AuthCarousel slides={slides} />
         </div>

@@ -25,7 +25,7 @@ export const AuthStatus = () => {
   };
 
   return (
-    <div className="flex justify-end w-full gap-4">
+    <div className="flex justify-end gap-2">
       <div className="border-r hidden md:inline"></div>
       {session?.user ? (
         <DropdownMenu>
@@ -51,10 +51,12 @@ export const AuthStatus = () => {
       ) : (
         <>
           <Link href={routes.auth.signIn}>
-            <Button variant="outline">Connexion</Button>
+            <Button variant="outline" size={"sm"}>
+              Connexion
+            </Button>
           </Link>
           <Link href={routes.auth.signUp}>
-            <Button>Inscription</Button>
+            <Button size={"sm"}>Inscription</Button>
           </Link>
         </>
       )}

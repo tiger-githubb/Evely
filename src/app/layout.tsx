@@ -20,7 +20,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Evely",
+  title: "Yala",
   description: "Découvrez, organisez et réservez vos événements en toute simplicité",
 };
 

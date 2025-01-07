@@ -6,8 +6,8 @@ import { AuthWrapper } from "../_components/auth-wrapper";
 import { SignInForm } from "./_components/sign-in-form";
 
 export const metadata: Metadata = {
-  title: "Connexion | Evely",
-  description: "Connectez-vous à votre compte Evely pour gérer vos événements au Togo.",
+  title: "Connexion | Yala",
+  description: "Connectez-vous à votre compte Yala pour gérer vos événements au Togo.",
 };
 
 export default function AuthenticationPage() {

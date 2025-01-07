@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Organization } from "@/types/api/organization.type";
+import { getImageUrl } from "@/utils/image-utils";
 import { Users } from "lucide-react";
 import Image from "next/image";
 import { OrganizationActions } from "./organization-actions";
@@ -10,7 +11,7 @@ export function OrganizationHeader({ organization }: { organization: Organizatio
       {/* Cover Image */}
       <div className="relative h-[200px] sm:h-[300px] md:h-[400px] w-full bg-muted">
         <Image
-          src={organization.coverImage}
+          src={getImageUrl(organization.coverImage)}
           alt={organization.name}
           fill
           className="object-cover transition-transform duration-300 hover:scale-105"
@@ -26,7 +27,7 @@ export function OrganizationHeader({ organization }: { organization: Organizatio
             <div className="flex items-end gap-6">
               <div className="relative">
                 <Image
-                  src={organization.logo}
+                  src={getImageUrl(organization.logo)}
                   alt={organization.name}
                   width={180}
                   height={180}

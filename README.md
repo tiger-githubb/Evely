@@ -1,6 +1,6 @@
-# Evely - La Plateforme d'Événements au Togo
+# Yala - La Plateforme d'Événements au Togo
 
-Evely est une plateforme innovante de gestion d'événements destinée à révolutionner la manière dont les événements sont organisés et réservés au Togo. Inspirée d'Eventbrite, notre solution permet aux utilisateurs de découvrir, organiser et réserver des événements de manière simple et rapide.
+Yala est une plateforme innovante de gestion d'événements destinée à révolutionner la manière dont les événements sont organisés et réservés au Togo. Inspirée d'Eventbrite, notre solution permet aux utilisateurs de découvrir, organiser et réserver des événements de manière simple et rapide.
 
 ## Technologies
 

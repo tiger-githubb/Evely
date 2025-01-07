@@ -42,7 +42,12 @@ export const EventTable = () => {
 
   if (events?.data.length === 0)
     return (
-      <EmptyState title="Aucun événement trouvé" description="Il n'y a pas d'événements correspondant à vos critères de recherche." />
+      <Section className="md:my-8">
+        <EmptyState
+          title="Aucun événement trouvé"
+          description="Il n'y a pas d'événements correspondant à vos critères de recherche."
+        />
+      </Section>
     );
 
   const filteredEvents = events?.data.filter((event) => {
@@ -65,7 +70,7 @@ export const EventTable = () => {
   return (
     <Section className="md:my-8">
       <div className="w-full">
-        <div className="flex gap-2 overflow-x-auto pb-4">
+        <div className="flex gap-2 overflow-x-auto pb-8">
           {CATEGORIES.map((category) => (
             <Button
               key={category.value}

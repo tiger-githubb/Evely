@@ -23,7 +23,7 @@ export default function SearchFilter() {
   const [formats, setFormats] = useState<EventFormat[]>([]);
   const [languages, setLanguages] = useState<EventLanguage[]>([]);
   const [types, setTypes] = useState<EventType[]>([]);
-  const [tags, setTags] = useState<EventTag[]>([]);
+
   const [topTags, setTopTags] = useState<EventTag[]>([]);
   const [dateFilter, setDateFilter] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<Date>();
@@ -43,21 +43,19 @@ export default function SearchFilter() {
   useEffect(() => {
     const fetchFiltersData = async () => {
       try {
-        const [categoriesResponse, formatsResponse, languagesResponse, typesResponse, tagsResponse, topTagsResponse] =
-          await Promise.all([
-            fetchEventCategories(),
-            fetchEventFormats(),
-            fetchEventLanguages(),
-            fetchEventTypes(),
-            fetchEventTags(),
-            fetchTopEventTags(),
-          ]);
+        const [categoriesResponse, formatsResponse, languagesResponse, typesResponse, topTagsResponse] = await Promise.all([
+          fetchEventCategories(),
+          fetchEventFormats(),
+          fetchEventLanguages(),
+          fetchEventTypes(),
+          fetchEventTags(),
+          fetchTopEventTags(),
+        ]);
 
         setCategories(categoriesResponse.data);
         setFormats(formatsResponse.data);
         setLanguages(languagesResponse.data);
         setTypes(typesResponse.data);
-        setTags(tagsResponse.data);
         setTopTags(topTagsResponse.data);
       } catch (error) {
         console.error("Error fetching filter data:", error);

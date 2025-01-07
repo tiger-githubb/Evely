@@ -17,7 +17,7 @@ export default function SearchContainer() {
   const [loading, setLoading] = useState(true);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [lastSearchParams, setLastSearchParams] = useLocalStorage("lastSearch", {});
+  const [lastSearchParams] = useLocalStorage("lastSearch", {});
   const debouncedSearchParams = useDebounce(lastSearchParams, 500);
 
   useEffect(() => {

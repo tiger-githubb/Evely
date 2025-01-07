@@ -1,7 +1,6 @@
 import { Slider } from "@/components/ui/slider";
 import { Event } from "@/types/api/event.type";
 import { Circle, GoogleMap, InfoWindow, LoadScript, Marker, MarkerClusterer } from "@react-google-maps/api";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import { MapIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -43,7 +42,6 @@ export function SearchMap({ events }: SearchMapProps) {
   const [radius, setRadius] = useState(15000);
   const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral | null>(null);
   const [showMap, setShowMap] = useState(false);
-  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
     const R = 6371;

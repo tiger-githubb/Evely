@@ -157,3 +157,24 @@ export function EventGridSkeleton() {
     </div>
   );
 }
+
+// Add this to existing ui-skeletons.tsx
+export function SearchFilterSkeleton() {
+  return (
+    <div className="space-y-6">
+      {[1, 2, 3, 4, 5, 6].map((i) => (
+        <div key={i} className="rounded-lg border p-4">
+          <Skeleton className="h-6 w-32 mb-3" />
+          <div className="space-y-2">
+            {[1, 2, 3, 4].map((j) => (
+              <div key={j} className="flex items-center space-x-2">
+                <Skeleton className="h-4 w-4" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}

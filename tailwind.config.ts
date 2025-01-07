@@ -116,7 +116,7 @@ export default {
           fontSize: theme("fontSize.xl"),
           fontWeight: "600",
           lineHeight: "1.5",
-          color: theme("colors.secondary.DEFAULT"),
+          color: theme("colors.secondary.foreground"),
           letterSpacing: theme("letterSpacing.tight"),
         },
         h5: {

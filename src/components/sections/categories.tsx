@@ -44,13 +44,13 @@ const categories = [
 
 export const Categories = () => {
   return (
-    <Section className="md:my-6">
-      <div className="flex gap-6 md:gap-8 overflow-x-auto">
+    <Section className="md:my-10">
+      <div className="flex gap-4 md:gap-8 overflow-x-auto">
         {categories.map((category) => (
           <Link href={category.href} key={category.label}>
-            <Button variant="outline" className="w-32 h-32 flex-col gap-4 p-4 text-center  rounded-full">
+            <Button variant="outline" className="w-28 h-28 flex-col gap-4 p-4 text-center  rounded-full">
               {category.icon}
-              <span className="font-medium text-sm leading-tight">{category.label}</span>
+              <span className="font-medium text-xs leading-tight">{category.label}</span>
             </Button>
           </Link>
         ))}

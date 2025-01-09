@@ -150,9 +150,54 @@ export function EventCardSkeleton() {
 
 export function EventGridSkeleton() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="flex flex-col gap-4">
       {Array.from({ length: 6 }).map((_, i) => (
-        <EventCardSkeleton key={i} />
+        <div key={i} className="h-32 rounded-lg border overflow-hidden">
+          <div className="flex h-full">
+            <div className="w-32 h-full">
+              <Skeleton className="h-full" />
+            </div>
+
+            <div className="flex-1 p-4 space-y-4">
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-4 w-4" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+
+              <Skeleton className="h-6 w-3/4" />
+
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-4 w-4" />
+                <Skeleton className="h-4 w-40" />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-6 w-6 rounded-full" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+// Add this to existing ui-skeletons.tsx
+export function SearchFilterSkeleton() {
+  return (
+    <div className="space-y-6">
+      {[1, 2, 3, 4, 5, 6].map((i) => (
+        <div key={i} className="rounded-lg border p-4">
+          <Skeleton className="h-6 w-32 mb-3" />
+          <div className="space-y-2">
+            {[1, 2, 3, 4].map((j) => (
+              <div key={j} className="flex items-center space-x-2">
+                <Skeleton className="h-4 w-4" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+            ))}
+          </div>
+        </div>
       ))}
     </div>
   );

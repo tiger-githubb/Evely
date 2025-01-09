@@ -4,28 +4,14 @@ import { routes } from "./routes";
 
 export const navigationItems = [
   {
-    title: "Accueil",
-    href: routes.home,
-    description: "Page d'accueil",
+    title: "Trouver des événements",
+    href: routes.events.list,
   },
   {
-    title: "Événements",
-    description: "Découvrez et gérez vos événements",
-    items: [
-      {
-        title: "Tous les événements",
-        href: routes.events.list,
-      },
-      {
-        title: "Créer un événement",
-        href: routes.createEvent,
-      },
-      {
-        title: "Rechercher",
-        href: routes.search,
-      },
-    ],
+    title: "Créer un événement",
+    href: routes.createEvent,
   },
+
   {
     title: "Aide",
     description: "Centre d'aide et support",

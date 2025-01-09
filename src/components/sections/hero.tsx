@@ -12,7 +12,7 @@ export const Hero = () => {
   const shuffledImages = [...images].sort(() => Math.random() - 0.5);
 
   return (
-    <Section className="md:mt-30 h-[55vh]">
+    <Section className="md:my-12 h-[50vh]">
       <div className="grid grid-cols-1 gap-4 items-center md:grid-cols-2 h-full">
         <div className="flex gap-4 flex-col">
           <div>

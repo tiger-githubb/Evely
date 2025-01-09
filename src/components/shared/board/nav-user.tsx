@@ -37,7 +37,7 @@ export function NavUser() {
   const handleSignOut = () => {
     signOut({ callbackUrl: routes.auth.signIn });
     toast.success("Déconnexion réussie", {
-      description: "À bientôt sur Evely!",
+      description: "À bientôt sur Yala!",
     });
   };
 

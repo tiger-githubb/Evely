@@ -9,23 +9,25 @@ import { routes } from "@/config/routes";
 import { useRouter } from "next/navigation";
 import { Eye, Trash } from "lucide-react";
 
-const columns = (onView: (slug: string) => void, onDelete: (id: number) => void) => [
+import { ColumnDef } from "@tanstack/react-table";
+
+const columns = (onView: (slug: string) => void, onDelete: (id: number) => void): ColumnDef<any, any>[] => [
   {
     accessorKey: "title",
     header: "Titre",
-    cell: ({ row }) => (
+    cell: ({ row }: { row: { original: { title: string } } }) => (
       <span className="font-medium">{row.original.title}</span>
     ),
   },
   {
     accessorKey: "date",
     header: "Date",
-    cell: ({ row }) => new Date(row.original.date).toLocaleDateString(),
+    cell: ({ row }: { row: { original: { date: string } } }) => new Date(row.original.date).toLocaleDateString(),
   },
   {
     accessorKey: "summary",
     header: "Résumé",
-    cell: ({ row }) => (
+    cell: ({ row }: { row: { original: { summary: string } } }) => (
       <span title={row.original.summary} className="truncate">
         {row.original.summary.slice(0, 50)}...
       </span>
@@ -34,7 +36,7 @@ const columns = (onView: (slug: string) => void, onDelete: (id: number) => void)
   {
     accessorKey: "tags",
     header: "Tags",
-    cell: ({ row }) =>
+    cell: ({ row }: { row: { original: { tags: { id: number; name: string }[] } } }) =>
       row.original.tags.map((tag: { id: number; name: string }) => (
         <span key={tag.id} className="bg-muted text-xs px-2 py-1 rounded-full mr-2">
           {tag.name}
@@ -44,7 +46,7 @@ const columns = (onView: (slug: string) => void, onDelete: (id: number) => void)
   {
     accessorKey: "actions",
     header: "Actions",
-    cell: ({ row }) => {
+    cell: ({ row }: { row: { original: { slug: string; id: number } } }) => {
       const event = row.original;
       return (
         <div className="flex gap-2">

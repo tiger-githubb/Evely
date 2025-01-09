@@ -181,3 +181,4 @@ export const updateEventPublishStatus = async (
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la modification du statut de publication");
   }
 };
+

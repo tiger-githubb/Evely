@@ -1,5 +1,4 @@
 import { EventInfo } from "./_components/event-info";
-import { EventStats } from "./_components/event-stats";
 import { fetchEvent } from "@/server/services/events.service";
 
 interface EventPageProps {
@@ -18,7 +17,6 @@ export default async function EventPage({ params }: EventPageProps) {
   return (
     <div className="space-y-8">
       <EventInfo event={event} />
-      <EventStats event={event} />
     </div>
   );
 }

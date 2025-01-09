@@ -25,7 +25,7 @@ export const routes = {
         show: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}`,
         edit: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/edit`,
         agendas: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/agendas`,
-        media: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/media`,
+        media: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/medias`,
         stats: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/stats`,
         faq: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/faq`,      },
     },

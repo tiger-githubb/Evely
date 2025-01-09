@@ -16,6 +16,11 @@ export interface EventFaqResponse {
   data: EventFaq;
 }
 
+
+
+
+
+
 export const fetchEventFaqs = async (): Promise<EventFaqsResponse> => {
   try {
     const headers = await getAuthHeaders();

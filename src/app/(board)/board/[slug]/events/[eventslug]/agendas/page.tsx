@@ -1,5 +1,3 @@
-// app/board/[slug]/events/[eventId]/agendas/page.tsx
-
 import { fetchEvent } from "@/server/services/events.service";
 import EventAgendas from "./_components/event-agendas";
 

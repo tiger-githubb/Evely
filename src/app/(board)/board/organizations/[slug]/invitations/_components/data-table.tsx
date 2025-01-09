@@ -4,7 +4,7 @@ import { CustomDataTable } from "@/components/ui/custom/custom-table";
 import { deleteOrganizationInvitation, fetchOrganizationInvitations } from "@/server/services/organizations.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { InvitationForm } from "../../membres/_components/invitation-form";
+import { InvitationForm } from "../../members/_components/invitation-form";
 import { columns } from "./columns";
 
 interface InvitationsTableProps {

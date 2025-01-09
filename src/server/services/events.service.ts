@@ -3,6 +3,8 @@ import { Event } from "@/types/api/event.type";
 import { ApiErrorHandler } from "@/utils/api-error";
 import { getAuthHeaders } from "@/utils/auth-utils";
 import api from "@/utils/axios-instance";
+import { fetchOrganizationIdBySlug } from "@/server/services/organizations.service";
+
 
 export interface EventsResponse {
   data: Event[];
@@ -12,6 +14,19 @@ export interface EventsResponse {
   pages: number;
 }
 
+
+export const fetchEvent = async (slug: string) => {
+  try {
+    const headers = await getAuthHeaders();
+    const { data } = await api.get(`/events/slug/${slug}`, { headers });
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la récupération de l'événement");
+  }
+};
+
+
+// Fetch all events
 export const fetchEvents = async (): Promise<EventsResponse> => {
   try {
     const headers = await getAuthHeaders();
@@ -22,6 +37,10 @@ export const fetchEvents = async (): Promise<EventsResponse> => {
   }
 };
 
+
+
+
+// Fetch draft events
 export const fetchDraftEvents = async (): Promise<EventsResponse> => {
   try {
     const headers = await getAuthHeaders();
@@ -35,6 +54,7 @@ export const fetchDraftEvents = async (): Promise<EventsResponse> => {
   }
 };
 
+// Fetch published events
 export const fetchPublishedEvents = async (): Promise<EventsResponse> => {
   try {
     const headers = await getAuthHeaders();
@@ -45,11 +65,19 @@ export const fetchPublishedEvents = async (): Promise<EventsResponse> => {
   }
 };
 
-export const fetchOrganizationEvents = async (organizationId: string): Promise<EventsResponse> => {
+
+export const fetchOrganizationEvents = async (organizationSlug: string): Promise<EventsResponse> => {
   try {
+    if (!organizationSlug) {
+      throw new Error("Organization slug is required but was not provided.");
+    }
+
+    const organizationId = await fetchOrganizationIdBySlug(organizationSlug);
     const headers = await getAuthHeaders();
-    const { data } = await api.get(`/events/${organizationId}`, { headers });
-    return data;
+
+    const { data: events } = await api.get(`/events/organization/${organizationId}`, { headers });
+
+    return events;
   } catch (error) {
     return ApiErrorHandler.handle<EventsResponse>(
       error,
@@ -58,10 +86,13 @@ export const fetchOrganizationEvents = async (organizationId: string): Promise<E
   }
 };
 
-export const createEvent = async (organizationId: string, eventData: CreateEventType) => {
+
+// Create a new event for an organization
+export const createEvent = async (organizationSlug: string, eventData: CreateEventType) => {
   try {
+    const organizationId = await fetchOrganizationIdBySlug(organizationSlug);
     const headers = await getAuthHeaders();
-    const { data } = await api.post(`/events/${organizationId}`, eventData, {
+    const { data } = await api.post(`/events/organization/${organizationId}`, eventData, {
       headers: {
         ...headers,
         "Content-Type": "application/json",
@@ -73,10 +104,16 @@ export const createEvent = async (organizationId: string, eventData: CreateEvent
   }
 };
 
-export const updateEvent = async (organizationId: string, eventId: number, eventData: Partial<CreateEventType>) => {
+// Update an event for an organization
+export const updateEvent = async (
+  organizationSlug: string,
+  eventId: number,
+  eventData: Partial<CreateEventType>
+) => {
   try {
+    const organizationId = await fetchOrganizationIdBySlug(organizationSlug);
     const headers = await getAuthHeaders();
-    const { data } = await api.put(`/events/${organizationId}/${eventId}`, eventData, {
+    const { data } = await api.put(`/events/organization/${organizationId}/${eventId}`, eventData, {
       headers: {
         ...headers,
         "Content-Type": "application/json",
@@ -88,19 +125,27 @@ export const updateEvent = async (organizationId: string, eventId: number, event
   }
 };
 
-export const deleteEvent = async (organizationId: string, eventId: number): Promise<void> => {
+// Delete an event for an organization
+export const deleteEvent = async (organizationSlug: string, eventId: number): Promise<void> => {
   try {
+    const organizationId = await fetchOrganizationIdBySlug(organizationSlug);
     const headers = await getAuthHeaders();
-    await api.delete(`/events/${organizationId}/${eventId}`, { headers });
+    await api.delete(`/events/organization/${organizationId}/${eventId}`, { headers });
   } catch (error) {
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la suppression de l'événement");
   }
 };
 
-export const updateEventMedia = async (organizationId: string, eventId: number, mediaData: FormData) => {
+// Update media for an event
+export const updateEventMedia = async (
+  organizationSlug: string,
+  eventId: number,
+  mediaData: FormData
+) => {
   try {
+    const organizationId = await fetchOrganizationIdBySlug(organizationSlug);
     const headers = await getAuthHeaders();
-    const { data } = await api.put(`/events/media/${organizationId}/${eventId}`, mediaData, {
+    const { data } = await api.put(`/events/organization/media/${organizationId}/${eventId}`, mediaData, {
       headers: {
         ...headers,
         "Content-Type": "multipart/form-data",
@@ -112,11 +157,17 @@ export const updateEventMedia = async (organizationId: string, eventId: number, 
   }
 };
 
-export const updateEventPublishStatus = async (organizationId: string, eventId: number, draft: boolean) => {
+// Update the publish status of an event
+export const updateEventPublishStatus = async (
+  organizationSlug: string,
+  eventId: number,
+  draft: boolean
+) => {
   try {
+    const organizationId = await fetchOrganizationIdBySlug(organizationSlug);
     const headers = await getAuthHeaders();
     const { data } = await api.put(
-      `/events/publish/${organizationId}/${eventId}`,
+      `/events/organization/publish/${organizationId}/${eventId}`,
       { draft },
       {
         headers: {
@@ -130,3 +181,4 @@ export const updateEventPublishStatus = async (organizationId: string, eventId: 
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la modification du statut de publication");
   }
 };
+

@@ -18,7 +18,8 @@ export const metaObject = (title?: string, openGraph?: OpenGraph, description: s
     openGraph: openGraph ?? {
       title: title ? `${title} - Yala` : title,
       description,
-      url: "https://yala.tg", // TODO: Update with actual domain
+      url: "https://yala.events", // TODO: Update with actual domain
+
       siteName: "Yala",
       images: {
         url: logoImg.src, // TODO: Update with Yala brand image

@@ -13,9 +13,15 @@ export function OrganizationHeader({ organizationSlug }: OrganizationHeaderProps
         <h1 className="text-3xl font-bold">Organisation {organizationSlug}</h1>
         <p className="text-muted-foreground">Gérez vos événements et suivez vos performances</p>
       </div>
+      <div className="flex gap-4">
       <Link href={routes.board.workspace.events.add(organizationSlug)}>
         <CustomButton>Créer un événement</CustomButton>
       </Link>
+      <Link href={routes.board.workspace.events.list(organizationSlug)}>
+        <CustomButton>Voir tous les événements</CustomButton>
+      </Link>
+      </div>
+      
     </div>
   );
 }

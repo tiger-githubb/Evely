@@ -24,7 +24,7 @@ function formatUserForAuth(user: AppUser, token: string): User {
 
 export async function signUpUser(email: string, password: string, firstName: string, lastName: string) {
   try {
-    const { data } = await api.post<SignUpResponse>("/auth/sign-up", {
+    const { data } = await api.post<SignUpResponse>("/auth/email/sign-up", {
       email,
       password,
       firstName,
@@ -40,7 +40,7 @@ export async function signUpUser(email: string, password: string, firstName: str
 
 export async function signInUser(email: string, password: string) {
   try {
-    const { data } = await api.post("/auth/sign-in", { email, password });
+    const { data } = await api.post("/auth/email/sign-in", { email, password });
 
     return formatUserForAuth(
       {

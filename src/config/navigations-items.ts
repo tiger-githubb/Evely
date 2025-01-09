@@ -1,5 +1,6 @@
-import { BadgeCheck, Bell, Building, CreditCard, Home, LogOut, Settings2, SquareChartGantt } from "lucide-react";
+import { BadgeCheck, Bell, Building, Calendar, CreditCard, Home, LogOut, Settings2, SquareChartGantt } from "lucide-react";
 import { routes } from "./routes";
+
 
 export const navigationItems = [
   {
@@ -45,7 +46,7 @@ export const navigationItems = [
   },
 ];
 
-export const boardNavigationItems = {
+export const boardNavigationItems =  {
   navMain: [
     {
       title: "Accueil",
@@ -56,6 +57,11 @@ export const boardNavigationItems = {
       title: "Mes événements",
       url: routes.board.myevents,
       icon: SquareChartGantt,
+    },
+    {
+      title: "Événements",
+      url: routes.board.workspace.events,
+      icon: Calendar,
     },
 
     {

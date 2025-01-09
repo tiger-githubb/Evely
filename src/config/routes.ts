@@ -1,10 +1,10 @@
 export const routes = {
   home: "/",
-  createEvent: "/evenements/creer",
+  createEvent: "/events/create",
   events: {
-    list: "/evenements",
+    list: "/events",
     details: (slug: string) => `/e/${slug}`,
-    create: "/evenements/creer",
+    create: "/events/create",
   },
 
   organizations: {
@@ -14,51 +14,54 @@ export const routes = {
   },
 
   board: {
-    dashboard: "/tableau-de-bord",
-    profile: "/tableau-de-bord/profil",
-    myevents: "/tableau-de-bord/mes-evenements",
+    dashboard: "/board",
+    profile: "/board/profile",
+    myevents: "/board/my-events",
     workspace: {
-      home: (slug: string) => `/tableau-de-bord/${slug}`,
+      home: (slug: string) => `/board/${slug}`,
       events: {
-        list: (slug: string) => `/tableau-de-bord/${slug}/evenements`,
-        add: (slug: string) => `/tableau-de-bord/${slug}/evenements/ajouter`,
-        show: (slug: string, eventId: string) => `/tableau-de-bord/${slug}/evenements/${eventId}`,
-        edit: (slug: string, eventId: string) => `/tableau-de-bord/${slug}/evenements/${eventId}/modifier`,
-      },
+        list: (slug: string) => `/board/${slug}/events`,
+        add: (slug: string) => `/board/${slug}/events/create`,
+        show: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}`,
+        edit: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/edit`,
+        agendas: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/agendas`,
+        media: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/media`,
+        stats: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/stats`,
+        faq: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/faq`,      },
     },
     organization: {
-      all: "/tableau-de-bord/organisations",
-      add: "/tableau-de-bord/organisations/ajouter",
-      show: (slug: string) => `/tableau-de-bord/organisations/${slug}`,
-      edit: (slug: string) => `/tableau-de-bord/organisations/${slug}/modifier`,
-      members: (slug: string) => `/tableau-de-bord/organisations/${slug}/membres`,
-      invitations: (slug: string) => `/tableau-de-bord/organisations/${slug}/invitations`,
-      roles: (slug: string) => `/tableau-de-bord/organisations/${slug}/roles`,
-      followers: (slug: string) => `/tableau-de-bord/organisations/${slug}/followers`,
+      all: "/board/organizations",
+      add: "/board/organizations/create",
+      show: (slug: string) => `/board/organizations/${slug}`,
+      edit: (slug: string) => `/board/organizations/${slug}/edit`,
+      members: (slug: string) => `/board/organizations/${slug}/members`,
+      invitations: (slug: string) => `/board/organizations/${slug}/invitations`,
+      roles: (slug: string) => `/board/organizations/${slug}/roles`,
+      followers: (slug: string) => `/board/organizations/${slug}/followers`,
     },
   },
   help: {
-    findTicket: "aide/trouver-billet",
-    buyTicket: "aide/acheter-billet",
-    contactOrganizer: "aide/contact-organisateur",
+    findTicket: "help/find-ticket",
+    buyTicket: "help/buy-ticket",
+    contactOrganizer: "help/contact-organizer",
   },
 
   auth: {
     signUp: "/auth/sign-up",
     mailVerifivation: "/auth/mail-verification",
     signIn: "/auth/sign-in",
-    forgotPassword: "/auth/mot-de-passe-oublie",
-    resetPassword: "/auth/reinitialiser-mot-de-passe",
-    congratulations: "/auth/reinitialiser-mot-de-passe/félicitations",
+    forgotPassword: "/auth/forgot-password",
+    resetPassword: "/auth/reset-password",
+    congratulations: "/auth/reset-password/congratulations",
     otp: "/auth/otp",
   },
 
-  search: "/recherche",
+  search: "/search",
 
-  faq: "/foires-aux-questions",
+  faq: "/faq",
   contact: "/contact",
-  terms: "/conditions-utilisation",
-  privacy: "/politique-de-confidentialite",
+  terms: "/terms",
+  privacy: "/privacy",
 
   // Inactive Routes
 

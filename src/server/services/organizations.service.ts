@@ -36,6 +36,25 @@ export interface OrganizationInvitationsResponse {
   pages: number;
 }
 
+export const fetchOrganizationIdBySlug = async (organizationSlug: string): Promise<string> => {
+  try {
+    const headers = await getAuthHeaders();
+    console.log("Fetching organization for slug:", organizationSlug);
+    const { data: organization } = await api.get(`/organizations/slug/${organizationSlug}`, { headers });
+    console.log("Fetched organization data:", organization);
+
+    if (!organization?.data?.id) {
+      throw new Error(`Organization with slug "${organizationSlug}" not found`);
+    }
+
+    return organization?.data?.id;
+  } catch (error) {
+    console.error("Error fetching organization by slug:", error);
+    return ApiErrorHandler.handle<string>(error, "Une erreur est survenue lors de la récupération de l'organisation par slug");
+  }
+};
+
+
 export const fetchOrganizations = async (): Promise<OrganizationsResponse> => {
   try {
     const headers = await getAuthHeaders();

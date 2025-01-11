@@ -50,12 +50,12 @@ export const fetchPublicEventBySlug = async (slug: string) => {
   }
 };
 
-export const fetchEventTickets = async (eventId: number, organizationId: number): Promise<EventTicketsResponse[]> => {
+export const fetchEventTickets = async (eventId: number, organizationId: number): Promise<EventTicket[]> => {
   try {
     const { data } = await api.get(`/events-tickets/${eventId}/${organizationId}`);
-    return data;
+    return data.data;
   } catch (error) {
-    return ApiErrorHandler.handle<EventTicketsResponse[]>(error, "Une erreur est survenue lors de la récupération des tickets");
+    return ApiErrorHandler.handle<EventTicket[]>(error, "Une erreur est survenue lors de la récupération des tickets");
   }
 };
 

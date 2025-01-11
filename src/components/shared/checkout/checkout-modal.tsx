@@ -1,45 +1,45 @@
 "use client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { routes } from "@/config/routes";
+import { CreateOrderType } from "@/schemas/order.schema";
+import { createOrder } from "@/server/services/orders.service";
+import { Event } from "@/types/api/event.type";
 import { Ticket } from "@/types/api/ticket.types";
-import { useState } from "react";
-import { CheckoutCart } from "./checkout-cart";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { CheckoutForm } from "./checkout-form";
-import { CheckoutSummary } from "./checkout-summary";
 
 interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
   eventId: number;
+  event: Event;
   cart: { [key: number]: number };
   tickets: Ticket[];
 }
 
-export function CheckoutModal({ isOpen, onClose, eventId, cart, tickets }: CheckoutModalProps) {
-  const [activeTab, setActiveTab] = useState("cart");
+export function CheckoutModal({ isOpen, onClose, eventId, cart, tickets, event }: CheckoutModalProps) {
+  const router = useRouter();
+
+  const createOrderMutation = useMutation({
+    mutationFn: createOrder,
+    onSuccess: (data) => {
+      router.push(routes.events.payment(event.slug, data.data.id));
+    },
+  });
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Finaliser votre commande</DialogTitle>
         </DialogHeader>
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="cart">Panier</TabsTrigger>
-            <TabsTrigger value="info">Informations</TabsTrigger>
-            <TabsTrigger value="summary">Résumé</TabsTrigger>
-          </TabsList>
-          <TabsContent value="cart">
-            <CheckoutCart tickets={tickets} cart={cart} onNext={() => setActiveTab("info")} />
-          </TabsContent>
-          <TabsContent value="info">
-            <CheckoutForm eventId={eventId} cart={cart} onNext={() => setActiveTab("summary")} />
-          </TabsContent>
-          <TabsContent value="summary">
-            <CheckoutSummary onConfirm={onClose} />
-          </TabsContent>
-        </Tabs>
+        <CheckoutForm
+          eventId={eventId}
+          cart={cart}
+          onNext={(formData) => createOrderMutation.mutate(formData)}
+          isLoading={createOrderMutation.isPending}
+        />{" "}
       </DialogContent>
     </Dialog>
   );

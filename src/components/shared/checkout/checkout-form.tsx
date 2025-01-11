@@ -10,10 +10,11 @@ import { useForm } from "react-hook-form";
 interface CheckoutFormProps {
   eventId: number;
   cart: { [key: number]: number };
-  onNext: () => void;
+  onNext: (data: CreateOrderType) => void;
+  isLoading?: boolean;
 }
 
-export function CheckoutForm({ eventId, cart, onNext }: CheckoutFormProps) {
+export function CheckoutForm({ eventId, cart, onNext, isLoading }: CheckoutFormProps) {
   const form = useForm<CreateOrderType>({
     resolver: zodResolver(createOrderSchema),
     defaultValues: {
@@ -29,7 +30,6 @@ export function CheckoutForm({ eventId, cart, onNext }: CheckoutFormProps) {
       })),
     },
   });
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onNext)} className="space-y-4">
@@ -105,8 +105,8 @@ export function CheckoutForm({ eventId, cart, onNext }: CheckoutFormProps) {
           />
         </div>
 
-        <Button type="submit" className="w-full">
-          Vérifier la commande
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? "Création de la commande..." : "Vérifier la commande"}
         </Button>
       </form>
     </Form>

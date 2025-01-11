@@ -53,7 +53,7 @@ export const fetchPublicEventBySlug = async (slug: string) => {
 
 export const fetchEventTickets = async (eventId: number, organizationId: number): Promise<Ticket[]> => {
   try {
-    const { data } = await api.get(`/events-tickets/${eventId}/${organizationId}`);
+    const { data } = await api.get(`/events-tickets/${organizationId}/${eventId}`);
     return data.data;
   } catch (error) {
     return ApiErrorHandler.handle<Ticket[]>(error, "Une erreur est survenue lors de la récupération des tickets");

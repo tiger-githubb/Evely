@@ -2,15 +2,17 @@
 import { CheckoutModal } from "@/components/shared/checkout/checkout-modal";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Event } from "@/types/api/event.type";
 import { Ticket } from "@/types/api/ticket.types";
 import { useState } from "react";
 
 interface TicketsTotalProps {
   tickets: Ticket[];
   counts: { [key: number]: number };
+  event: Event;
 }
 
-export function TicketsTotal({ tickets, counts }: TicketsTotalProps) {
+export function TicketsTotal({ tickets, counts, event }: TicketsTotalProps) {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   const totalAmount = Object.entries(counts).reduce((total, [ticketId, count]) => {
@@ -27,7 +29,7 @@ export function TicketsTotal({ tickets, counts }: TicketsTotalProps) {
           <span className="font-medium">{totalAmount} FCFA</span>
         </div>
         <Button className="w-full" size="lg" disabled={totalAmount === 0} onClick={() => setIsCheckoutOpen(true)}>
-          Procéder au paiement
+          Valider
         </Button>
       </div>
 
@@ -35,6 +37,7 @@ export function TicketsTotal({ tickets, counts }: TicketsTotalProps) {
         isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
         eventId={tickets[0]?.eventId}
+        event={event}
         cart={counts}
         tickets={tickets}
       />

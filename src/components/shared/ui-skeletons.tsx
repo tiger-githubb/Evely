@@ -204,8 +204,6 @@ export function SearchFilterSkeleton() {
   );
 }
 
-
-
 export function TicketCardSkeleton() {
   return (
     <div className="rounded-lg border p-4 space-y-4">
@@ -227,13 +225,15 @@ export function TicketCardSkeleton() {
   );
 }
 
-
 export function TicketGridSkeleton() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
       {Array.from({ length: 6 }).map((_, i) => (
         <TicketCardSkeleton key={i} />
       ))}
+    </div>
+  );
+}
 
 export function TicketsSkeleton() {
   return (
@@ -257,7 +257,6 @@ export function TicketsSkeleton() {
           ))}
         </CardContent>
       </Card>
-
     </div>
   );
 }

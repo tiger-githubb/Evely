@@ -1,20 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useOrganizationStore } from "@/stores/organization-store";
+import { useState } from "react";
 import TicketGenerationForm from "./ticket-generation-form";
 
 interface TicketGenerationFormDialogProps {
-  organizationSlug: string;
   eventSlug: string;
 }
 
-export default function TicketGenerationFormDialog({
-  organizationSlug,
-  eventSlug,
-}: TicketGenerationFormDialogProps) {
+export default function TicketGenerationFormDialog({ eventSlug }: TicketGenerationFormDialogProps) {
   const [open, setOpen] = useState(false);
+  const { activeOrganization } = useOrganizationStore();
+  const organizationSlug = activeOrganization?.slug;
+
+  if (!organizationSlug) {
+    return null;
+  }
 
   return (
     <>

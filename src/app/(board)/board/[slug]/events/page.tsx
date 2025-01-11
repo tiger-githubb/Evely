@@ -1,17 +1,23 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { routes } from "@/config/routes";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import EventsTable from "./_components/data-table";
 
-export default function EventsPage({ params }: { params: { slug: string } }) {
-  const router = useRouter();
-  const organizationSlug = params.slug;
+interface EventPageProps {
+  params: Promise<{
+    organizationSlug: string;
+  }>;
+}
+
+export default async function EventsPage({ params }: EventPageProps) {
+  const { organizationSlug } = await params;
 
   return (
     <div className="container">
       <h1 className="text-2xl font-semibold mb-4">Liste des événements</h1>
-      <Button onClick={() => router.push(routes.board.workspace.events.add(organizationSlug))}>Créer un événement</Button>
+      <Link href={routes.board.workspace.events.add(organizationSlug)}>
+        <Button>Créer un événement</Button>
+      </Link>
       <EventsTable organizationSlug={organizationSlug} />
     </div>
   );

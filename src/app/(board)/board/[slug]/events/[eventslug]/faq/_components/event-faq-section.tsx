@@ -1,14 +1,16 @@
 import EventFaqAccordion from "./event-faq-accordion";
 
-interface Event {
-  faq: [];
+interface EventPageProps {
+  params: Promise<{ eventslug: string }>;
 }
 
-const EventFaqSection = ({ event }: { event: Event }) => {
+const EventFaqSection = async ({ params }: EventPageProps) => {
+  const { eventslug } = await params;
+
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold">FAQ</h2>
-      <EventFaqAccordion faqs={event.faq} />
+      <EventFaqAccordion eventslug={eventslug} />
     </div>
   );
 };

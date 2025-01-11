@@ -1,15 +1,16 @@
-import { EventInfo } from "./_components/event-info";
 import { fetchEvent } from "@/server/services/events.service";
+import { EventInfo } from "./_components/event-info";
 
 interface EventPageProps {
-  params: { eventslug: string };
+  params: Promise<{ eventslug: string }>;
 }
 
 export default async function EventPage({ params }: EventPageProps) {
-  const eventResponse = await fetchEvent(params.eventslug);
+  const { eventslug } = await params;
+  const eventResponse = await fetchEvent(eventslug);
 
   if (!eventResponse?.data) {
-    return <p>Événement introuvable</p>; 
+    return <p>Événement introuvable</p>;
   }
 
   const event = eventResponse.data;

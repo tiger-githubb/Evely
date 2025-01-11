@@ -1,16 +1,14 @@
 import { fetchEvent } from "@/server/services/events.service";
 import EventAgendas from "./_components/event-agendas";
 
-type PageProps = {
-  params: {
-    slug: string;
+interface PageProps {
+  params: Promise<{
     eventslug: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
+  }>;
+}
 
 export default async function AgendasPage({ params }: PageProps) {
-  const { eventslug } = params;
+  const { eventslug } = await params;
 
   const eventResponse = await fetchEvent(eventslug);
 

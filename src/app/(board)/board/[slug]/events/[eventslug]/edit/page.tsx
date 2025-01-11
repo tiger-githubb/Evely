@@ -2,18 +2,16 @@ import EventForm from "@/components/shared/board/event-form";
 import { fetchEvent } from "@/server/services/events.service";
 
 interface EditEventPageProps {
-  params: {
+  params: Promise<{
     eventslug: string;
-  };
+  }>;
 }
 
 export default async function EditEventPage({ params }: EditEventPageProps) {
-  const { eventslug } = params;
+  const { eventslug } = await params;
 
   const event = await fetchEvent(eventslug);
   console.log(event);
-  
-  
 
   if (!event) {
     return (

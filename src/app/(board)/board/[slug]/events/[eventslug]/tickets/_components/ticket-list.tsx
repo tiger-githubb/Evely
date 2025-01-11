@@ -1,47 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { TicketGridSkeleton } from "@/components/shared/ui-skeletons";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { fetchEventTickets } from "@/server/services/events-tickets.service";
-import { toast } from "sonner";
-import { fetchEvent } from "@/server/services/events.service";
-import { fetchOrganizationIdBySlug } from "@/server/services/organizations.service";
-import { MoreVertical } from "lucide-react";
+import { useOrganizationStore } from "@/stores/organization-store";
 import { formatDate, formatTime } from "@/utils/date-utils";
-import { TicketGridSkeleton } from "@/components/shared/ui-skeletons";
-
-
+import { useQuery } from "@tanstack/react-query";
+import { MoreVertical } from "lucide-react";
+import { toast } from "sonner";
 
 interface TicketListProps {
-  organizationSlug: string;
   eventSlug: string;
 }
-export default function TicketList({ organizationSlug, eventSlug }: TicketListProps) {
-  const [organizationId, setOrganizationId] = useState<string | null>(null);
-  const [eventId, setEventId] = useState<string | null>(null);
+export default function TicketList({ eventSlug }: TicketListProps) {
+  const { activeOrganization } = useOrganizationStore();
+  const organizationId = activeOrganization?.id;
+  const eventId = eventSlug;
 
-
-  // Resolve organization and event IDs from slugs
-  useEffect(() => {
-    const fetchIds = async () => {
-      try {
-        const orgId = await fetchOrganizationIdBySlug(organizationSlug);
-        setOrganizationId(orgId);
-
-        const event = await fetchEvent(eventSlug);
-        setEventId(event?.data.id);
-      } catch {
-        toast.error("Erreur lors de la récupération des IDs par slug");
-      }
-    };
-
-    fetchIds();
-  }, [organizationSlug, eventSlug]);
-
-  // Fetch tickets when IDs are resolved
   const { data, isLoading, error } = useQuery({
     queryKey: ["event-tickets", organizationId, eventId],
     queryFn: () => fetchEventTickets(Number(organizationId), Number(eventId)),

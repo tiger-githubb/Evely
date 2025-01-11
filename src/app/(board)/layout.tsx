@@ -7,7 +7,7 @@ import { Metadata } from "next";
 import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
-  title: "Compte",
+  title: "Yala",
   description: "Gérez les paramètres de votre compte et définissez les préférences. ",
 };
 

@@ -36,7 +36,7 @@ export default function MediaSection({ form }: MediaSectionProps) {
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="video"
           render={({ field }) => (
@@ -54,7 +54,7 @@ export default function MediaSection({ form }: MediaSectionProps) {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
       </div>
     </div>
   );

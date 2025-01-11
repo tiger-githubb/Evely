@@ -29,6 +29,7 @@ interface EventFormProps {
 
 export default function EventForm({ event }: EventFormProps) {
   const { activeOrganization } = useOrganizationStore();
+  
 
   const form = useForm<EventFormValues>({
     resolver: zodResolver(createEventSchema),
@@ -51,6 +52,8 @@ export default function EventForm({ event }: EventFormProps) {
       },
   });
 
+  console.log(form.getValues());
+
   const createEventMutation = useMutation({
     mutationFn: async (data: EventFormValues) => {
       if (!activeOrganization) throw new Error("No active organization");
@@ -60,7 +63,7 @@ export default function EventForm({ event }: EventFormProps) {
         endTime: data.endTime ? format(new Date(data.endTime), "HH:mm") : undefined,
       };
 
-      return createEvent(String(activeOrganization.slug), eventData);
+      return createEvent(activeOrganization.id, eventData);
     },
   });
 
@@ -75,21 +78,22 @@ export default function EventForm({ event }: EventFormProps) {
         endTime: data.endTime ? format(new Date(data.endTime), "HH:mm") : undefined,
       };
 
-      return updateEvent(String(activeOrganization.slug), event.id, eventData);
+      return updateEvent(activeOrganization.id, event.id, eventData);
     },
   });
 
   const updateMediaMutation = useMutation({
     mutationFn: async ({ eventId, mediaData }: { eventId: number; mediaData: FormData }) => {
       if (!activeOrganization) throw new Error("No active organization");
-      return updateEventMedia(String(activeOrganization.id), eventId, mediaData);
+      return updateEventMedia(activeOrganization.id, eventId, mediaData);
     },
   });
 
   const onSubmit = async (data: EventFormValues) => {
-    console.log("Form data submitted:", data); // Add this
 
     try {
+
+      console.log("Submitting form data:", data); // Debug log
       const mutation = event ? updateEventMutation : createEventMutation;
       const eventResponse = await mutation.mutateAsync(data);
       console.log("Event successfully submitted:", eventResponse);
@@ -101,9 +105,9 @@ export default function EventForm({ event }: EventFormProps) {
           mediaFormData.append("covers[]", file);
         });
 
-        if (data.video instanceof File) {
-          mediaFormData.append("video", data.video);
-        }
+        // if (data.video instanceof File) {
+        //   mediaFormData.append("video", data.video);
+        // }
 
         const mediaResponse = await updateMediaMutation.mutateAsync({
           eventId: event ? event.id : eventResponse.data.id,

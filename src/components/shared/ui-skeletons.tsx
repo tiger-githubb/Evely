@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent, CardHeader } from "../ui/card";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 
 interface TableSkeletonProps {
@@ -199,6 +200,32 @@ export function SearchFilterSkeleton() {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+export function TicketsSkeleton() {
+  return (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <Skeleton className="h-6 w-32" />
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <Card key={i} className="p-4">
+              <div className="flex justify-between items-center">
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-3 w-16" />
+                  <Skeleton className="h-3 w-20" />
+                </div>
+                <Skeleton className="h-8 w-24" />
+              </div>
+            </Card>
+          ))}
+        </CardContent>
+      </Card>
     </div>
   );
 }

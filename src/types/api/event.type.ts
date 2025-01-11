@@ -7,6 +7,7 @@ import { EventLocation } from "./event-location.type";
 import { EventTag } from "./event-tag.type";
 import { EventType } from "./event-type.type";
 import { Organization } from "./organization.type";
+import { Ticket } from "./ticket.types";
 
 export interface Event {
   id: number;
@@ -36,34 +37,5 @@ export interface Event {
   faq: EventFaq[];
   tags: EventTag[];
   agendas: EventAgenda[];
-}
-
-export interface EventTicket {
-  id: number;
-  name: string;
-  availableQuantity: number;
-  price: number;
-  description: string;
-  minTicketsPerOrder: number;
-  maxTicketsPerOrder: number;
-  saleStartDate: string;
-  saleStartTime: string;
-  saleEndDate: string;
-  saleEndTime: string;
-  ticketTypeId: number;
-  eventId: number;
-  createdAt: string;
-  _count: {
-    inscriptions: number;
-  };
-  ticketType: {
-    id: number;
-    name: string;
-    icon: string;
-    description: string;
-    paid: boolean;
-    free: boolean;
-    donation: boolean;
-    createdAt: string;
-  };
+  tickets?: Ticket[];
 }

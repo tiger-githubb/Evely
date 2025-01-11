@@ -1,12 +1,13 @@
 import { CreateEventType } from "@/schemas/event.schema";
 import { fetchOrganizationIdBySlug } from "@/server/services/organizations.service";
-import { Event, EventTicket } from "@/types/api/event.type";
+import { Event } from "@/types/api/event.type";
+import { Ticket } from "@/types/api/ticket.types";
 import { ApiErrorHandler } from "@/utils/api-error";
 import { getAuthHeaders } from "@/utils/auth-utils";
 import api from "@/utils/axios-instance";
 
 export interface EventTicketsResponse {
-  data: EventTicket[];
+  data: Ticket[];
   total: number;
   page: number;
   perPage: number;
@@ -50,16 +51,14 @@ export const fetchPublicEventBySlug = async (slug: string) => {
   }
 };
 
-export const fetchEventTickets = async (eventId: number, organizationId: number): Promise<EventTicket[]> => {
+export const fetchEventTickets = async (eventId: number, organizationId: number): Promise<Ticket[]> => {
   try {
     const { data } = await api.get(`/events-tickets/${eventId}/${organizationId}`);
     return data.data;
   } catch (error) {
-    return ApiErrorHandler.handle<EventTicket[]>(error, "Une erreur est survenue lors de la récupération des tickets");
+    return ApiErrorHandler.handle<Ticket[]>(error, "Une erreur est survenue lors de la récupération des tickets");
   }
 };
-
-
 
 // Fetch all events
 export const fetchEvents = async (): Promise<EventsResponse> => {

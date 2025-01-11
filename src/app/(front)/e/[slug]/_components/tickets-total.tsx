@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { EventTicket } from "@/types/api/event.type";
+import { Ticket } from "@/types/api/ticket.types";
 
 interface TicketsTotalProps {
-  tickets: EventTicket[];
+  tickets: Ticket[];
   counts: { [key: number]: number };
 }
 

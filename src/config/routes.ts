@@ -5,6 +5,7 @@ export const routes = {
     list: "/events",
     details: (slug: string) => `/e/${slug}`,
     create: "/events/create",
+    payment: (slug: string, orderUid: string) => `/e/${slug}/payment/${orderUid}`,
   },
 
   organizations: {
@@ -28,9 +29,8 @@ export const routes = {
         media: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/medias`,
         stats: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/stats`,
         faq: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/faq`,
-        tickets: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/tickets`, 
+        tickets: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/tickets`,
       },
-
     },
     organization: {
       all: "/board/organizations",

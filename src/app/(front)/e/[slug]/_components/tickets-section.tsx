@@ -3,6 +3,7 @@ import { TicketsSkeleton } from "@/components/shared/ui-skeletons";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { fetchEventTickets } from "@/server/services/events.service";
+import { Event } from "@/types/api/event.type";
 import { useQuery } from "@tanstack/react-query";
 import { AlertCircle, TicketX } from "lucide-react";
 import { useState } from "react";
@@ -13,7 +14,7 @@ interface TicketCounter {
   [key: number]: number;
 }
 
-export function TicketsSection({ eventId, organizationId }: { eventId: number; organizationId: number }) {
+export function TicketsSection({ event, organizationId }: { event: Event; organizationId: number }) {
   const [ticketCounts, setTicketCounts] = useState<TicketCounter>({});
 
   const {
@@ -21,8 +22,8 @@ export function TicketsSection({ eventId, organizationId }: { eventId: number; o
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["tickets", eventId, organizationId],
-    queryFn: () => fetchEventTickets(eventId, organizationId),
+    queryKey: ["tickets", event.id, organizationId],
+    queryFn: () => fetchEventTickets(event.id, organizationId),
   });
 
   if (isLoading) return <TicketsSkeleton />;
@@ -61,7 +62,7 @@ export function TicketsSection({ eventId, organizationId }: { eventId: number; o
       </CardHeader>
       <CardContent>
         <TicketsList tickets={tickets} onCountChange={setTicketCounts} />
-        <TicketsTotal tickets={tickets} counts={ticketCounts} />
+        <TicketsTotal tickets={tickets} counts={ticketCounts} event={event} />
       </CardContent>
     </Card>
   );

@@ -155,5 +155,9 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-plus-jakarta-sans);
+  }
+  :root {
+    --font-plus-jakarta-sans: 'Plus Jakarta Sans', sans-serif;
   }
 }

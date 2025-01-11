@@ -27,7 +27,10 @@ export const routes = {
         agendas: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/agendas`,
         media: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/medias`,
         stats: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/stats`,
-        faq: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/faq`,      },
+        faq: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/faq`,
+        tickets: (slug: string, eventId: string) => `/board/${slug}/events/${eventId}/tickets`, 
+      },
+
     },
     organization: {
       all: "/board/organizations",

@@ -46,7 +46,7 @@ export const boardNavigationItems = {
     },
     {
       title: "Événements",
-      url: routes.board.workspace.events.list(useOrganizationStore.getState().activeOrganization?.id.toString() || ""),
+      url: routes.board.workspace.events.list(useOrganizationStore.getState().activeOrganization?.slug || ""),
       icon: Calendar,
     },
 

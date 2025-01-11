@@ -59,6 +59,8 @@ export const fetchEventTickets = async (eventId: number, organizationId: number)
   }
 };
 
+
+
 // Fetch all events
 export const fetchEvents = async (): Promise<EventsResponse> => {
   try {

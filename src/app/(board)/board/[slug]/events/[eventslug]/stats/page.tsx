@@ -4,14 +4,13 @@ import { fetchEvent } from "@/server/services/events.service";
 import EventStats from "./_components/event-stats";
 
 interface StatsPageProps {
-  params: {
-    slug: string;
+  params: Promise<{
     eventslug: string;
-  };
+  }>;
 }
 
 export default async function StatsPage({ params }: StatsPageProps) {
-  const { eventslug } = params;
+  const { eventslug } = await params;
 
   const eventResponse = await fetchEvent(eventslug);
 

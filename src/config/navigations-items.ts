@@ -1,6 +1,6 @@
+import { useOrganizationStore } from "@/stores/organization-store";
 import { BadgeCheck, Bell, Building, Calendar, CreditCard, Home, LogOut, Settings2, SquareChartGantt } from "lucide-react";
 import { routes } from "./routes";
-
 
 export const navigationItems = [
   {
@@ -32,7 +32,7 @@ export const navigationItems = [
   },
 ];
 
-export const boardNavigationItems =  {
+export const boardNavigationItems = {
   navMain: [
     {
       title: "Accueil",
@@ -46,7 +46,7 @@ export const boardNavigationItems =  {
     },
     {
       title: "Événements",
-      url: routes.board.workspace.events,
+      url: routes.board.workspace.events.list(useOrganizationStore.getState().activeOrganization?.slug || ""),
       icon: Calendar,
     },
 

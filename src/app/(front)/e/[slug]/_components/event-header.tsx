@@ -7,11 +7,13 @@ import { CalendarDays, MapPin } from "lucide-react";
 import Image from "next/image";
 
 export function EventHeader({ event }: { event: Event }) {
+  const coverImage = event.covers?.[0] || "/placeholder-image.png";
+
   return (
     <div className="space-y-6">
       <div className="relative aspect-[21/9] overflow-hidden rounded-xl">
         <Image
-          src={event.covers[0]}
+          src={coverImage}
           alt={event.title}
           fill
           className="object-cover hover:scale-105 transition-transform duration-300"

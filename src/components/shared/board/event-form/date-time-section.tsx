@@ -30,42 +30,42 @@ export default function DateTimeSection({ form }: DateTimeSectionProps) {
             </FormItem>
           )}
         />
-
-        <FormField
-          control={form.control}
-          name="startTime"
-          render={({ field: { value, onChange } }) => (
-            <FormItem>
-              <FormLabel>Heure de début</FormLabel>
-              <FormControl>
-                <DatePicker
-                  date={value ? new Date(value) : undefined}
-                  onSelect={(date) => onChange(date.toISOString())}
-                  variant="time"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+<FormField
+  control={form.control}
+  name="startTime"
+  render={({ field: { value, onChange } }) => (
+    <FormItem>
+      <FormLabel>Heure de début</FormLabel>
+      <FormControl>
+        <DatePicker
+          date={value ? new Date(value) : undefined} // Convert ISO string to Date object
+          onSelect={(date) => onChange(date.toISOString())} // Convert back to ISO string
+          variant="time"
         />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
 
-        <FormField
-          control={form.control}
-          name="endTime"
-          render={({ field: { value, onChange } }) => (
-            <FormItem>
-              <FormLabel>Heure de fin</FormLabel>
-              <FormControl>
-                <DatePicker
-                  date={value ? new Date(value) : undefined}
-                  onSelect={(date) => onChange(date.toISOString())}
-                  variant="time"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+<FormField
+  control={form.control}
+  name="endTime"
+  render={({ field: { value, onChange } }) => (
+    <FormItem>
+      <FormLabel>Heure de fin</FormLabel>
+      <FormControl>
+        <DatePicker
+          date={value ? new Date(value) : undefined} // Convert ISO string to Date object
+          onSelect={(date) => onChange(date.toISOString())} // Convert back to ISO string
+          variant="time"
         />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
       </div>
     </div>
   );

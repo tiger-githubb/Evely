@@ -1,10 +1,17 @@
 import { CreateEventType } from "@/schemas/event.schema";
-import { Event } from "@/types/api/event.type";
+import { fetchOrganizationIdBySlug } from "@/server/services/organizations.service";
+import { Event, EventTicket } from "@/types/api/event.type";
 import { ApiErrorHandler } from "@/utils/api-error";
 import { getAuthHeaders } from "@/utils/auth-utils";
 import api from "@/utils/axios-instance";
-import { fetchOrganizationIdBySlug } from "@/server/services/organizations.service";
 
+export interface EventTicketsResponse {
+  data: EventTicket[];
+  total: number;
+  page: number;
+  perPage: number;
+  pages: number;
+}
 
 export interface EventsResponse {
   data: Event[];
@@ -13,7 +20,6 @@ export interface EventsResponse {
   perPage: number;
   pages: number;
 }
-
 
 export const fetchEvent = async (slug: string) => {
   try {
@@ -24,6 +30,35 @@ export const fetchEvent = async (slug: string) => {
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la récupération de l'événement");
   }
 };
+
+export const fetchPublicEvents = async (): Promise<EventsResponse> => {
+  try {
+    const { data } = await api.get("/events/published");
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle<EventsResponse>(error, "Une erreur est survenue lors de la récupération des événements");
+  }
+};
+
+// Fetch single public event by slug (no authentication required)
+export const fetchPublicEventBySlug = async (slug: string) => {
+  try {
+    const { data } = await api.get(`/events/published/${slug}`);
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la récupération de l'événement");
+  }
+};
+
+export const fetchEventTickets = async (eventId: number, organizationId: number): Promise<EventTicket[]> => {
+  try {
+    const { data } = await api.get(`/events-tickets/${eventId}/${organizationId}`);
+    return data.data;
+  } catch (error) {
+    return ApiErrorHandler.handle<EventTicket[]>(error, "Une erreur est survenue lors de la récupération des tickets");
+  }
+};
+
 
 
 // Fetch all events
@@ -36,9 +71,6 @@ export const fetchEvents = async (): Promise<EventsResponse> => {
     return ApiErrorHandler.handle<EventsResponse>(error, "Une erreur est survenue lors de la récupération des événements");
   }
 };
-
-
-
 
 // Fetch draft events
 export const fetchDraftEvents = async (): Promise<EventsResponse> => {
@@ -65,7 +97,6 @@ export const fetchPublishedEvents = async (): Promise<EventsResponse> => {
   }
 };
 
-
 export const fetchOrganizationEvents = async (organizationSlug: string): Promise<EventsResponse> => {
   try {
     if (!organizationSlug) {
@@ -86,7 +117,6 @@ export const fetchOrganizationEvents = async (organizationSlug: string): Promise
   }
 };
 
-
 // Create a new event for an organization
 export const createEvent = async (organizationSlug: string, eventData: CreateEventType) => {
   try {
@@ -105,11 +135,7 @@ export const createEvent = async (organizationSlug: string, eventData: CreateEve
 };
 
 // Update an event for an organization
-export const updateEvent = async (
-  organizationSlug: string,
-  eventId: number,
-  eventData: Partial<CreateEventType>
-) => {
+export const updateEvent = async (organizationSlug: string, eventId: number, eventData: Partial<CreateEventType>) => {
   try {
     const organizationId = await fetchOrganizationIdBySlug(organizationSlug);
     const headers = await getAuthHeaders();
@@ -137,11 +163,7 @@ export const deleteEvent = async (organizationSlug: string, eventId: number): Pr
 };
 
 // Update media for an event
-export const updateEventMedia = async (
-  organizationSlug: string,
-  eventId: number,
-  mediaData: FormData
-) => {
+export const updateEventMedia = async (organizationSlug: string, eventId: number, mediaData: FormData) => {
   try {
     const organizationId = await fetchOrganizationIdBySlug(organizationSlug);
     const headers = await getAuthHeaders();
@@ -158,11 +180,7 @@ export const updateEventMedia = async (
 };
 
 // Update the publish status of an event
-export const updateEventPublishStatus = async (
-  organizationSlug: string,
-  eventId: number,
-  draft: boolean
-) => {
+export const updateEventPublishStatus = async (organizationSlug: string, eventId: number, draft: boolean) => {
   try {
     const organizationId = await fetchOrganizationIdBySlug(organizationSlug);
     const headers = await getAuthHeaders();
@@ -181,4 +199,3 @@ export const updateEventPublishStatus = async (
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la modification du statut de publication");
   }
 };
-

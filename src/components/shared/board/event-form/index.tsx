@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { createEventSchema } from "@/schemas/event.schema";
-import { createEvent, updateEventMedia } from "@/server/services/events.service";
+import { createEvent, updateEvent, updateEventMedia } from "@/server/services/events.service";
 import { useOrganizationStore } from "@/stores/organization-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -23,22 +23,32 @@ import TagsSection from "./tags-section";
 
 type EventFormValues = z.infer<typeof createEventSchema>;
 
-export default function EventForm() {
-  // const router = useRouter();
+interface EventFormProps {
+  event?: EventFormValues & { id: number }; // Add optional `event` prop for editing
+}
+
+export default function EventForm({ event }: EventFormProps) {
   const { activeOrganization } = useOrganizationStore();
 
   const form = useForm<EventFormValues>({
     resolver: zodResolver(createEventSchema),
-    defaultValues: {
-      title: "",
-      summary: "",
-      content: "",
-      date: new Date(),
-      tags: [],
-      newTags: [],
-      faq: [],
-      agendas: [],
-    },
+    defaultValues: event
+      ? {
+        ...event,
+        date: event.date ? new Date(event.date) : undefined, // Convert back to Date object
+        startTime: event.startTime ? `1970-01-01T${event.startTime}` : undefined, // Convert HH:mm to ISO string
+        endTime: event.endTime ? `1970-01-01T${event.endTime}` : undefined,     // Convert HH:mm to ISO string
+      }
+    : {
+        title: "",
+        summary: "",
+        content: "",
+        date: new Date(),
+        tags: [],
+        newTags: [],
+        faq: [],
+        agendas: [],
+      },
   });
 
   const createEventMutation = useMutation({
@@ -46,12 +56,26 @@ export default function EventForm() {
       if (!activeOrganization) throw new Error("No active organization");
       const eventData = {
         ...data,
-
         startTime: data.startTime ? format(new Date(data.startTime), "HH:mm") : undefined,
         endTime: data.endTime ? format(new Date(data.endTime), "HH:mm") : undefined,
       };
 
-      return createEvent(String(activeOrganization.id), eventData);
+      return createEvent(String(activeOrganization.slug), eventData);
+    },
+  });
+
+  const updateEventMutation = useMutation({
+    mutationFn: async (data: EventFormValues) => {
+      console.log("Updating event with data:", data); 
+
+      if (!activeOrganization || !event) throw new Error("No active organization or event");
+      const eventData = {
+        ...data,
+        startTime: data.startTime ? format(new Date(data.startTime), "HH:mm") : undefined,
+        endTime: data.endTime ? format(new Date(data.endTime), "HH:mm") : undefined,
+      };
+
+      return updateEvent(String(activeOrganization.slug), event.id, eventData);
     },
   });
 
@@ -63,9 +87,12 @@ export default function EventForm() {
   });
 
   const onSubmit = async (data: EventFormValues) => {
+    console.log("Form data submitted:", data); // Add this
+
     try {
-      const eventResponse = await createEventMutation.mutateAsync(data);
-      console.log("Event created successfully:", eventResponse);
+      const mutation = event ? updateEventMutation : createEventMutation;
+      const eventResponse = await mutation.mutateAsync(data);
+      console.log("Event successfully submitted:", eventResponse);
 
       if (data.covers && data.covers.length > 0) {
         const mediaFormData = new FormData();
@@ -79,20 +106,21 @@ export default function EventForm() {
         }
 
         const mediaResponse = await updateMediaMutation.mutateAsync({
-          eventId: eventResponse.data.id,
+          eventId: event ? event.id : eventResponse.data.id,
           mediaData: mediaFormData,
         });
         console.log("Media uploaded successfully:", mediaResponse);
       }
 
-      toast.success("Événement créé avec succès");
-      console.log("Full form data submitted:", data);
+      toast.success(`Événement ${event ? "modifié" : "créé"} avec succès`);
     } catch (err) {
       console.error(err);
-      toast.error("Une erreur est survenue lors de la création de l'événement");
+      toast.error("Une erreur est survenue lors du traitement de l'événement");
     }
   };
-  const isLoading = createEventMutation.isPending || updateMediaMutation.isPending;
+
+  const isLoading =
+    createEventMutation.isPending || updateEventMutation.isPending || updateMediaMutation.isPending;
 
   return (
     <Form {...form}>
@@ -111,7 +139,7 @@ export default function EventForm() {
 
               <div className="flex justify-end">
                 <Button type="submit" size="lg" disabled={isLoading}>
-                  {isLoading ? "Création en cours..." : "Créer l'événement"}
+                  {isLoading ? "En traitement..." : event ? "Modifier l'événement" : "Créer l'événement"}
                 </Button>
               </div>
             </div>

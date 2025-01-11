@@ -95,7 +95,7 @@ export function TeamSwitcher() {
                 onClick={() => {
                   setActiveOrganization(org);
                   // Redirect to the organization workspace home
-                  window.location.href = routes.board.workspace.home(org.id.toString());
+                  window.location.href = routes.board.workspace.home(org.slug.toString());
                 }}
                 className="gap-2 p-2"
               >

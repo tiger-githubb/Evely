@@ -4,14 +4,13 @@ import { fetchEvent } from "@/server/services/events.service";
 import EventMedia from "./_components/event-media";
 
 interface MediaPageProps {
-  params: {
-    slug: string;
+  params: Promise<{
     eventslug: string;
-  };
+  }>;
 }
 
 export default async function MediaPage({ params }: MediaPageProps) {
-  const { eventslug } = params;
+  const { eventslug } = await params;
 
   const eventResponse = await fetchEvent(eventslug);
 

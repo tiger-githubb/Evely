@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { EVENT_TYPE } from "@/config/constants";
-import { fetchEvents } from "@/server/services/events.service";
+import { fetchPublicEvents } from "@/server/services/events.service";
 import { useQuery } from "@tanstack/react-query";
 import { isToday, isWeekend } from "date-fns";
 import { useState } from "react";
@@ -36,8 +36,8 @@ export const EventTable = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["events"],
-    queryFn: fetchEvents,
+    queryKey: ["public-events"],
+    queryFn: fetchPublicEvents,
   });
 
   if (events?.data.length === 0)

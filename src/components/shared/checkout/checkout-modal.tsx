@@ -1,7 +1,6 @@
 "use client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { routes } from "@/config/routes";
-import { CreateOrderType } from "@/schemas/order.schema";
 import { createOrder } from "@/server/services/orders.service";
 import { Event } from "@/types/api/event.type";
 import { Ticket } from "@/types/api/ticket.types";
@@ -18,7 +17,7 @@ interface CheckoutModalProps {
   tickets: Ticket[];
 }
 
-export function CheckoutModal({ isOpen, onClose, eventId, cart, tickets, event }: CheckoutModalProps) {
+export function CheckoutModal({ isOpen, onClose, eventId, cart, event }: CheckoutModalProps) {
   const router = useRouter();
 
   const createOrderMutation = useMutation({

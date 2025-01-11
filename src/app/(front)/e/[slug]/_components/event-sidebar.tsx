@@ -9,7 +9,7 @@ import { TicketsSection } from "./tickets-section";
 export function EventSidebar({ event }: { event: Event }) {
   return (
     <div className="space-y-6">
-      <TicketsSection eventId={event.id} organizationId={event.organizationId} />
+      <TicketsSection event={event} organizationId={event.organizationId} />
 
       <Card>
         <CardHeader>

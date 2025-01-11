@@ -11,7 +11,6 @@ interface EventsPageProps {
 
 export default async function EventPage({ params }: EventsPageProps) {
   const { slug } = await params;
-  console.log(slug);
   const event = await fetchPublicEventBySlug(slug);
   const eventData = event.data;
 

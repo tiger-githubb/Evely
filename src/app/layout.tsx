@@ -3,20 +3,16 @@ import ReactQueryProvider from "@/utils/providers/ReactQueryProvider";
 import { ThemeProvider } from "@/utils/providers/theme-provider";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
-import localFont from "next/font/local";
 import { authOptions } from "./api/auth/[...nextauth]/auth-options";
 import AuthProvider from "./api/auth/[...nextauth]/auth-provider";
 import "./globals.css";
+import { Plus_Jakarta_Sans } from "next/font/google";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+// Import the Plus Jakarta Sans Google Font
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  variable: "--font-plus-jakarta-sans",
 });
 
 export const metadata: Metadata = {
@@ -33,7 +29,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${plusJakartaSans.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ReactQueryProvider>
             <AuthProvider session={session}>

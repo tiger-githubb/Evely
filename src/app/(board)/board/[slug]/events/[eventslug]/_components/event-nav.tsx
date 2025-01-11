@@ -35,6 +35,10 @@ export function EventNav({ eventId, organizationId }: EventNavProps) {
       title: "FAQ",
       href: routes.board.workspace.events.faq(organizationId, eventId),
     },
+    {
+      title: "Tickets",
+      href: routes.board.workspace.events.tickets(organizationId, eventId),
+    },
   ];
 
   return (

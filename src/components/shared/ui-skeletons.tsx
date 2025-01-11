@@ -202,3 +202,37 @@ export function SearchFilterSkeleton() {
     </div>
   );
 }
+
+
+
+export function TicketCardSkeleton() {
+  return (
+    <div className="rounded-lg border p-4 space-y-4">
+      <div className="flex justify-between items-center">
+        <Skeleton className="h-6 w-1/2" />
+        <Skeleton className="h-4 w-6" />
+      </div>
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-4 w-3/4" />
+      <div className="flex justify-between items-center">
+        <Skeleton className="h-4 w-24" />
+        <Skeleton className="h-4 w-16" />
+      </div>
+      <div className="flex justify-between items-center">
+        <Skeleton className="h-4 w-32" />
+        <Skeleton className="h-4 w-12" />
+      </div>
+    </div>
+  );
+}
+
+
+export function TicketGridSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <TicketCardSkeleton key={i} />
+      ))}
+    </div>
+  );
+}

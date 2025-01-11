@@ -7,12 +7,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { PiPencilSimpleDuotone } from "react-icons/pi";
 import { Badge } from "@/components/ui/badge";
+import { useParams } from "next/navigation";
 
 interface EventHeaderProps {
   event: Event;
 }
 
 export function EventHeader({ event }: EventHeaderProps) {
+  const params = useParams();
+  const { slug, eventslug } = params as { slug: string; eventslug: string };
   return (
     <div className="mt-0">
       <div className="relative -mx-4 h-36 sm:h-40 md:h-48 lg:-mx-6 lg:h-52 xl:h-60 2xl:h-72">
@@ -40,7 +43,7 @@ export function EventHeader({ event }: EventHeaderProps) {
           </div>
 
           <div className="mt-4 sm:mt-0">
-            <Link href={routes.board.workspace.events.edit(event.organizationId.toString(), event.id.toString())}>
+            <Link href={routes.board.workspace.events.edit(slug, eventslug)}>
               <button className="h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center shadow">
                 <PiPencilSimpleDuotone className="h-5 w-5 text-gray-600" />
               </button>

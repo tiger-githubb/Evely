@@ -26,6 +26,8 @@ export const fetchEvent = async (slug: string) => {
 };
 
 
+
+
 // Fetch all events
 export const fetchEvents = async (): Promise<EventsResponse> => {
   try {

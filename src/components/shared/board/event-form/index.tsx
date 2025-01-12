@@ -3,9 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { createEventSchema } from "@/schemas/event.schema";
+import { createEventSchema, CreateEventType } from "@/schemas/event.schema";
 import { createEvent, updateEventMedia } from "@/server/services/events.service";
 import { useOrganizationStore } from "@/stores/organization-store";
+import { Event } from "@/types/api/event.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -23,21 +24,28 @@ import TagsSection from "./tags-section";
 
 type EventFormValues = z.infer<typeof createEventSchema>;
 
-export default function EventForm() {
-  // const router = useRouter();
+interface EventFormProps {
+  initialData?: Event;
+}
+
+export default function EventForm({ initialData }: EventFormProps) {
   const { activeOrganization } = useOrganizationStore();
 
-  const form = useForm<EventFormValues>({
+  const form = useForm<CreateEventType>({
     resolver: zodResolver(createEventSchema),
     defaultValues: {
-      title: "",
-      summary: "",
-      content: "",
-      date: new Date(),
-      tags: [],
+      title: initialData?.title || "",
+      summary: initialData?.summary || "",
+      content: initialData?.content || "",
+      date: initialData?.date ? new Date(initialData.date) : new Date(),
+      typeId: initialData?.typeId || 0,
+      categoryId: initialData?.categoryId || 0,
+      languageId: initialData?.languageId || 0,
+      formatId: initialData?.formatId || 0,
+      tags: initialData?.tags.map((tag) => tag.id) || [],
       newTags: [],
-      faq: [],
-      agendas: [],
+      faq: initialData?.faq || [],
+      agendas: initialData?.agendas || [],
     },
   });
 

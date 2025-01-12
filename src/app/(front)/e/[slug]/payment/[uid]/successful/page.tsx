@@ -39,13 +39,15 @@ export default function PaymentSuccessPage() {
             <Link href="/">
               <Button variant="outline" className="w-full gap-2">
                 <Home size={16} />
-                Retour à l'accueil
+                Retour à l&apos;accueil
               </Button>
             </Link>
           </div>
         </Card>
 
-        <p className="mt-8 text-sm text-muted-foreground">Une question? Contactez notre support client</p>
+        <p className="mt-8 text-sm text-muted-foreground">
+          Une question? Contactez notre support client
+        </p>
       </div>
     </div>
   );

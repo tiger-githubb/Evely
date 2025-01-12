@@ -11,7 +11,9 @@ export default function PaymentFailedPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-red-600/40" />
         <div className="absolute bottom-6 left-6 text-white">
           <h2 className="text-2xl font-bold">Échec du paiement</h2>
-          <p className="mt-2">Une erreur est survenue lors de votre transaction</p>
+          <p className="mt-2">
+            Une erreur est survenue lors de votre transaction
+          </p>
         </div>
       </div>
 
@@ -22,7 +24,7 @@ export default function PaymentFailedPage() {
           <h1 className="mt-6 text-2xl font-bold">Paiement non effectué</h1>
 
           <div className="mt-4 space-y-2 text-muted-foreground">
-            <p>Votre paiement n'a pas pu être traité.</p>
+            <p>Votre paiement n`&apos;a pas pu être traité.</p>
             <p>Veuillez vérifier vos informations et réessayer.</p>
           </div>
 
@@ -41,7 +43,9 @@ export default function PaymentFailedPage() {
           </div>
         </Card>
 
-        <p className="mt-8 text-sm text-muted-foreground">Besoin d'aide? Notre équipe support est disponible 24/7</p>
+        <p className="mt-8 text-sm text-muted-foreground">
+          Besoin d&apos;aide? Notre équipe support est disponible 24/7
+        </p>
       </div>
     </div>
   );

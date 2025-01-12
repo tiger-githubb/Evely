@@ -61,7 +61,7 @@ export const columns = (
             <Trash size={16} />
           </Button>
           {isDraft ? (
-            <Button variant="primary" size="sm" onClick={() => onPublishToggle(event.id, false)}>
+            <Button variant="default" size="sm" onClick={() => onPublishToggle(event.id, false)}>
               <Upload size={16} />
               <span className="ml-1">Publier</span>
             </Button>

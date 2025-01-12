@@ -1,12 +1,10 @@
 import { CreateEventType } from "@/schemas/event.schema";
 
-import { fetchOrganizationIdBySlug } from "@/server/services/organizations.service";
 import { Event } from "@/types/api/event.type";
 import { Ticket } from "@/types/api/ticket.types";
 import { ApiErrorHandler } from "@/utils/api-error";
 import { getAuthHeaders } from "@/utils/auth-utils";
 import api from "@/utils/axios-instance";
-
 
 export interface EventTicketsResponse {
   data: Ticket[];
@@ -34,7 +32,6 @@ export const fetchEvent = async (eventSlug: string) => {
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la récupération de l'événement");
   }
 };
-
 
 export const fetchEventTickets = async (eventId: number, organizationId: number): Promise<Ticket[]> => {
   try {
@@ -81,6 +78,24 @@ export const fetchPublishedEvents = async (): Promise<EventsResponse> => {
   }
 };
 
+export const fetchPublicEvents = async (): Promise<EventsResponse> => {
+  try {
+    const { data } = await api.get("/events/published");
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle<EventsResponse>(error, "Une erreur est survenue lors de la récupération des événements");
+  }
+};
+
+// Fetch single public event by slug (no authentication required)
+export const fetchPublicEventBySlug = async (slug: string) => {
+  try {
+    const { data } = await api.get(`/events/published/${slug}`);
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la récupération de l'événement");
+  }
+};
 // Fetch all events for a specific organization
 export const fetchOrganizationEvents = async (organizationId: number): Promise<EventsResponse> => {
   try {
@@ -112,11 +127,7 @@ export const createEvent = async (organizationId: number, eventData: CreateEvent
 };
 
 // Update an event for an organization
-export const updateEvent = async (
-  organizationId: number,
-  eventId: number,
-  eventData: Partial<CreateEventType>
-) => {
+export const updateEvent = async (organizationId: number, eventId: number, eventData: Partial<CreateEventType>) => {
   try {
     const headers = await getAuthHeaders();
     const { data } = await api.put(`/events/organization/${organizationId}/${eventId}`, eventData, {
@@ -142,11 +153,7 @@ export const deleteEvent = async (organizationId: number, eventId: number): Prom
 };
 
 // Update media for an event
-export const updateEventMedia = async (
-  organizationId: number,
-  eventId: number,
-  mediaData: FormData
-) => {
+export const updateEventMedia = async (organizationId: number, eventId: number, mediaData: FormData) => {
   try {
     const headers = await getAuthHeaders();
     const { data } = await api.put(`/events/organization/media/${organizationId}/${eventId}`, mediaData, {
@@ -162,11 +169,7 @@ export const updateEventMedia = async (
 };
 
 // Update the publish status of an event
-export const updateEventPublishStatus = async (
-  organizationId: number,
-  eventId: number,
-  draft: boolean
-) => {
+export const updateEventPublishStatus = async (organizationId: number, eventId: number, draft: boolean) => {
   try {
     const headers = await getAuthHeaders();
     const { data } = await api.put(

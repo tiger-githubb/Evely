@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { createEventSchema } from "@/schemas/event.schema";
-import { createEvent, updateEvent, updateEventMedia } from "@/server/services/events.service";
+import { createEvent, updateEventMedia } from "@/server/services/events.service";
 import { useOrganizationStore } from "@/stores/organization-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -23,62 +23,35 @@ import TagsSection from "./tags-section";
 
 type EventFormValues = z.infer<typeof createEventSchema>;
 
-interface EventFormProps {
-  event?: EventFormValues & { id: number }; // Add optional `event` prop for editing
-}
-
-export default function EventForm({ event }: EventFormProps) {
+export default function EventForm() {
+  // const router = useRouter();
   const { activeOrganization } = useOrganizationStore();
-  
 
   const form = useForm<EventFormValues>({
     resolver: zodResolver(createEventSchema),
-    defaultValues: event
-      ? {
-        ...event,
-        date: event.date ? new Date(event.date) : undefined, // Convert back to Date object
-        startTime: event.startTime ? `1970-01-01T${event.startTime}` : undefined, // Convert HH:mm to ISO string
-        endTime: event.endTime ? `1970-01-01T${event.endTime}` : undefined,     // Convert HH:mm to ISO string
-      }
-    : {
-        title: "",
-        summary: "",
-        content: "",
-        date: new Date(),
-        tags: [],
-        newTags: [],
-        faq: [],
-        agendas: [],
-      },
+    defaultValues: {
+      title: "",
+      summary: "",
+      content: "",
+      date: new Date(),
+      tags: [],
+      newTags: [],
+      faq: [],
+      agendas: [],
+    },
   });
-
-  console.log(form.getValues());
 
   const createEventMutation = useMutation({
     mutationFn: async (data: EventFormValues) => {
       if (!activeOrganization) throw new Error("No active organization");
       const eventData = {
         ...data,
+
         startTime: data.startTime ? format(new Date(data.startTime), "HH:mm") : undefined,
         endTime: data.endTime ? format(new Date(data.endTime), "HH:mm") : undefined,
       };
 
       return createEvent(activeOrganization.id, eventData);
-    },
-  });
-
-  const updateEventMutation = useMutation({
-    mutationFn: async (data: EventFormValues) => {
-      console.log("Updating event with data:", data); 
-
-      if (!activeOrganization || !event) throw new Error("No active organization or event");
-      const eventData = {
-        ...data,
-        startTime: data.startTime ? format(new Date(data.startTime), "HH:mm") : undefined,
-        endTime: data.endTime ? format(new Date(data.endTime), "HH:mm") : undefined,
-      };
-
-      return updateEvent(activeOrganization.id, event.id, eventData);
     },
   });
 
@@ -90,13 +63,9 @@ export default function EventForm({ event }: EventFormProps) {
   });
 
   const onSubmit = async (data: EventFormValues) => {
-
     try {
-
-      console.log("Submitting form data:", data); // Debug log
-      const mutation = event ? updateEventMutation : createEventMutation;
-      const eventResponse = await mutation.mutateAsync(data);
-      console.log("Event successfully submitted:", eventResponse);
+      const eventResponse = await createEventMutation.mutateAsync(data);
+      console.log("Event created successfully:", eventResponse);
 
       if (data.covers && data.covers.length > 0) {
         const mediaFormData = new FormData();
@@ -105,30 +74,29 @@ export default function EventForm({ event }: EventFormProps) {
           mediaFormData.append("covers[]", file);
         });
 
-        // if (data.video instanceof File) {
-        //   mediaFormData.append("video", data.video);
-        // }
+        if ("video" in data && data.video instanceof File) {
+          mediaFormData.append("video", data.video);
+        }
 
         const mediaResponse = await updateMediaMutation.mutateAsync({
-          eventId: event ? event.id : eventResponse.data.id,
+          eventId: eventResponse.data.id,
           mediaData: mediaFormData,
         });
         console.log("Media uploaded successfully:", mediaResponse);
       }
 
-      toast.success(`Événement ${event ? "modifié" : "créé"} avec succès`);
+      toast.success("Événement créé avec succès");
+      console.log("Full form data submitted:", data);
     } catch (err) {
       console.error(err);
-      toast.error("Une erreur est survenue lors du traitement de l'événement");
+      toast.error("Une erreur est survenue lors de la création de l'événement");
     }
   };
-
-  const isLoading =
-    createEventMutation.isPending || updateEventMutation.isPending || updateMediaMutation.isPending;
+  const isLoading = createEventMutation.isPending || updateMediaMutation.isPending;
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-3xl mx-auto">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <Card>
           <CardContent className="p-6">
             <div className="space-y-8">
@@ -143,7 +111,7 @@ export default function EventForm({ event }: EventFormProps) {
 
               <div className="flex justify-end">
                 <Button type="submit" size="lg" disabled={isLoading}>
-                  {isLoading ? "En traitement..." : event ? "Modifier l'événement" : "Créer l'événement"}
+                  {isLoading ? "Création en cours..." : "Créer l'événement"}
                 </Button>
               </div>
             </div>

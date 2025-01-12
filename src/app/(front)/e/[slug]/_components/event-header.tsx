@@ -1,19 +1,18 @@
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Event } from "@/types/api/event.type";
+import { getImageUrl } from "@/utils/image-utils";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale/fr";
 import { CalendarDays, MapPin } from "lucide-react";
 import Image from "next/image";
 
 export function EventHeader({ event }: { event: Event }) {
-  const coverImage = event.covers?.[0] || "/placeholder-image.png";
-
   return (
     <div className="space-y-6">
       <div className="relative aspect-[21/9] overflow-hidden rounded-xl">
         <Image
-          src={coverImage}
+          src={getImageUrl(event.covers?.[0]) || "/placeholder-image.png"}
           alt={event.title}
           fill
           className="object-cover hover:scale-105 transition-transform duration-300"

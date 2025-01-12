@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { EventTicket } from "@/types/api/event.type";
+import { Ticket } from "@/types/api/ticket.types";
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 
@@ -10,8 +10,10 @@ interface TicketCounter {
 }
 
 interface TicketsListProps {
-  tickets: EventTicket[];
-  onCountChange: (counts: TicketCounter) => void;
+  tickets: Ticket[];
+  onCountChange: (counts: { [key: number]: number }) => void;
+  initialCounts?: { [key: number]: number };
+  readOnly?: boolean;
 }
 
 export function TicketsList({ tickets, onCountChange }: TicketsListProps) {
@@ -26,21 +28,21 @@ export function TicketsList({ tickets, onCountChange }: TicketsListProps) {
     onCountChange(newCounts);
   };
 
-  const handleIncrement = (ticket: EventTicket) => {
+  const handleIncrement = (ticket: Ticket) => {
     const currentCount = ticketCounts[ticket.id] || 0;
     if (currentCount < ticket.maxTicketsPerOrder) {
       updateTicketCount(ticket.id, currentCount + 1);
     }
   };
 
-  const handleDecrement = (ticket: EventTicket) => {
+  const handleDecrement = (ticket: Ticket) => {
     const currentCount = ticketCounts[ticket.id] || 0;
     if (currentCount > 0) {
       updateTicketCount(ticket.id, currentCount - 1);
     }
   };
 
-  const getRemainingTickets = (ticket: EventTicket) => {
+  const getRemainingTickets = (ticket: Ticket) => {
     return ticket.availableQuantity - (ticket._count?.inscriptions || 0);
   };
 

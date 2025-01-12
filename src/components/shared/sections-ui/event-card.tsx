@@ -5,7 +5,7 @@ import { Event } from "@/types/api/event.type";
 import { getImageUrl } from "@/utils/image-utils";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { CalendarDays, MapPin, Users } from "lucide-react";
+import { CalendarDays, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 

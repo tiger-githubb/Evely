@@ -23,7 +23,7 @@ export function CheckoutModal({ isOpen, onClose, eventId, cart, event }: Checkou
   const createOrderMutation = useMutation({
     mutationFn: createOrder,
     onSuccess: (data) => {
-      router.push(routes.events.payment(event.slug, data.data.id));
+      router.push(routes.events.payment(event.slug, data.data.uid));
     },
   });
 

@@ -10,6 +10,8 @@ import { formatDate, formatTime } from "@/utils/date-utils";
 import { useQuery } from "@tanstack/react-query";
 import { MoreVertical } from "lucide-react";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { resolveSlug } from "@/server/services/slug-resolver.service";
 
 interface TicketListProps {
   eventSlug: string;
@@ -17,7 +19,25 @@ interface TicketListProps {
 export default function TicketList({ eventSlug }: TicketListProps) {
   const { activeOrganization } = useOrganizationStore();
   const organizationId = activeOrganization?.id;
-  const eventId = eventSlug;
+  const [eventId, setEventId] = useState<number | null>(null);
+
+
+  useEffect(() => {
+    const fetchEventId = async () => {
+      if (organizationId && eventSlug) {
+        try {
+          const id = await resolveSlug("event", eventSlug);
+          setEventId(id);
+        } catch {
+          toast.error("Erreur lors de la résolution de l'ID de l'événement.");
+        }
+      }
+    };
+
+    fetchEventId();
+  }, [organizationId, eventSlug]);
+
+
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["event-tickets", organizationId, eventId],

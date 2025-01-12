@@ -18,7 +18,7 @@ export default async function EventsPage({ params }: EventPageProps) {
       <Link href={routes.board.workspace.events.add(organizationSlug)}>
         <Button>Créer un événement</Button>
       </Link>
-      <EventsTable organizationSlug={organizationSlug} />
+      <EventsTable/>
     </div>
   );
 }

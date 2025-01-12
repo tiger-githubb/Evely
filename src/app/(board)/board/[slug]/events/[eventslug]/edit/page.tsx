@@ -9,9 +9,7 @@ interface EditEventPageProps {
 
 export default async function EditEventPage({ params }: EditEventPageProps) {
   const { eventslug } = await params;
-
   const event = await fetchEvent(eventslug);
-  console.log(event);
 
   if (!event) {
     return (
@@ -25,7 +23,7 @@ export default async function EditEventPage({ params }: EditEventPageProps) {
   return (
     <div className="container">
       <h3>Modifier l&apos;Événement</h3>
-      <EventForm event={event.data} />
+      <EventForm initialData={event.data} />
     </div>
   );
 }

@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { EVENT_TYPE } from "@/config/constants";
-import { fetchPublicEvents } from "@/server/services/events.service";
 import { useQuery } from "@tanstack/react-query";
 import { isToday, isWeekend } from "date-fns";
 import { useState } from "react";
@@ -10,6 +9,7 @@ import { EventCard } from "../shared/sections-ui/event-card";
 import { EventGridSkeleton } from "../shared/ui-skeletons";
 import { EmptyState, ErrorState } from "../shared/ui-states";
 import Section from "../ui/custom/section";
+import { fetchPublishedEvents } from "@/server/services/events.service";
 
 interface Category {
   label: string;
@@ -37,7 +37,7 @@ export const EventTable = () => {
     isError,
   } = useQuery({
     queryKey: ["public-events"],
-    queryFn: fetchPublicEvents,
+    queryFn: fetchPublishedEvents,
   });
 
   if (events?.data.length === 0)

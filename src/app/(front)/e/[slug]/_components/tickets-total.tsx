@@ -35,7 +35,7 @@ export function TicketsTotal({ tickets, counts, event }: TicketsTotalProps) {
 
       <CheckoutModal
         isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
+        onCloseAction={() => setIsCheckoutOpen(false)}
         eventId={tickets[0]?.eventId}
         event={event}
         cart={counts}

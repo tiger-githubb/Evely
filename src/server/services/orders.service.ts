@@ -24,8 +24,7 @@ export const previewOrder = async (orderData: CreateOrderType) => {
 
 export const createOrder = async (orderData: CreateOrderType) => {
   try {
-    const headers = await getAuthHeaders();
-    const { data } = await api.post("/users-events-tickets-orders", orderData, { headers });
+    const { data } = await api.post("/users-events-tickets-orders", orderData);
     return data;
   } catch (error) {
     return ApiErrorHandler.handle(error, "Une erreur est survenue lors de la création de la commande");

@@ -50,16 +50,17 @@ export function PaymentForm({ uid }: { uid: string }) {
   };
 
   return (
-    <div className="grid h-[80vh] lg:grid-cols-2">
+    <div className="grid h-[90vh] lg:grid-cols-2">
       <div className="relative hidden bg-muted lg:block">
         <Image
           src={sideImage.src}
           alt="Image"
+          fill
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
         <div className="absolute inset-0 " />
         <div className="absolute bottom-6 left-6 text-white">
-          <h2 className="text-2xl font-bold">Paiement sécurisé</h2>
+          <h2 className="text-2xl font-bold text-white">Paiement sécurisé</h2>
           <p className="mt-2">Vos transactions sont protégées par un cryptage de bout en bout</p>
         </div>
       </div>
@@ -82,7 +83,7 @@ export function PaymentForm({ uid }: { uid: string }) {
               onClick={() => method.isAvailable && handlePayment(method.id)}
             >
               <div className="flex items-center gap-6">
-                <Image src={method.logo} alt={method.name} className="h-10" />
+                <Image src={method.logo} alt={method.name} width={40} height={40} className="h-10" />
                 <div className="flex-1">
                   <h3 className="font-semibold text-lg">{method.name}</h3>
                   <p className="text-sm text-muted-foreground">

@@ -10,14 +10,14 @@ import { CheckoutForm } from "./checkout-form";
 
 interface CheckoutModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onCloseAction: () => void; // Renamed from onClose
   eventId: number;
   event: Event;
   cart: { [key: number]: number };
   tickets: Ticket[];
 }
 
-export function CheckoutModal({ isOpen, onClose, eventId, cart, event }: CheckoutModalProps) {
+export function CheckoutModal({ isOpen, onCloseAction, eventId, cart, event }: CheckoutModalProps) {
   const router = useRouter();
 
   const createOrderMutation = useMutation({
@@ -28,7 +28,7 @@ export function CheckoutModal({ isOpen, onClose, eventId, cart, event }: Checkou
   });
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={onCloseAction}>
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Finaliser votre commande</DialogTitle>
@@ -36,9 +36,9 @@ export function CheckoutModal({ isOpen, onClose, eventId, cart, event }: Checkou
         <CheckoutForm
           eventId={eventId}
           cart={cart}
-          onNext={(formData) => createOrderMutation.mutate(formData)}
+          onNextAction={(formData) => createOrderMutation.mutate(formData)}
           isLoading={createOrderMutation.isPending}
-        />{" "}
+        />
       </DialogContent>
     </Dialog>
   );

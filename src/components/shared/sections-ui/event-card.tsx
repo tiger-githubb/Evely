@@ -59,10 +59,10 @@ export const EventCard = ({ event }: EventCardProps) => {
                 <span className="line-clamp-1">{event.location.name}</span>
               </div>
             )}
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               <span>0 participants</span>
-            </div>
+            </div> */}
           </div>
         </CardContent>
 

@@ -10,11 +10,11 @@ import { useForm } from "react-hook-form";
 interface CheckoutFormProps {
   eventId: number;
   cart: { [key: number]: number };
-  onNext: (data: CreateOrderType) => void;
+  onNextAction: (data: CreateOrderType) => void; // Renamed from onNext
   isLoading?: boolean;
 }
 
-export function CheckoutForm({ eventId, cart, onNext, isLoading }: CheckoutFormProps) {
+export function CheckoutForm({ eventId, cart, onNextAction, isLoading }: CheckoutFormProps) {
   const form = useForm<CreateOrderType>({
     resolver: zodResolver(createOrderSchema),
     defaultValues: {
@@ -32,7 +32,7 @@ export function CheckoutForm({ eventId, cart, onNext, isLoading }: CheckoutFormP
   });
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onNext)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onNextAction)} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}

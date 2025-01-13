@@ -20,6 +20,8 @@ pnpm dev
 bun dev
 ```
 
+Open `.env.local` and set the following environment variables:
+
 ```bash
 
 NEXT_PUBLIC_API_URL=

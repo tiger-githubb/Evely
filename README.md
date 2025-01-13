@@ -20,6 +20,18 @@ pnpm dev
 bun dev
 ```
 
+```bash
+
+NEXT_PUBLIC_API_URL=
+NEXT_PUBLIC_STORAGE_URL=
+
+NEXTAUTH_URL=http://localhost:3009/
+NEXTAUTH_SECRET=
+
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
+
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.

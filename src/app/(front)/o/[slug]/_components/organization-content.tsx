@@ -1,11 +1,11 @@
-import { Organization } from "@/types/api/organization.type";
 import { Card } from "@/components/ui/card";
-import { Globe, Facebook, Twitter, Instagram, Linkedin, Calendar, MapPin } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
+import { routes } from "@/config/routes";
+import { Organization } from "@/types/api/organization.type";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { routes } from "@/config/routes";
+import { Calendar, Facebook, Globe, Instagram, Linkedin, MapPin, Twitter } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export function OrganizationContent({ organization }: { organization: Organization }) {
   return (

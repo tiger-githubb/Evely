@@ -263,3 +263,40 @@ export function EventGridSkeleton() {
     </div>
   );
 }
+
+export function PaymentFormSkeleton() {
+  return (
+    <div className="grid h-[90vh] lg:grid-cols-2">
+      <div className="relative hidden bg-muted lg:block">
+        <Skeleton className="h-full w-full" />
+      </div>
+
+      <div className="flex flex-col p-6 md:p-10">
+        <div className="flex items-center gap-2 mb-8">
+          <Skeleton className="h-5 w-5" />
+          <Skeleton className="h-4 w-16" />
+        </div>
+
+        <Skeleton className="h-8 w-64 mb-6" />
+
+        <div className="flex flex-col gap-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <Card key={i} className="p-6">
+              <div className="flex items-center gap-6">
+                <Skeleton className="h-10 w-10" />
+                <div className="flex-1">
+                  <Skeleton className="h-6 w-48 mb-2" />
+                  <Skeleton className="h-4 w-64" />
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        <div className="mt-auto pt-8 text-center">
+          <Skeleton className="h-4 w-96 mx-auto" />
+        </div>
+      </div>
+    </div>
+  );
+}

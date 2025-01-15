@@ -35,7 +35,7 @@ export function OrganizationActions({ organization, isFollowing = false }: Organ
         toast.success("Vous suivez maintenant cette organisation");
       }
       setFollowing(!following);
-    } catch (err) {
+    } catch {
       toast.error("Une erreur est survenue");
     } finally {
       setIsLoading(false);

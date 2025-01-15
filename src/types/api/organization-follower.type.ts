@@ -1,5 +1,5 @@
-import { Organization } from "./organization.type";
-import { AppUser } from "../user.type";
+import { Organization } from './organization.type';
+import { AppUser } from '../user.type';
 
 export interface OrganizationFollower {
   id: number;

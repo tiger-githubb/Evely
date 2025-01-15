@@ -5,20 +5,20 @@ import EventsTable from "./_components/data-table";
 
 interface EventPageProps {
   params: Promise<{
-    organizationSlug: string;
+    slug: string;
   }>;
 }
 
 export default async function EventsPage({ params }: EventPageProps) {
-  const { organizationSlug } = await params;
+  const { slug } = await params;
 
   return (
     <div className="container">
       <h1 className="text-2xl font-semibold mb-4">Liste des événements</h1>
-      <Link href={routes.board.workspace.events.add(organizationSlug)}>
+      <Link href={routes.board.workspace.events.add(slug)}>
         <Button>Créer un événement</Button>
       </Link>
-      <EventsTable/>
+      <EventsTable />
     </div>
   );
 }

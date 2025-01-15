@@ -2,6 +2,7 @@
 
 import { FileUploader } from "@/components/shared/file-uploader";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input"; // Assuming Input is your reusable input component
 import { UseFormReturn } from "react-hook-form";
 import type { CreateEventType } from "@/schemas/event.schema";
 
@@ -15,6 +16,7 @@ export default function MediaSection({ form }: MediaSectionProps) {
       <h3 className="text-lg font-medium">Médias</h3>
 
       <div className="grid gap-6">
+        {/* Cover images uploader */}
         <FormField
           control={form.control}
           name="covers"
@@ -36,25 +38,25 @@ export default function MediaSection({ form }: MediaSectionProps) {
           )}
         />
 
-        {/* <FormField
+        {/* Video URL input */}
+        <FormField
           control={form.control}
           name="video"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Vidéo (optionnel)</FormLabel>
+              <FormLabel>Vidéo (URL)</FormLabel>
               <FormControl>
-                <FileUploader
-                  value={field.value ? [field.value] : []}
-                  onChange={(files) => field.onChange(files[0])}
-                  accept={{ "video/*": [] }}
-                  maxFiles={1}
-                  preview={false}
+                <Input
+                  placeholder="Lien de la vidéo (ex: https://youtube.com/...)"
+                  {...field}
+                  value={field.value || ""}
+                  onChange={(e) => field.onChange(e.target.value)}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ export const fetchEventCategories = async (): Promise<EventCategoriesResponse> =
     return ApiErrorHandler.handle<EventCategoriesResponse>(
       error,
       "Une erreur est survenue lors de la récupération des catégories d'événements"
+      
     );
   }
 };

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { createEventSchema, CreateEventType } from "@/schemas/event.schema";
-import { createEvent, updateEventMedia } from "@/server/services/events.service";
+import { createEvent, updateEvent, updateEventMedia } from "@/server/services/events.service";
 import { useOrganizationStore } from "@/stores/organization-store";
 import { Event } from "@/types/api/event.type";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -46,6 +46,8 @@ export default function EventForm({ initialData }: EventFormProps) {
       newTags: [],
       faq: initialData?.faq || [],
       agendas: initialData?.agendas || [],
+      video: initialData?.video || "",
+      covers: [],
     },
   });
 
@@ -54,12 +56,22 @@ export default function EventForm({ initialData }: EventFormProps) {
       if (!activeOrganization) throw new Error("No active organization");
       const eventData = {
         ...data,
-
         startTime: data.startTime ? format(new Date(data.startTime), "HH:mm") : undefined,
         endTime: data.endTime ? format(new Date(data.endTime), "HH:mm") : undefined,
       };
-
       return createEvent(activeOrganization.id, eventData);
+    },
+  });
+
+  const updateEventMutation = useMutation({
+    mutationFn: async ({ eventId, data }: { eventId: number; data: EventFormValues }) => {
+      if (!activeOrganization) throw new Error("No active organization");
+      const eventData = {
+        ...data,
+        startTime: data.startTime ? format(new Date(data.startTime), "HH:mm") : undefined,
+        endTime: data.endTime ? format(new Date(data.endTime), "HH:mm") : undefined,
+      };
+      return updateEvent(activeOrganization.id, eventId, eventData);
     },
   });
 
@@ -71,36 +83,54 @@ export default function EventForm({ initialData }: EventFormProps) {
   });
 
   const onSubmit = async (data: EventFormValues) => {
+    if (!activeOrganization) {
+      toast.error("Aucune organisation active");
+      return;
+    }
+
     try {
-      const eventResponse = await createEventMutation.mutateAsync(data);
-      console.log("Event created successfully:", eventResponse);
+      let eventId = initialData?.id;
+      let eventResponse;
 
-      if (data.covers && data.covers.length > 0) {
-        const mediaFormData = new FormData();
-
-        data.covers.forEach((file) => {
-          mediaFormData.append("covers[]", file);
-        });
-
-        if ("video" in data && data.video instanceof File) {
-          mediaFormData.append("video", data.video);
-        }
-
-        const mediaResponse = await updateMediaMutation.mutateAsync({
-          eventId: eventResponse.data.id,
-          mediaData: mediaFormData,
-        });
-        console.log("Media uploaded successfully:", mediaResponse);
+      if (eventId) {
+        // Update existing event
+        eventResponse = await updateEventMutation.mutateAsync({ eventId, data });
+        toast.success("Événement mis à jour avec succès");
+      } else {
+        // Create new event
+        eventResponse = await createEventMutation.mutateAsync(data);
+        toast.success("Événement créé avec succès");
+        eventId = eventResponse.data.id;
       }
 
-      toast.success("Événement créé avec succès");
+      // Upload covers if any
+      if (data.covers && data.covers.length > 0) {
+        const mediaFormData = new FormData();
+        data.covers.forEach((file) => {
+          if (file instanceof File) {
+            mediaFormData.append("covers[]", file);
+          }
+        });
+
+        await updateMediaMutation.mutateAsync({
+          eventId: eventId!,
+          mediaData: mediaFormData,
+        });
+
+        console.log("Media uploaded successfully");
+      }
+
       console.log("Full form data submitted:", data);
     } catch (err) {
-      console.error(err);
-      toast.error("Une erreur est survenue lors de la création de l'événement");
+      console.error("Error submitting event:", err);
+      toast.error("Une erreur est survenue lors de la soumission de l'événement");
     }
   };
-  const isLoading = createEventMutation.isPending || updateMediaMutation.isPending;
+
+
+
+  const isLoading = createEventMutation.status === 'pending' || updateMediaMutation.status === 'pending';
+
 
   return (
     <Form {...form}>
@@ -119,7 +149,13 @@ export default function EventForm({ initialData }: EventFormProps) {
 
               <div className="flex justify-end">
                 <Button type="submit" size="lg" disabled={isLoading}>
-                  {isLoading ? "Création en cours..." : "Créer l'événement"}
+                  {isLoading
+                    ? initialData
+                      ? "Mise à jour en cours..."
+                      : "Création en cours..."
+                    : initialData
+                    ? "Mettre à jour l'événement"
+                    : "Créer l'événement"}
                 </Button>
               </div>
             </div>

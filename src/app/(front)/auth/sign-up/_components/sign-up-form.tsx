@@ -11,7 +11,9 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { PiGoogleLogoDuotone, PiSpinnerGapDuotone } from "react-icons/pi";
+import { PiSpinnerGapDuotone } from "react-icons/pi";
+import { FcGoogle } from "react-icons/fc"; // Google Icon
+import Link from "next/link";
 import type { z } from "zod";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
@@ -30,7 +32,7 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
     resolver: zodResolver(signUpFormSchema),
   });
 
-  async function onSubmit(data: FormData) {
+  const onSubmit = async (data: FormData) => {
     setIsLoading(true);
     try {
       const result = await signIn("credentials", {
@@ -54,13 +56,33 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      const result = await signIn("google", {
+        redirect: true,
+        callbackUrl: routes.board.dashboard,
+      });
+      if (result?.error) {
+        setError("root", {
+          message: "Erreur lors de la connexion avec Google",
+        });
+      }
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      setError("root", { message: "Une erreur est survenue avec Google" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-4">
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2 align-center justify-center">
             <div className="grid gap-2">
               <Label htmlFor="firstName">Prénom</Label>
               <Input
@@ -71,7 +93,11 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
                 autoCorrect="off"
                 disabled={isLoading}
               />
-              {errors.firstName && <p className="text-sm text-red-500">{errors.firstName.message}</p>}
+              {errors.firstName && (
+                <p className="text-sm text-red-500">
+                  {errors.firstName.message}
+                </p>
+              )}
             </div>
 
             <div className="grid gap-2">
@@ -84,7 +110,11 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
                 autoCorrect="off"
                 disabled={isLoading}
               />
-              {errors.lastName && <p className="text-sm text-red-500">{errors.lastName.message}</p>}
+              {errors.lastName && (
+                <p className="text-sm text-red-500">
+                  {errors.lastName.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -100,17 +130,29 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
               autoCorrect="off"
               disabled={isLoading}
             />
-            {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email.message}</p>
+            )}
           </div>
 
           <div className="grid gap-2">
             <Label htmlFor="password">Mot de passe</Label>
-            <Input {...register("password")} id="password" type="password" placeholder="Votre mot de passe" disabled={isLoading} />
-            {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+            <Input
+              {...register("password")}
+              id="password"
+              type="password"
+              placeholder="Votre mot de passe"
+              disabled={isLoading}
+            />
+            {errors.password && (
+              <p className="text-sm text-red-500">{errors.password.message}</p>
+            )}
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="password_confirmation">Confirmer le mot de passe</Label>
+            <Label htmlFor="password_confirmation">
+              Confirmer le mot de passe
+            </Label>
             <Input
               {...register("password_confirmation")}
               id="password_confirmation"
@@ -118,13 +160,21 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
               placeholder="Confirmez votre mot de passe"
               disabled={isLoading}
             />
-            {errors.password_confirmation && <p className="text-sm text-red-500">{errors.password_confirmation.message}</p>}
+            {errors.password_confirmation && (
+              <p className="text-sm text-red-500">
+                {errors.password_confirmation.message}
+              </p>
+            )}
           </div>
 
-          {errors.root && <p className="text-sm text-red-500">{errors.root.message}</p>}
+          {errors.root && (
+            <p className="text-sm text-red-500">{errors.root.message}</p>
+          )}
 
           <Button className="w-full" disabled={isLoading}>
-            {isLoading && <PiSpinnerGapDuotone className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading && (
+              <PiSpinnerGapDuotone className="mr-2 h-4 w-4 animate-spin" />
+            )}
             S&apos;inscrire
           </Button>
         </div>
@@ -135,14 +185,36 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">Ou continuer avec</span>
+          <span className="bg-background px-2 text-muted-foreground">
+            Ou continuer avec
+          </span>
         </div>
       </div>
 
-      <Button variant="outline" type="button" disabled={isLoading}>
-        {isLoading ? <PiSpinnerGapDuotone className="mr-2 h-4 w-4 animate-spin" /> : <PiGoogleLogoDuotone className="mr-2 h-4 w-4" />}
+      <Button
+        variant="outline"
+        type="button"
+        disabled={isLoading}
+        onClick={handleGoogleSignIn}
+        className="w-full"
+      >
+        {isLoading ? (
+          <PiSpinnerGapDuotone className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <FcGoogle className="mr-2 h-4 w-4" />
+        )}
         Google
       </Button>
+
+      <div className="text-center text-sm">
+        Vous avez déjà un compte ?{" "}
+        <Link
+          href={routes.auth.signIn}
+          className="font-semibold text-primary hover:underline"
+        >
+          Connectez-vous
+        </Link>
+      </div>
     </div>
   );
 }

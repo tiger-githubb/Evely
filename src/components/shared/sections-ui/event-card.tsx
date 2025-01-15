@@ -1,5 +1,13 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { routes } from "@/config/routes";
 import { Event } from "@/types/api/event.type";
 import { getImageUrl } from "@/utils/image-utils";
@@ -23,15 +31,22 @@ const gradients = [
 
 export const EventCard = ({ event }: EventCardProps) => {
   const coverImage = getImageUrl(event.covers[0]);
-  const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
-  const organizationLogo = getImageUrl(event.organization.logo) || "/placeholder-avatar.jpg";
+  const randomGradient =
+    gradients[Math.floor(Math.random() * gradients.length)];
+  const organizationLogo =
+    getImageUrl(event.organization.logo) || "/placeholder-avatar.jpg";
 
   return (
     <Link href={routes.events.details(event.slug)}>
       <Card className="group overflow-hidden transition-all hover:shadow-lg">
         <div className="relative aspect-[16/9] overflow-hidden">
           {coverImage ? (
-            <Image src={coverImage} alt={event.title} fill className="object-cover transition-transform group-hover:scale-105" />
+            <Image
+              src={coverImage}
+              alt={event.title}
+              fill
+              className="object-cover transition-transform group-hover:scale-105"
+            />
           ) : (
             <div className={`w-full h-full ${randomGradient}`} />
           )}
@@ -43,22 +58,28 @@ export const EventCard = ({ event }: EventCardProps) => {
         </div>
 
         <CardHeader>
+          <CardTitle className="line-clamp-1">{event.title}</CardTitle>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <CalendarDays className="h-4 w-4" />
             <span>{format(new Date(event.date), "PPP", { locale: fr })}</span>
           </div>
-          <CardTitle className="line-clamp-1">{event.title}</CardTitle>
-          <CardDescription className="line-clamp-2">{event.summary}</CardDescription>
+
+          {event.location && (
+            <div className="flex items-center gap-2">
+              <MapPin className="h-4 w-4" />
+              <span className="line-clamp-1">
+                {event.location?.name ? event.location.name : "En Ligne"}
+              </span>
+            </div>
+          )}
+
+          <CardDescription className="line-clamp-2">
+            {event.summary}
+          </CardDescription>
         </CardHeader>
 
         <CardContent>
           <div className="flex flex-col gap-2 text-sm text-muted-foreground">
-            {event.location && (
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                <span className="line-clamp-1">{event.location.name}</span>
-              </div>
-            )}
             {/* <div className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               <span>0 participants</span>
@@ -68,8 +89,16 @@ export const EventCard = ({ event }: EventCardProps) => {
 
         <CardFooter className="flex gap-4">
           <div className="flex items-center gap-2">
-            <Image src={organizationLogo} alt={event.organization.name} width={24} height={24} className="rounded-full" />
-            <span className="text-sm text-muted-foreground">{event.organization.name}</span>
+            <Image
+              src={organizationLogo}
+              alt={event.organization.name}
+              width={24}
+              height={24}
+              className="rounded-full"
+            />
+            <span className="text-sm text-muted-foreground">
+              {event.organization.name}
+            </span>
           </div>
         </CardFooter>
       </Card>

@@ -10,7 +10,9 @@ interface WorkspacePageProps {
   }>;
 }
 
-export default async function OrganizationWorkspacePage({ params }: WorkspacePageProps) {
+export default async function OrganizationWorkspacePage({
+  params,
+}: WorkspacePageProps) {
   const { slug } = await params;
 
   return (

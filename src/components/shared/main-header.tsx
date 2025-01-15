@@ -15,6 +15,7 @@ import { PiCheersDuotone } from "react-icons/pi";
 import { Input } from "../ui/input";
 import { AuthStatus } from "./auth-status";
 import { MobileMenu } from "./mobile-menu";
+import { Logo } from "./logo";
 
 export const MainHeader = () => {
   return (
@@ -33,8 +34,7 @@ export const MainHeader = () => {
 
         <div className="flex lg:justify-center">
           <Link href={routes.home} className="flex items-center gap-2">
-            <PiCheersDuotone className="h-6 w-6" />
-            <p className="font-bold">Yala</p>
+        <Logo/>
           </Link>
         </div>
 

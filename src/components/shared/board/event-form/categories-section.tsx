@@ -33,8 +33,14 @@ export default function CategoriesSection({ form }: CategoriesSectionProps) {
         fetchEventLanguages(),
       ]);
 
+
+      console.log("Types:", typesRes.data);
+      console.log("Categories:", categoriesRes);
+      console.log("Formats:", formatsRes.data);
+      console.log("Languages:", languagesRes.data);
+
       setTypes(typesRes.data);
-      setCategories(categoriesRes.data);
+      // setCategories(categoriesRes);
       setFormats(formatsRes.data);
       setLanguages(languagesRes.data);
     };

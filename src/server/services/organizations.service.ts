@@ -54,7 +54,6 @@ export const fetchOrganizationIdBySlug = async (organizationSlug: string): Promi
   }
 };
 
-
 export const fetchOrganizations = async (): Promise<OrganizationsResponse> => {
   try {
     const headers = await getAuthHeaders();
@@ -70,6 +69,18 @@ export const fetchOrganization = async (id: string): Promise<OrganizationRespons
     const { data } = await api.get<OrganizationResponse>(`/organizations/${id}`, {
       headers: {
         ...headers,
+        "Content-Type": "application/json",
+      },
+    });
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle<OrganizationResponse>(error, "Une erreur est survenue lors de la récupération de l'organisation");
+  }
+};
+export const fetchOrganizationBySlug = async (slug: string): Promise<OrganizationResponse> => {
+  try {
+    const { data } = await api.get<OrganizationResponse>(`/organizations/slug/${slug}`, {
+      headers: {
         "Content-Type": "application/json",
       },
     });

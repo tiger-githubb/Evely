@@ -10,9 +10,9 @@ import { Event } from "@/types/api/event.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { format } from "date-fns";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import type { z } from "zod";
 import AgendaSection from "./agenda-section";
 import BasicInfoSection from "./basic-info-section";
 import CategoriesSection from "./categories-section";
@@ -22,17 +22,16 @@ import LocationSection from "./location-section";
 import MediaSection from "./media-section";
 import TagsSection from "./tags-section";
 
-type EventFormValues = z.infer<typeof createEventSchema>;
-
 interface EventFormProps {
   initialData?: Event;
 }
 
 export default function EventForm({ initialData }: EventFormProps) {
+  const t = useTranslations("eventForm");
   const { activeOrganization } = useOrganizationStore();
 
   const form = useForm<CreateEventType>({
-    resolver: zodResolver(createEventSchema),
+    resolver: zodResolver(createEventSchema(t).create),
     defaultValues: {
       title: initialData?.title || "",
       summary: initialData?.summary || "",
@@ -52,8 +51,8 @@ export default function EventForm({ initialData }: EventFormProps) {
   });
 
   const createEventMutation = useMutation({
-    mutationFn: async (data: EventFormValues) => {
-      if (!activeOrganization) throw new Error("No active organization");
+    mutationFn: async (data: CreateEventType) => {
+      if (!activeOrganization) throw new Error(t("errors.noOrganization"));
       const eventData = {
         ...data,
         startTime: data.startTime ? format(new Date(data.startTime), "HH:mm") : undefined,
@@ -64,8 +63,8 @@ export default function EventForm({ initialData }: EventFormProps) {
   });
 
   const updateEventMutation = useMutation({
-    mutationFn: async ({ eventId, data }: { eventId: number; data: EventFormValues }) => {
-      if (!activeOrganization) throw new Error("No active organization");
+    mutationFn: async ({ eventId, data }: { eventId: number; data: CreateEventType }) => {
+      if (!activeOrganization) throw new Error(t("errors.noOrganization"));
       const eventData = {
         ...data,
         startTime: data.startTime ? format(new Date(data.startTime), "HH:mm") : undefined,
@@ -77,14 +76,14 @@ export default function EventForm({ initialData }: EventFormProps) {
 
   const updateMediaMutation = useMutation({
     mutationFn: async ({ eventId, mediaData }: { eventId: number; mediaData: FormData }) => {
-      if (!activeOrganization) throw new Error("No active organization");
+      if (!activeOrganization) throw new Error(t("errors.noOrganization"));
       return updateEventMedia(activeOrganization.id, eventId, mediaData);
     },
   });
 
-  const onSubmit = async (data: EventFormValues) => {
+  const onSubmit = async (data: CreateEventType) => {
     if (!activeOrganization) {
-      toast.error("Aucune organisation active");
+      toast.error(t("errors.noOrganization"));
       return;
     }
 
@@ -93,17 +92,14 @@ export default function EventForm({ initialData }: EventFormProps) {
       let eventResponse;
 
       if (eventId) {
-        // Update existing event
         eventResponse = await updateEventMutation.mutateAsync({ eventId, data });
-        toast.success("Événement mis à jour avec succès");
+        toast.success(t("success.update"));
       } else {
-        // Create new event
         eventResponse = await createEventMutation.mutateAsync(data);
-        toast.success("Événement créé avec succès");
+        toast.success(t("success.create"));
         eventId = eventResponse.data.id;
       }
 
-      // Upload covers if any
       if (data.covers && data.covers.length > 0) {
         const mediaFormData = new FormData();
         data.covers.forEach((file) => {
@@ -117,20 +113,17 @@ export default function EventForm({ initialData }: EventFormProps) {
           mediaData: mediaFormData,
         });
 
-        console.log("Media uploaded successfully");
+        toast.success(t("success.mediaUpload"));
       }
 
-      console.log("Full form data submitted:", data);
+      console.log("Form data submitted:", data);
     } catch (err) {
       console.error("Error submitting event:", err);
-      toast.error("Une erreur est survenue lors de la soumission de l'événement");
+      toast.error(t("errors.submit"));
     }
   };
 
-
-
-  const isLoading = createEventMutation.status === 'pending' || updateMediaMutation.status === 'pending';
-
+  const isLoading = createEventMutation.status === "pending" || updateMediaMutation.status === "pending";
 
   return (
     <Form {...form}>
@@ -151,11 +144,11 @@ export default function EventForm({ initialData }: EventFormProps) {
                 <Button type="submit" size="lg" disabled={isLoading}>
                   {isLoading
                     ? initialData
-                      ? "Mise à jour en cours..."
-                      : "Création en cours..."
+                      ? t("loading.update")
+                      : t("loading.create")
                     : initialData
-                    ? "Mettre à jour l'événement"
-                    : "Créer l'événement"}
+                    ? t("actions.update")
+                    : t("actions.create")}
                 </Button>
               </div>
             </div>

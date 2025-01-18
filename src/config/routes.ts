@@ -17,6 +17,7 @@ export const routes = {
   board: {
     dashboard: "/board",
     profile: "/board/profile",
+    mytickets: "/board/my-tickets",
     favorite: "/board/favorite",
     orders: "/board/orders",
     favorites: "/board/favorite",

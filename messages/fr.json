@@ -1,0 +1,34 @@
+{
+  "AppLayout": {
+    "home": "Accueil",
+    "logout": "Déconnexion",
+    "profile": "Profil"
+  },
+  "Hero": {
+    "badge": "Créez, partagez, vivez.",
+    "title": "Pour ceux qui aiment vivre l'instant.",
+    "button": "Voir tous les événements"
+  },
+  "HomePage": {
+    "title": "Accueil"
+  },
+  "LocaleSwitcher": {
+    "fr": "Français",
+    "en": "Anglais",
+    "label": "Langue"
+  },
+  "LoginPage": {
+    "credentials": "Identifiants: jane@doe.com / next-intl",
+    "description": "Veuillez saisir vos informations.",
+    "email": "Email",
+    "invalidCredentials": "Veuillez vérifier vos identifiants.",
+    "invalidEmail": "Veuillez saisir une adresse email valide.",
+    "invalidPassword": "Veuillez saisir un mot de passe.",
+    "login": "Se connecter",
+    "password": "Mot de passe",
+    "title": "Bon retour"
+  },
+  "ProfilePage": {
+    "title": "Profil"
+  }
+}

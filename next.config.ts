@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       { hostname: "minio.100visagesls.xyz" },
       { hostname: "picsum.photos" },
       { hostname: "example.com" },
+      { hostname: "storage.yala.events" },
     ],
     //TODO: Check if this is needed and if it is the good config
 

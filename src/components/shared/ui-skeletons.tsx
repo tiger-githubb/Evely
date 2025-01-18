@@ -300,3 +300,21 @@ export function PaymentFormSkeleton() {
     </div>
   );
 }
+
+export function PaymentMethodsSkeleton() {
+  return (
+    <div className="flex flex-col gap-4">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <Card key={i} className="p-6">
+          <div className="flex items-center gap-6">
+            <Skeleton className="h-10 w-10 rounded-md" />
+            <div className="flex-1 space-y-2">
+              <Skeleton className="h-5 w-48" />
+              <Skeleton className="h-4 w-64" />
+            </div>
+          </div>
+        </Card>
+      ))}
+    </div>
+  );
+}

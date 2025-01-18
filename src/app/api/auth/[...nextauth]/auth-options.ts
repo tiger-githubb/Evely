@@ -1,5 +1,4 @@
 import { signInUser, signUpUser } from "@/server/services/auth.service";
-import { useOrganizationStore } from "@/stores/organization-store";
 import { Session, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { pagesOptions } from "./pages-options";
@@ -14,9 +13,6 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session, token }) {
-      // Clear organization store when session is created/updated
-      useOrganizationStore.getState().clearActiveOrganization();
-
       return {
         ...session,
         user: token.user as Session["user"],

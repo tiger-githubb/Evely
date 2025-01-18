@@ -1,6 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { PhoneInput } from "@/components/ui/custom/phone-input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import type { CreateOrderType } from "@/schemas/order.schema";
 import { createOrderSchema } from "@/schemas/order.schema";
@@ -14,7 +22,12 @@ interface CheckoutFormProps {
   isLoading?: boolean;
 }
 
-export function CheckoutForm({ eventId, cart, onNextAction, isLoading }: CheckoutFormProps) {
+export function CheckoutForm({
+  eventId,
+  cart,
+  onNextAction,
+  isLoading,
+}: CheckoutFormProps) {
   const form = useForm<CreateOrderType>({
     resolver: zodResolver(createOrderSchema),
     defaultValues: {
@@ -104,6 +117,8 @@ export function CheckoutForm({ eventId, cart, onNextAction, isLoading }: Checkou
             )}
           />
         </div>
+
+        <PhoneInput />
 
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? "Création de la commande..." : "Vérifier la commande"}

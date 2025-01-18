@@ -1,7 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { PiCheersDuotone } from "react-icons/pi";
 import { AuthCarousel } from "./auth-carousel";
 
 type QuoteSlide = {
@@ -31,9 +30,7 @@ export function AuthWrapper({ children, title, description, linkText, linkHref, 
 
       {slides && (
         <div className="relative hidden h-full lg:flex bg-muted">
-          <div className="z-20 flex items-center text-lg font-medium p-10 text-white absolute">
-           Yala
-          </div>
+          <div className="z-20 flex items-center text-lg font-medium p-10 text-white absolute">Yala</div>
           <AuthCarousel slides={slides} />
         </div>
       )}

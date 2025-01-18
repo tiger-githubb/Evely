@@ -2,17 +2,17 @@
 
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { UseFormReturn } from "react-hook-form";
-import { useEffect, useState } from "react";
-import { fetchEventTypes } from "@/server/services/event-types.service";
+import type { CreateEventType } from "@/schemas/event.schema";
 import { fetchEventCategories } from "@/server/services/event-categories.service";
 import { fetchEventFormats } from "@/server/services/event-formats.service";
 import { fetchEventLanguages } from "@/server/services/event-languages.service";
-import type { CreateEventType } from "@/schemas/event.schema";
-import type { EventType } from "@/types/api/event-type.type";
+import { fetchEventTypes } from "@/server/services/event-types.service";
 import type { EventCategory } from "@/types/api/event-category.type";
 import type { EventFormat } from "@/types/api/event-format.type";
 import type { EventLanguage } from "@/types/api/event-language.type";
+import type { EventType } from "@/types/api/event-type.type";
+import { useEffect, useState } from "react";
+import { UseFormReturn } from "react-hook-form";
 
 interface CategoriesSectionProps {
   form: UseFormReturn<CreateEventType>;
@@ -33,14 +33,8 @@ export default function CategoriesSection({ form }: CategoriesSectionProps) {
         fetchEventLanguages(),
       ]);
 
-
-      console.log("Types:", typesRes.data);
-      console.log("Categories:", categoriesRes);
-      console.log("Formats:", formatsRes.data);
-      console.log("Languages:", languagesRes.data);
-
       setTypes(typesRes.data);
-      // setCategories(categoriesRes);
+      setCategories(categoriesRes.data); // Uncomment and add .data to match the API response structure
       setFormats(formatsRes.data);
       setLanguages(languagesRes.data);
     };

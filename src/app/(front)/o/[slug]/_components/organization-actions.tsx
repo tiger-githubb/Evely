@@ -1,7 +1,10 @@
 "use client";
 import { SignInModal } from "@/components/shared/auth/sign-in-modal";
 import { Button } from "@/components/ui/button";
-import { followOrganization, unfollowOrganization } from "@/server/services/followers.service";
+import {
+  followOrganization,
+  unfollowOrganization,
+} from "@/server/services/followers.service";
 import { Organization } from "@/types/api/organization.type";
 import { Share2 } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -13,7 +16,10 @@ interface OrganizationActionsProps {
   isFollowing?: boolean;
 }
 
-export function OrganizationActions({ organization, isFollowing = false }: OrganizationActionsProps) {
+export function OrganizationActions({
+  organization,
+  isFollowing = false,
+}: OrganizationActionsProps) {
   const [following, setFollowing] = useState(isFollowing);
   const [isLoading, setIsLoading] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -73,7 +79,12 @@ export function OrganizationActions({ organization, isFollowing = false }: Organ
         >
           {following ? "Ne plus suivre" : "Suivre"}
         </Button>
-        <Button variant="outline" size="lg" className="flex-1 sm:flex-none" onClick={handleShare}>
+        <Button
+          variant="outline"
+          size="lg"
+          className="flex-1 sm:flex-none"
+          onClick={handleShare}
+        >
           <Share2 className="h-4 w-4 mr-2" />
           Partager
         </Button>

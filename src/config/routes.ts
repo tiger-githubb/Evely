@@ -18,6 +18,7 @@ export const routes = {
     dashboard: "/board",
     profile: "/board/profile",
     myevents: "/board/my-events",
+    favorite: "/board/favorite",
     workspace: {
       home: (slug: string) => `/board/${slug}`,
       events: {
@@ -29,7 +30,7 @@ export const routes = {
         media: (slug: string, eventSlug: string) => `/board/${slug}/events/${eventSlug}/medias`,
         stats: (slug: string, eventSlug: string) => `/board/${slug}/events/${eventSlug}/stats`,
         faq: (slug: string, eventSlug: string) => `/board/${slug}/events/${eventSlug}/faq`,
-        tickets: (slug: string, eventSlug: string) => `/board/${slug}/events/${eventSlug}/tickets`, 
+        tickets: (slug: string, eventSlug: string) => `/board/${slug}/events/${eventSlug}/tickets`,
       },
     },
     organization: {

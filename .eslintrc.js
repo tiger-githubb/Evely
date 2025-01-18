@@ -1,4 +1,5 @@
 module.exports = {
+  darkMode: "class",
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",

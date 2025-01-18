@@ -3,14 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      { hostname: "loremflickr.com" },
-      { hostname: "cloudflare-ipfs.com" },
-      { hostname: "avatars.githubusercontent.com" },
-      { hostname: "minio.100visagesls.xyz" },
-      { hostname: "picsum.photos" },
-      { hostname: "example.com" },
+      { hostname: "yala.events" },
       { hostname: "storage.yala.events" },
     ],
+
     //TODO: Check if this is needed and if it is the good config
 
     minimumCacheTTL: 300,

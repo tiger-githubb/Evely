@@ -5,25 +5,42 @@ import { SearchMap } from "@/components/shared/search/search-map";
 import { EventGridSkeleton } from "@/components/shared/ui-skeletons";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import { fetchEvents } from "@/server/services/events.service";
+import { fetchPublicEvents } from "@/server/services/events.service";
 import { Event } from "@/types/api/event.type";
 import { FilterIcon, MapIcon, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { useDebounce, useLocalStorage, useMediaQuery } from "@uidotdev/usehooks";
+import { useDebounce, useMediaQuery } from "@uidotdev/usehooks";
 
-export default function SearchContainer() {
+// interface SearchContainerProps {
+//   search?: string;
+//   categories?: string;
+//   formats?: string;
+//   languages?: string;
+//   types?: string;
+//   ticketTypes?: string;
+//   startDate?: string;
+//   endDate?: string;
+// }
+
+interface SearchContainerProps {
+  searchTerm: string;
+}
+
+export default function SearchContainer({ searchTerm }: SearchContainerProps) {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [lastSearchParams] = useLocalStorage("lastSearch", {});
-  const debouncedSearchParams = useDebounce(lastSearchParams, 500);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
     const loadEvents = async () => {
+      setLoading(true);
       try {
-        const response = await fetchEvents();
+        const response = await fetchPublicEvents({
+          search: debouncedSearchTerm,
+        });
         setEvents(response.data);
       } catch (error) {
         console.error("Error loading events:", error);
@@ -33,7 +50,7 @@ export default function SearchContainer() {
     };
 
     loadEvents();
-  }, [debouncedSearchParams]);
+  }, [debouncedSearchTerm]);
 
   return (
     <div className="container mx-auto p-4">

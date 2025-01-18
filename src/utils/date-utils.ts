@@ -1,35 +1,45 @@
-import { format, parseISO } from "date-fns";
-import { fr } from "date-fns/locale";
+"use client";
 
-/**
- * Formats a date string into a more readable format (e.g., "17 janvier 2025").
- * @param dateString - ISO date string (e.g., "2025-01-17").
- * @returns Formatted date string.
- */
-export function formatDate(dateString: string | null): string {
-  if (!dateString) return "N/A";
+import { useFormatter, useTranslations } from "next-intl";
+
+export function FormattedDate({ dateString }: { dateString: string | null }) {
+  const t = useTranslations("FormattedDate");
+  const formatter = useFormatter();
+
+  if (!dateString) return t("na");
+
   try {
-    return format(parseISO(dateString), "d MMMM yyyy", { locale: fr });
+    const date = new Date(dateString);
+    return formatter.dateTime(date, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   } catch (error) {
     console.error("Error formatting date:", error);
-    return "Invalid date";
+    return t("invalidDate");
   }
 }
 
+export function FormattedTime({ timeString }: { timeString: string | null }) {
+  const t = useTranslations("FormattedTime");
+  const formatter = useFormatter();
 
-/**
- * Formats a time string into a 24-hour format (e.g., "10:00").
- * @param timeString - Time string (e.g., "10:00:00").
- * @returns Formatted time string.
- */
-export function formatTime(timeString: string | null): string {
-    if (!timeString) return "N/A";
-    try {
-      const [hours, minutes] = timeString.split(":");
-      return `${hours}:${minutes}`;
-    } catch (error) {
-      console.error("Error formatting time:", error);
-      return "Invalid time";
-    }
+  if (!timeString) return t("na");
+
+  try {
+    const [hours, minutes] = timeString.split(":");
+    const date = new Date();
+    date.setHours(parseInt(hours, 10));
+    date.setMinutes(parseInt(minutes, 10));
+
+    return formatter.dateTime(date, {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+  } catch (error) {
+    console.error("Error formatting time:", error);
+    return t("invalidTime");
   }
-  
+}

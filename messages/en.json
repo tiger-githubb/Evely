@@ -1,35 +1,268 @@
 {
-  "AppLayout": {
-    "home": "Home",
-    "logout": "Logout",
-    "profile": "Profile"
-  },
-  "Hero": {
-    "badge": "Create, share, live.",
-    "title": "For those who love living in the moment.",
-    "button": "See all events"
-  },
-
-  "HomePage": {
-    "title": "Home"
-  },
   "LocaleSwitcher": {
     "fr": "French",
     "en": "English",
     "label": "Language"
   },
-  "LoginPage": {
-    "credentials": "Credentials: jane@doe.com / next-intl",
-    "description": "Please enter your details.",
-    "email": "Email",
-    "invalidCredentials": "Please check your credentials.",
-    "invalidEmail": "Please enter a valid email address.",
-    "invalidPassword": "Please enter a password.",
-    "login": "Sign in",
-    "password": "Password",
-    "title": "Welcome back"
+  "FormattedDate": {
+    "invalidDate": "Invalid date",
+    "na": "N/A"
   },
-  "ProfilePage": {
-    "title": "Profile"
+  "FormattedTime": {
+    "invalidTime": "Invalid time",
+    "na": "N/A"
+  },
+  "Auth": {
+    "notAuthenticated": "User is not authenticated"
+  },
+  "Schemas": {
+    "EventFaq": {
+      "questionRequired": "The question is required",
+      "responseRequired": "The response is required",
+      "eventIdRequired": "The event ID is required"
+    },
+    "EventTicket": {
+      "nameMin": "The ticket name must be at least 2 characters",
+      "descriptionMin": "The description must be at least 10 characters",
+      "priceType": "The price must be a number",
+      "priceMin": "The price must be at least 0",
+      "availableQuantityType": "The available quantity must be a number",
+      "availableQuantityMin": "The available quantity must be at least 1",
+      "minTicketsType": "Minimum tickets per order must be a number",
+      "minTicketsMin": "Minimum tickets per order must be at least 1",
+      "maxTicketsType": "Maximum tickets per order must be a number",
+      "maxTicketsMin": "Maximum tickets per order must be at least 1",
+      "ticketTypeIdType": "The ticket type must be a number"
+    },
+    "EventCreate": {
+      "titleMin": "The title must be at least 3 characters",
+      "contentMin": "The content must be at least 10 characters",
+      "summaryMin": "The summary must be at least 10 characters",
+      "faqQuestionMin": "The FAQ question must be at least 5 characters",
+      "faqResponseMin": "The FAQ response must be at least 5 characters",
+      "agendaTitleMin": "The agenda title must be at least 2 characters",
+      "sessionTitleMin": "The session title must be at least 2 characters",
+      "locationNameMin": "The location name must be at least 2 characters"
+    },
+    "OrganizationInvitation": {
+      "emailInvalid": "The email address is invalid",
+      "roleIdRequired": "The role ID is required"
+    },
+    "Order": {
+      "cartQuantityMin": "Quantity must be at least 1",
+      "firstNameMin": "The first name must be at least 2 characters",
+      "lastNameMin": "The last name must be at least 2 characters",
+      "emailInvalid": "The email address is invalid"
+    },
+    "SignUpForm": {
+      "firstNameRequired": "The first name is required",
+      "lastNameRequired": "The last name is required",
+      "emailInvalid": "The email address is invalid",
+      "passwordMin": "The password must be at least 8 characters",
+      "passwordSymbol": "The password must contain at least one symbol",
+      "passwordConfirmationMin": "The confirmation password must be at least 8 characters",
+      "passwordMismatch": "The passwords do not match"
+    }
+  },
+  "Config": {
+    "Site": {
+      "title": "Yala",
+      "description": "The innovative event management platform in Togo - Discover, organize, and book your events with ease",
+      "url": "https://yala.events",
+      "locale": "fr_TG"
+    }
+  },
+  "Categories": {
+    "music": "Music",
+    "nightLife": "Nightlife",
+    "performingArts": "Performing Arts",
+    "parties": "Parties",
+    "meetings": "Meetings",
+    "business": "Business",
+    "gastronomy": "Gastronomy"
+  },
+  "Common": {
+    "Logs": {
+      "noItemsFound": "No items found",
+      "noItemsDescription": "There are no items to display at the moment.",
+      "errorTitle": "Error",
+      "errorDescription": "An error occurred. Please try again later.",
+      "successTitle": "Success",
+      "successDescription": "The operation was successfully completed.",
+      "warningTitle": "Warning",
+      "warningDescription": "An action requires your attention.",
+      "fileUnsupported": "Unsupported file format or size too large",
+      "dragDropActive": "Drop the image here...",
+      "dragDropInactive": "Drag an image here or click to select one",
+      "fileDropActive": "Drop the files here...",
+      "fileDropInactive": "Drag files here or click to select",
+      "someFileUnsupported": "Some files could not be added (unsupported format or size too large)"
+    },
+    "Buttons": {
+      "signIn": "Sign In",
+      "signUp": "Sign Up",
+      "signOut": "Sign Out"
+    },
+    "Menus": {
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "myEvents": "My Events"
+    },
+    "Placeholders": {
+      "search": "Search events...",
+      "userFallback": "U"
+    },
+    "Messages": {
+      "errorLoading": "An error occurred while loading.",
+      "noResults": "No results found."
+    }
+  },
+  "AuthentificationStatus": {
+    "userFallback": "U",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "myEvents": "My Events",
+    "signOut": "Sign Out",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+
+  "HomePage": {
+    "Hero": {
+      "badge": "Create, share, live.",
+      "title": "For those who love living in the moment.",
+      "button": "See all events",
+      "imageAlt": "Event"
+    },
+    "FilterHomepage": {
+      "all": "All",
+      "forYou": "For You",
+      "online": "Online",
+      "today": "Today",
+      "weekend": "This Weekend",
+      "free": "Free",
+      "music": "Music",
+      "food": "Food",
+      "charity": "Charity"
+    }
+  },
+  "FollowButton": {
+    "followButton": "Follow",
+    "unfollowButton": "Unfollow",
+    "followSuccess": "You are now following the organization!",
+    "unfollowSuccess": "You have unfollowed the organization.",
+    "errorMessage": "An error occurred. Please try again."
+  },
+
+  "ShareButton": {
+    "buttonText": "Share",
+    "shareText": "Discover {organizationName} on YALA Events.",
+    "copySuccess": "Link copied to clipboard!",
+    "shareError": "Failed to share. Please try again."
+  },
+
+  "SignUpForm": {
+    "firstNameLabel": "First Name",
+    "firstNamePlaceholder": "John",
+    "lastNameLabel": "Last Name",
+    "lastNamePlaceholder": "Doe",
+    "emailLabel": "Email",
+    "emailPlaceholder": "name@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Your password",
+    "passwordConfirmationLabel": "Confirm Password",
+    "passwordConfirmationPlaceholder": "Confirm your password",
+    "signUpButton": "Sign Up",
+    "googleButton": "Google",
+    "alreadyHaveAccount": "Already have an account?",
+    "signInLink": "Sign In",
+    "orContinueWith": "Or continue with",
+    "signUpError": "Error signing up",
+    "googleSignInError": "Error signing in with Google",
+    "unknownError": "An unknown error occurred"
+  },
+  "invitationForm": {
+    "inviteButton": "Invite a member",
+    "dialogTitle": "Invite a new member",
+    "emailLabel": "Email",
+    "emailPlaceholder": "example@email.com",
+    "roleLabel": "Role",
+    "rolePlaceholder": "Select a role",
+    "submitButton": "Send invitation",
+    "invitationSuccess": "Invitation sent successfully",
+    "invitationError": "An error occurred while sending the invitation"
+  },
+  "roleForm": {
+    "createButton": "Create Role",
+    "editButton": "Edit Role",
+    "dialogTitleCreate": "Create Role",
+    "dialogTitleEdit": "Edit Role",
+    "nameLabel": "Role Name",
+    "namePlaceholder": "Role Name",
+    "moduleHeader": "Module",
+    "permissionsHeader": "Permissions",
+    "submitButtonCreate": "Create Role",
+    "submitButtonEdit": "Edit Role",
+    "creationSuccess": "Role created successfully",
+    "creationError": "An error occurred while creating the role",
+    "updateSuccess": "Role updated successfully",
+    "updateError": "An error occurred while updating the role"
+  },
+
+  "organizationForm": {
+    "createTitle": "Create Organization",
+    "editTitle": "Edit Organization",
+    "nameLabel": "Organization Name",
+    "namePlaceholder": "My Organization",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Describe your organization...",
+    "logoLabel": "Logo",
+    "logoDescription": "Accepted formats: .jpg, .jpeg, .png, and .webp. Max 5MB",
+    "coverImageLabel": "Cover Image",
+    "coverImageDescription": "Accepted formats: .jpg, .jpeg, .png, and .webp. Max 5MB",
+    "websiteLabel": "Website",
+    "websitePlaceholder": "https://www.mywebsite.com",
+    "createButton": "Create Organization",
+    "editButton": "Edit Organization",
+    "createSuccess": "Organization created successfully",
+    "createError": "An error occurred while creating the organization",
+    "editSuccess": "Organization updated successfully",
+    "editError": "An error occurred while updating the organization"
+  },
+  "eventForm": {
+    "createEvent": "Create Event",
+    "updateEvent": "Update Event",
+    "creatingEvent": "Creating...",
+    "updatingEvent": "Updating...",
+    "creationSuccess": "Event created successfully",
+    "updateSuccess": "Event updated successfully",
+    "creationError": "An error occurred while creating the event",
+    "updateError": "An error occurred while updating the event",
+    "sessionTitleMin": "The session title must be at least 2 characters",
+    "agendaTitleMin": "The agenda title must be at least 2 characters",
+    "locationNameMin": "The location name must be at least 2 characters",
+    "faqQuestionMin": "The FAQ question must be at least 5 characters",
+    "faqResponseMin": "The FAQ response must be at least 5 characters",
+    "titleMin": "The title must be at least 3 characters",
+    "contentMin": "The content must be at least 10 characters",
+    "summaryMin": "The summary must be at least 10 characters"
+  },
+  "orderForm": {
+    "firstNameLabel": "First Name",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastNameLabel": "Last Name",
+    "lastNamePlaceholder": "Enter your last name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter your email address",
+    "indicatifLabel": "Indicative",
+    "indicatifPlaceholder": "+228",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "Enter your phone number",
+    "loadingButton": "Creating order...",
+    "submitButton": "Verify Order",
+    "cartQuantityMin": "The minimum quantity is 1",
+    "firstNameMin": "The first name must be at least 2 characters",
+    "lastNameMin": "The last name must be at least 2 characters",
+    "emailInvalid": "Invalid email address"
   }
 }

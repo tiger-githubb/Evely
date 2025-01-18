@@ -15,6 +15,7 @@ import { Role } from "@/types/api/role.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
+import { useTranslations } from "next-intl"; // Import translations hook
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { PiPencilSimple } from "react-icons/pi";
@@ -26,6 +27,7 @@ interface RoleFormProps {
 }
 
 export function RoleForm({ organizationId, role }: RoleFormProps) {
+  const t = useTranslations("roleForm"); // Fetch translations
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -40,7 +42,7 @@ export function RoleForm({ organizationId, role }: RoleFormProps) {
   });
 
   const form = useForm<CreateRoleType>({
-    resolver: zodResolver(createRoleSchema),
+    resolver: zodResolver(createRoleSchema(t).create),
     defaultValues: {
       name: role?.name || "",
       editable: role?.editable ?? true,
@@ -56,25 +58,25 @@ export function RoleForm({ organizationId, role }: RoleFormProps) {
   const createMutation = useMutation({
     mutationFn: createRole,
     onSuccess: () => {
-      toast.success("Rôle créé avec succès");
+      toast.success(t("creationSuccess"));
       form.reset();
       setOpen(false);
       queryClient.invalidateQueries({ queryKey: ["organization-roles"] });
     },
     onError: () => {
-      toast.error("Une erreur est survenue lors de la création du rôle");
+      toast.error(t("creationError"));
     },
   });
 
   const updateMutation = useMutation({
     mutationFn: (values: CreateRoleType) => updateRole(role!.id, values),
     onSuccess: () => {
-      toast.success("Rôle modifié avec succès");
+      toast.success(t("updateSuccess"));
       setOpen(false);
       queryClient.invalidateQueries({ queryKey: ["organization-roles"] });
     },
     onError: () => {
-      toast.error("Une erreur est survenue lors de la modification du rôle");
+      toast.error(t("updateError"));
     },
   });
 
@@ -98,13 +100,13 @@ export function RoleForm({ organizationId, role }: RoleFormProps) {
         ) : (
           <Button className="gap-2">
             <Plus className="h-4 w-4" />
-            Créer un rôle
+            {t("createButton")}
           </Button>
         )}
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{role ? "Modifier le rôle" : "Créer un rôle"}</DialogTitle>
+          <DialogTitle>{role ? t("dialogTitleEdit") : t("dialogTitleCreate")}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -113,9 +115,9 @@ export function RoleForm({ organizationId, role }: RoleFormProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nom du rôle</FormLabel>
+                  <FormLabel>{t("nameLabel")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nom du rôle" {...field} />
+                    <Input placeholder={t("namePlaceholder")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -125,8 +127,8 @@ export function RoleForm({ organizationId, role }: RoleFormProps) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Module</TableHead>
-                  <TableHead>Permissions</TableHead>
+                  <TableHead>{t("moduleHeader")}</TableHead>
+                  <TableHead>{t("permissionsHeader")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -168,7 +170,7 @@ export function RoleForm({ organizationId, role }: RoleFormProps) {
             </Table>
 
             <CustomButton type="submit" className="w-full" disabled={isSubmitting} isLoading={isSubmitting}>
-              {role ? "Modifier le rôle" : "Créer le rôle"}
+              {role ? t("submitButtonEdit") : t("submitButtonCreate")}
             </CustomButton>
           </form>
         </Form>

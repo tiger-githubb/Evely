@@ -5,6 +5,7 @@ import { EVENT_TYPE } from "@/config/constants";
 import { fetchPublicEvents } from "@/server/services/events.service";
 import { useQuery } from "@tanstack/react-query";
 import { isToday, isWeekend } from "date-fns";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { EventCard } from "../shared/sections-ui/event-card";
 import { EventGridSkeleton } from "../shared/ui-skeletons";
@@ -16,19 +17,22 @@ interface Category {
   value: string;
 }
 
-const CATEGORIES: Category[] = [
-  { label: "Tous", value: "all" },
-  { label: "Pour vous", value: "for-you" },
-  { label: "En ligne", value: "online" },
-  { label: "Aujourd'hui", value: "today" },
-  { label: "Ce week-end", value: "weekend" },
-  { label: "Libre", value: "free" },
-  { label: "Musique", value: "music" },
-  { label: "Gastronomie", value: "food" },
-  { label: "Œuvres de bienfaisance", value: "charity" },
-];
-
 export const EventTable = () => {
+  const t = useTranslations("HomePage.FilterHomepage");
+  const tLogs = useTranslations("Common.Logs");
+
+  const CATEGORIES: Category[] = [
+    { label: t("all"), value: "all" },
+    { label: t("forYou"), value: "for-you" },
+    { label: t("online"), value: "online" },
+    { label: t("today"), value: "today" },
+    { label: t("weekend"), value: "weekend" },
+    { label: t("free"), value: "free" },
+    { label: t("music"), value: "music" },
+    { label: t("food"), value: "food" },
+    { label: t("charity"), value: "charity" },
+  ];
+
   const [categoryFilter, setCategoryFilter] = useState("all");
 
   const {
@@ -43,10 +47,7 @@ export const EventTable = () => {
   if (events?.data.length === 0)
     return (
       <Section className="md:my-8">
-        <EmptyState
-          title="Aucun événement trouvé"
-          description="Il n'y a pas d'événements correspondant à vos critères de recherche."
-        />
+        <EmptyState title={tLogs("noEventsTitle")} description={tLogs("noEventsDescription")} />
       </Section>
     );
 
@@ -85,12 +86,9 @@ export const EventTable = () => {
         {isLoading ? (
           <EventGridSkeleton />
         ) : isError ? (
-          <ErrorState description="Une erreur est survenue lors du chargement des événements." variant="xl" />
+          <ErrorState description={tLogs("errorState")} variant="xl" />
         ) : filteredEvents?.length === 0 ? (
-          <EmptyState
-            title="Aucun événement trouvé"
-            description="Il n'y a pas d'événements correspondant à vos critères de recherche."
-          />
+          <EmptyState title={tLogs("noEventsTitle")} description={tLogs("noEventsDescription")} />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredEvents?.map((event) => (

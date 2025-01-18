@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { toast } from "sonner";
-import { createEventTicket } from "@/server/services/events-tickets.service";
-import { fetchEventTicketTypes } from "@/server/services/events-tickets-types.service";
-import { resolveSlug } from "@/server/services/slug-resolver.service";
 import { createTicketSchema, CreateTicketType } from "@/schemas/event-ticket.schema";
+import { fetchEventTicketTypes } from "@/server/services/events-tickets-types.service";
+import { createEventTicket } from "@/server/services/events-tickets.service";
+import { resolveSlug } from "@/server/services/slug-resolver.service";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface TicketGenerationFormProps {
   organizationSlug: string;
@@ -30,7 +30,7 @@ export default function TicketGenerationForm({ organizationSlug, eventSlug }: Ti
     reset,
     formState: { errors },
   } = useForm<CreateTicketType>({
-    resolver: zodResolver(createTicketSchema),
+    resolver: zodResolver(createTicketSchema((t) => t)),
   });
 
   // Resolve slugs to IDs
@@ -88,12 +88,7 @@ export default function TicketGenerationForm({ organizationSlug, eventSlug }: Ti
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <Input
-        {...register("name")}
-        placeholder="Nom du ticket"
-        required
-        aria-invalid={!!errors.name}
-      />
+      <Input {...register("name")} placeholder="Nom du ticket" required aria-invalid={!!errors.name} />
       {errors.name && <p className="text-red-500">{errors.name.message}</p>}
 
       <textarea
@@ -143,33 +138,16 @@ export default function TicketGenerationForm({ organizationSlug, eventSlug }: Ti
       {errors.maxTicketsPerOrder && <p className="text-red-500">{errors.maxTicketsPerOrder.message}</p>}
 
       <div className="flex gap-4">
-        <Input
-          {...register("saleStartDate")}
-          type="date"
-          placeholder="Date de début des ventes"
-        />
-        <Input
-          {...register("saleStartTime")}
-          type="time"
-          placeholder="Heure de début des ventes"
-        />
+        <Input {...register("saleStartDate")} type="date" placeholder="Date de début des ventes" />
+        <Input {...register("saleStartTime")} type="time" placeholder="Heure de début des ventes" />
       </div>
 
       <div className="flex gap-4">
-        <Input
-          {...register("saleEndDate")}
-          type="date"
-          placeholder="Date de fin des ventes"
-        />
-        <Input
-          {...register("saleEndTime")}
-          type="time"
-          placeholder="Heure de fin des ventes"
-        />
+        <Input {...register("saleEndDate")} type="date" placeholder="Date de fin des ventes" />
+        <Input {...register("saleEndTime")} type="time" placeholder="Heure de fin des ventes" />
       </div>
 
       <div>
-      
         <Select
           onValueChange={(value) => setValue("ticketTypeId", parseInt(value))}
           defaultValue={isLoadingTicketTypes || !eventTicketType ? "" : eventTicketType.data[0]?.id.toString()}

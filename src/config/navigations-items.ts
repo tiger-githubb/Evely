@@ -35,7 +35,7 @@ export const navigationItems = [
 export const boardNavigationItems = {
   navMain: [
     {
-      title: "Tableau de bord",
+      title: "Yala",
       url: routes.board.dashboard,
       icon: Home,
     },

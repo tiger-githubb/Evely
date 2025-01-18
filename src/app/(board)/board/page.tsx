@@ -1,12 +1,19 @@
+import { OrdersSection } from "./_components/orders-section";
+import { QuickActions } from "./_components/quick-actions";
+import { UserInfo } from "./_components/user-info";
+
 export default function Page() {
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div className="aspect-video rounded-xl bg-muted" />
-        <div className="aspect-video rounded-xl bg-muted" />
-        <div className="aspect-video rounded-xl bg-muted" />
+      <UserInfo />
+      <div className="flex gap-4">
+        <div className="w-2/3">
+          <OrdersSection />
+        </div>
+        <div className="w-1/3">
+          <QuickActions />
+        </div>
       </div>
-      <div className="min-h-[100vh] flex-1 rounded-xl bg-muted md:min-h-min" />
     </div>
   );
 }

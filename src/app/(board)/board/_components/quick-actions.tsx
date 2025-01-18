@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { CalendarPlus, Store, Users } from "lucide-react";
+import Link from "next/link";
 
 export function QuickActions() {
   const actions = [
@@ -23,24 +24,28 @@ export function QuickActions() {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      className="sticky top-4 rounded-xl border bg-card p-6 shadow-sm"
-    >
-      <h3 className="mb-4 text-lg font-semibold">Actions rapides</h3>
-      <div className="flex flex-col gap-3">
-        {actions.map((action) => (
-          <a
-            key={action.title}
-            href={action.href}
-            className="flex items-center gap-3 rounded-lg border p-3 transition-colors hover:bg-muted"
-          >
-            <action.icon className="h-4 w-4 text-primary" />
-            <span>{action.title}</span>
-          </a>
-        ))}
-      </div>
-    </motion.div>
+    <div className="sticky top-4">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="rounded-lg bg-white dark:bg-gray-800 shadow-sm"
+      >
+        <div className="p-4 border-b dark:border-gray-700">
+          <h3 className="font-medium text-base dark:text-gray-100">Actions rapides</h3>
+        </div>
+        <div className="p-2">
+          {actions.map((action) => (
+            <Link
+              key={action.title}
+              href={action.href}
+              className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-200 dark:text-gray-200"
+            >
+              <action.icon className="h-4 w-4 text-primary/80" />
+              <span className="text-sm">{action.title}</span>
+            </Link>
+          ))}
+        </div>
+      </motion.div>
+    </div>
   );
 }

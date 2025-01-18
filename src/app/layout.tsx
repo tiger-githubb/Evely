@@ -8,6 +8,8 @@ import { getMessages } from "next-intl/server";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { authOptions } from "./api/auth/[...nextauth]/auth-options";
 import AuthProvider from "./api/auth/[...nextauth]/auth-provider";
+import NextTopLoader from "nextjs-toploader";
+
 import "./globals.css";
 
 // Import the Plus Jakarta Sans Google Font
@@ -33,6 +35,8 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${plusJakartaSans.variable} antialiased`}>
+        <NextTopLoader showSpinner={false} color="#e95d41" />
+
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <NextIntlClientProvider messages={messages}>
             <ReactQueryProvider>

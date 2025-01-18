@@ -11,12 +11,15 @@ export class ApiErrorHandler {
     }
 
     // Client-side handling
-    if (error instanceof AxiosError && error.response?.data) {
-      const apiError = error.response.data as ApiError;
-      toast.error(apiError.message);
-      return null as T;
+    if (process.env.NODE_ENV === "development") {
+      if (error instanceof AxiosError && error.response?.data) {
+        const apiError = error.response.data as ApiError;
+        toast.error(apiError.message);
+        return null as T;
+      }
+      toast.error(defaultMessage);
     }
-    toast.error(defaultMessage);
+
     return null as T;
   }
 }

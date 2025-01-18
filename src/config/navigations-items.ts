@@ -32,7 +32,7 @@ export const navigationItems = [
   },
 ];
 
-export const boardNavigationItems = {
+export const OrganisationNavigationItems = {
   navMain: [
     {
       title: "Yala",
@@ -40,7 +40,7 @@ export const boardNavigationItems = {
       icon: Home,
     },
     {
-      title: "Mes événements",
+      title: "My Tickets",
       url: routes.board.myevents,
       icon: SquareChartGantt,
     },
@@ -68,6 +68,25 @@ export const boardNavigationItems = {
     //   url: "#",
     //   icon: PieChart,
     // },
+  ],
+};
+export const UserMainNavigationItems = {
+  navMain: [
+    {
+      title: "Yala",
+      url: routes.board.dashboard,
+      icon: Home,
+    },
+    {
+      title: "My Tickets",
+      url: routes.board.myevents,
+      icon: SquareChartGantt,
+    },
+    {
+      title: "Favorites",
+      url: routes.board.favorite,
+      icon: Bell,
+    },
   ],
 };
 

@@ -22,7 +22,7 @@ export function ShareButton({ organizationName }: ShareButtonProps) {
         navigator.clipboard.writeText(shareData.url);
         alert("Lien copié dans le presse-papiers !");
       }
-    } catch (error) {
+    } catch {
       alert("Échec du partage. Veuillez réessayer.");
     }
   };

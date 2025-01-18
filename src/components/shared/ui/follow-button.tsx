@@ -1,26 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { SignInModal } from "@/components/shared/auth/sign-in-modal";
-import { useSession } from "next-auth/react";
-import {
-  followOrganization,
-  unfollowOrganization,
-} from "@/server/services/followers.service";
-import { toast } from "sonner";
 import { CustomButton } from "@/components/ui/custom/custom-button";
+import { followOrganization, unfollowOrganization } from "@/server/services/followers.service";
 import { Bell } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 interface FollowButtonProps {
   organizationId: string;
   isFollowing?: boolean;
 }
 
-export function FollowButton({
-  organizationId,
-  isFollowing = false,
-}: FollowButtonProps) {
+export function FollowButton({ organizationId, isFollowing = false }: FollowButtonProps) {
   const [following, setFollowing] = useState(isFollowing);
   const [isLoading, setIsLoading] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -44,7 +37,7 @@ export function FollowButton({
       }
 
       setFollowing(!following);
-    } catch (error) {
+    } catch {
       toast.error("Une erreur s'est produite. Veuillez réessayer.");
     } finally {
       setIsLoading(false);

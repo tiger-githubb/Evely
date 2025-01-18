@@ -22,7 +22,6 @@ export const routes = {
     orders: "/board/orders",
     favorites: "/board/favorite",
     interests: "/board/interests",
-    mytickets: "/board/my-tickets",
     workspace: {
       home: (slug: string) => `/board/${slug}`,
       events: {

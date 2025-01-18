@@ -1,35 +1,27 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { PhoneInput } from "@/components/ui/custom/phone-input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import type { CreateOrderType } from "@/schemas/order.schema";
 import { createOrderSchema } from "@/schemas/order.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
 interface CheckoutFormProps {
   eventId: number;
   cart: { [key: number]: number };
-  onNextAction: (data: CreateOrderType) => void; // Renamed from onNext
+  onNextAction: (data: CreateOrderType) => void;
   isLoading?: boolean;
 }
 
-export function CheckoutForm({
-  eventId,
-  cart,
-  onNextAction,
-  isLoading,
-}: CheckoutFormProps) {
+export function CheckoutForm({ eventId, cart, onNextAction, isLoading }: CheckoutFormProps) {
+  const t = useTranslations("orderForm");
+
   const form = useForm<CreateOrderType>({
-    resolver: zodResolver(createOrderSchema),
+    resolver: zodResolver(createOrderSchema(t)),
     defaultValues: {
       eventId,
       firstName: "",
@@ -43,6 +35,7 @@ export function CheckoutForm({
       })),
     },
   });
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onNextAction)} className="space-y-4">
@@ -52,9 +45,9 @@ export function CheckoutForm({
             name="firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Prénom</FormLabel>
+                <FormLabel>{t("firstNameLabel")}</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input placeholder={t("firstNamePlaceholder")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -65,9 +58,9 @@ export function CheckoutForm({
             name="lastName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nom</FormLabel>
+                <FormLabel>{t("lastNameLabel")}</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input placeholder={t("lastNamePlaceholder")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -80,9 +73,9 @@ export function CheckoutForm({
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t("emailLabel")}</FormLabel>
               <FormControl>
-                <Input type="email" {...field} />
+                <Input type="email" placeholder={t("emailPlaceholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -95,9 +88,9 @@ export function CheckoutForm({
             name="indicatif"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Indicatif</FormLabel>
+                <FormLabel>{t("indicatifLabel")}</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input placeholder={t("indicatifPlaceholder")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -108,9 +101,9 @@ export function CheckoutForm({
             name="phone"
             render={({ field }) => (
               <FormItem className="col-span-2">
-                <FormLabel>Téléphone</FormLabel>
+                <FormLabel>{t("phoneLabel")}</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input placeholder={t("phonePlaceholder")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -121,7 +114,7 @@ export function CheckoutForm({
         <PhoneInput />
 
         <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? "Création de la commande..." : "Vérifier la commande"}
+          {isLoading ? t("loadingButton") : t("submitButton")}
         </Button>
       </form>
     </Form>

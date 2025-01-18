@@ -1,5 +1,4 @@
-import { useOrganizationStore } from "@/stores/organization-store";
-import { BadgeCheck, Bell, Building, Calendar, CreditCard, Home, LogOut, Settings2, SquareChartGantt } from "lucide-react";
+import { BadgeCheck, Bell, Building, Calendar, CreditCard, Heart, Home, LogOut, Settings2, SquareChartGantt } from "lucide-react";
 import { routes } from "./routes";
 
 export const navigationItems = [
@@ -41,12 +40,12 @@ export const OrganisationNavigationItems = {
     },
     {
       title: "My Tickets",
-      url: routes.board.myevents,
+      url: routes.board.mytickets,
       icon: SquareChartGantt,
     },
     {
       title: "Événements",
-      url: routes.board.workspace.events.list(useOrganizationStore.getState().activeOrganization?.slug || ""),
+      url: "/board/events", // Use a default path initially
       icon: Calendar,
     },
 
@@ -79,13 +78,13 @@ export const UserMainNavigationItems = {
     },
     {
       title: "My Tickets",
-      url: routes.board.myevents,
+      url: routes.board.mytickets,
       icon: SquareChartGantt,
     },
     {
       title: "Favorites",
       url: routes.board.favorite,
-      icon: Bell,
+      icon: Heart,
     },
   ],
 };

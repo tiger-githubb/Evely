@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Event } from "@/types/api/event.type";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye, Trash, Upload, RotateCcw } from "lucide-react";
+import { Eye, RotateCcw, Trash, Upload } from "lucide-react";
 
 export const columns = (
   onView: (slug: string) => void,
@@ -13,13 +13,15 @@ export const columns = (
   {
     accessorKey: "title",
     header: "Titre",
+    size: 300,
     cell: ({ row }) => <span className="font-medium">{row.original.title}</span>,
   },
-  {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ row }) => new Date(row.original.date).toLocaleDateString(),
-  },
+
+  // {
+  //   accessorKey: "date",
+  //   header: "Date",
+  //   cell: ({ row }) => new Date(row.original.date).toLocaleDateString(),
+  // },
   {
     accessorKey: "summary",
     header: "Résumé",
@@ -32,6 +34,7 @@ export const columns = (
   {
     accessorKey: "status",
     header: "Statut",
+    size: 50,
     cell: ({ row }) => {
       const isDraft = row.original.draft;
       return (

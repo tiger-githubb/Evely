@@ -1,19 +1,22 @@
 import { z } from "zod";
 
-const orderCartItemSchema = z.object({
-  ticketId: z.number(),
-  quantity: z.number().min(1),
-});
+export const createOrderSchema = (t: (key: string) => string) => {
+  const orderCartItemSchema = z.object({
+    ticketId: z.number(),
+    quantity: z.number().min(1, t("cartQuantityMin")),
+  });
 
-export const createOrderSchema = z.object({
-  eventId: z.number(),
-  firstName: z.string().min(2),
-  lastName: z.string().min(2),
-  email: z.string().email(),
-  indicatif: z.string(),
-  phone: z.string(),
-  promoCodeId: z.string().optional(),
-  cart: z.array(orderCartItemSchema),
-});
+  return z.object({
+    eventId: z.number(),
+    firstName: z.string().min(2, t("firstNameMin")),
+    lastName: z.string().min(2, t("lastNameMin")),
+    email: z.string().email(t("emailInvalid")),
+    indicatif: z.string(),
+    phone: z.string(),
+    promoCodeId: z.string().optional(),
+    cart: z.array(orderCartItemSchema),
+  });
+};
 
-export type CreateOrderType = z.infer<typeof createOrderSchema>;
+export type OrderSchema = ReturnType<typeof createOrderSchema>;
+export type CreateOrderType = z.infer<OrderSchema>;

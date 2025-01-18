@@ -5,6 +5,7 @@ import { CustomButton } from "@/components/ui/custom/custom-button";
 import { followOrganization, unfollowOrganization } from "@/server/services/followers.service";
 import { Bell } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -18,6 +19,7 @@ export function FollowButton({ organizationId, isFollowing = false }: FollowButt
   const [isLoading, setIsLoading] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
   const { data: session } = useSession();
+  const t = useTranslations("FollowButton"); // Load translations for FollowButton
 
   const handleFollowToggle = async () => {
     if (!session) {
@@ -30,15 +32,15 @@ export function FollowButton({ organizationId, isFollowing = false }: FollowButt
     try {
       if (following) {
         await unfollowOrganization(Number(organizationId));
-        toast.success("Vous ne suivez plus l'organisation.");
+        toast.success(t("unfollowSuccess")); // Toast for unfollow success
       } else {
         await followOrganization(Number(organizationId));
-        toast.success("Vous suivez désormais l'organisation !");
+        toast.success(t("followSuccess")); // Toast for follow success
       }
 
       setFollowing(!following);
     } catch {
-      toast.error("Une erreur s'est produite. Veuillez réessayer.");
+      toast.error(t("errorMessage")); // Toast for errors
     } finally {
       setIsLoading(false);
     }
@@ -50,17 +52,15 @@ export function FollowButton({ organizationId, isFollowing = false }: FollowButt
         onClick={handleFollowToggle}
         disabled={isLoading}
         variant={following ? "secondary" : "black"}
-        //round button
-
         className="rounded-full"
       >
         {following ? (
           <>
             <Bell className="w-4 h-4 mr-2" />
-            Ne plus suivre
+            {t("unfollowButton")}
           </>
         ) : (
-          "Suivre"
+          t("followButton")
         )}
       </CustomButton>
       <SignInModal isOpen={showSignInModal} onOpenChange={setShowSignInModal} />

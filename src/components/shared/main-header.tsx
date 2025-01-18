@@ -16,12 +16,14 @@ import { AuthStatus } from "./auth-status";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 import { ModeToggleFront } from "./mode-toggle-front";
+import LocaleSwitcher from "./translate/LocaleSwitcher";
 
 export const MainHeader = () => {
   return (
     <header className="w-full top-0 left-0 bg-background">
       <div className="container relative mx-auto min-h-20 flex gap-4 flex-row  items-center  justify-between">
         <div className="hidden lg:flex items-center max-w-md w-full">
+          <LocaleSwitcher />
           <div className="relative w-full">
             <Input
               type="search"
@@ -54,17 +56,13 @@ export const MainHeader = () => {
                       </>
                     ) : (
                       <>
-                        <NavigationMenuTrigger className="font-medium text-xs">
-                          {item.title}
-                        </NavigationMenuTrigger>
+                        <NavigationMenuTrigger className="font-medium text-xs">{item.title}</NavigationMenuTrigger>
                         <NavigationMenuContent className="!w-[450px] p-4">
                           <div className="flex flex-col lg:grid grid-cols-2 gap-4">
                             <div className="flex flex-col h-full justify-between">
                               <div className="flex flex-col">
                                 <p className="text-base">{item.title}</p>
-                                <p className="text-muted-foreground text-sm">
-                                  {item.description}
-                                </p>
+                                <p className="text-muted-foreground text-sm">{item.description}</p>
                               </div>
                               <Button size="sm" className="mt-10">
                                 Book a call today

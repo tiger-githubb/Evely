@@ -12,6 +12,7 @@ import { fetchOrganizationRoles } from "@/server/services/roles.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UserPlus } from "lucide-react";
+import { useTranslations } from "next-intl"; // Import the translation hook
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -21,6 +22,7 @@ interface InvitationFormProps {
 }
 
 export function InvitationForm({ organizationId }: InvitationFormProps) {
+  const t = useTranslations("invitationForm"); // Updated namespace
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
 
@@ -30,7 +32,7 @@ export function InvitationForm({ organizationId }: InvitationFormProps) {
   });
 
   const form = useForm<CreateOrganizationInvitationType>({
-    resolver: zodResolver(createOrganizationInvitationSchema),
+    resolver: zodResolver(createOrganizationInvitationSchema((key) => t(key)).create), // Pass translation function
     defaultValues: {
       email: "",
       roleId: undefined,
@@ -40,7 +42,7 @@ export function InvitationForm({ organizationId }: InvitationFormProps) {
   const inviteMutation = useMutation({
     mutationFn: (values: CreateOrganizationInvitationType) => sendOrganizationInvitation(organizationId, values),
     onSuccess: () => {
-      toast.success("Invitation envoyée avec succès");
+      toast.success(t("invitationSuccess")); // Use nested key
       form.reset();
       setOpen(false);
       queryClient.invalidateQueries({
@@ -48,7 +50,7 @@ export function InvitationForm({ organizationId }: InvitationFormProps) {
       });
     },
     onError: () => {
-      toast.error("Une erreur est survenue lors de l'envoi de l'invitation");
+      toast.error(t("invitationError")); // Use nested key
     },
   });
 
@@ -61,12 +63,12 @@ export function InvitationForm({ organizationId }: InvitationFormProps) {
       <DialogTrigger asChild>
         <Button className="gap-2">
           <UserPlus className="h-4 w-4" />
-          Inviter un membre
+          {t("inviteButton")} {/* Updated key */}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Inviter un nouveau membre</DialogTitle>
+          <DialogTitle>{t("dialogTitle")}</DialogTitle> {/* Updated key */}
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -75,9 +77,9 @@ export function InvitationForm({ organizationId }: InvitationFormProps) {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("emailLabel")}</FormLabel> {/* Updated key */}
                   <FormControl>
-                    <Input placeholder="exemple@email.com" {...field} />
+                    <Input placeholder={t("emailPlaceholder")} {...field} /> {/* Updated key */}
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -89,11 +91,11 @@ export function InvitationForm({ organizationId }: InvitationFormProps) {
               name="roleId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Rôle</FormLabel>
+                  <FormLabel>{t("roleLabel")}</FormLabel> {/* Updated key */}
                   <Select onValueChange={(value) => field.onChange(Number(value))} value={field.value?.toString()}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner un rôle" />
+                        <SelectValue placeholder={t("rolePlaceholder")} /> {/* Updated key */}
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -110,7 +112,7 @@ export function InvitationForm({ organizationId }: InvitationFormProps) {
             />
 
             <CustomButton type="submit" className="w-full" disabled={inviteMutation.isPending} isLoading={inviteMutation.isPending}>
-              Envoyer l&apos;invitation
+              {t("submitButton")} {/* Updated key */}
             </CustomButton>
           </form>
         </Form>

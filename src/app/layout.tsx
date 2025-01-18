@@ -3,10 +3,14 @@ import ReactQueryProvider from "@/utils/providers/ReactQueryProvider";
 import { ThemeProvider } from "@/utils/providers/theme-provider";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { authOptions } from "./api/auth/[...nextauth]/auth-options";
 import AuthProvider from "./api/auth/[...nextauth]/auth-provider";
+import NextTopLoader from "nextjs-toploader";
+
 import "./globals.css";
-import { Plus_Jakarta_Sans } from "next/font/google";
 
 // Import the Plus Jakarta Sans Google Font
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -25,18 +29,23 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const messages = await getMessages();
   const session = await getServerSession(authOptions);
 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${plusJakartaSans.variable} antialiased`}>
+        <NextTopLoader showSpinner={false} color="#e95d41" />
+
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <ReactQueryProvider>
-            <AuthProvider session={session}>
-              {children}
-              <Toaster richColors />
-            </AuthProvider>
-          </ReactQueryProvider>
+          <NextIntlClientProvider messages={messages}>
+            <ReactQueryProvider>
+              <AuthProvider session={session}>
+                {children}
+                <Toaster richColors />
+              </AuthProvider>
+            </ReactQueryProvider>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

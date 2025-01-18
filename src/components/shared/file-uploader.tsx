@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { FileIcon, ImageIcon, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
@@ -29,19 +30,20 @@ export function FileUploader({
   },
   preview = true,
 }: FileUploaderProps) {
+  const t = useTranslations("Common.Logs");
   const [files, setFiles] = useState<(File | string)[]>(value);
 
   const onDrop = useCallback(
     (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
       if (rejectedFiles.length > 0) {
-        toast.error("Certains fichiers n'ont pas pu être ajoutés (format non supporté ou taille trop importante)");
+        toast.error(t("someFileUnsupported"));
       }
 
       const newFiles = [...files, ...acceptedFiles].slice(0, maxFiles);
       setFiles(newFiles);
       onChange(newFiles.filter((file): file is File => file instanceof File));
     },
-    [files, maxFiles, onChange]
+    [files, maxFiles, onChange, t]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -72,13 +74,13 @@ export function FileUploader({
         <input {...getInputProps()} />
         <div className="text-center">
           {isDragActive ? (
-            <p className="text-sm text-muted-foreground">Déposez les fichiers ici...</p>
+            <p className="text-sm text-muted-foreground">{t("fileDropActive")}</p>
           ) : (
             <div className="space-y-2">
               <div className="flex justify-center">
                 <ImageIcon className="h-8 w-8 text-muted-foreground" />
               </div>
-              <p className="text-sm text-muted-foreground">Glissez des fichiers ici ou cliquez pour en sélectionner</p>
+              <p className="text-sm text-muted-foreground">{t("fileDropInactive")}</p>
             </div>
           )}
         </div>

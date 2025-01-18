@@ -11,11 +11,10 @@ import { navigationItems } from "@/config/navigations-items";
 import { routes } from "@/config/routes";
 import { MoveRight, Search } from "lucide-react";
 import Link from "next/link";
-import { PiCheersDuotone } from "react-icons/pi";
 import { Input } from "../ui/input";
 import { AuthStatus } from "./auth-status";
-import { MobileMenu } from "./mobile-menu";
 import { Logo } from "./logo";
+import { MobileMenu } from "./mobile-menu";
 
 export const MainHeader = () => {
   return (
@@ -34,7 +33,7 @@ export const MainHeader = () => {
 
         <div className="flex lg:justify-center">
           <Link href={routes.home} className="flex items-center gap-2">
-        <Logo/>
+            <Logo />
           </Link>
         </div>
 

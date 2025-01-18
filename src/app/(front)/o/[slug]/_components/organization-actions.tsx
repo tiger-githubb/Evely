@@ -56,11 +56,10 @@ export function OrganizationActions({ organization, isFollowing = false }: Organ
         await navigator.clipboard.writeText(window.location.href);
         toast.success("Lien copié dans le presse-papier");
       }
-    } catch (err) {
+    } catch {
       toast.error("Le partage a échoué");
     }
   };
-
   return (
     <>
       <div className="flex items-center gap-3 mb-4 sm:ml-auto">

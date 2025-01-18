@@ -19,7 +19,7 @@ export default function EventsTable() {
   const organizationId = activeOrganization?.id;
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["organization-events", organizationSlug],
+    queryKey: ["organization-events", organizationSlug, organizationId],
     queryFn: () => {
       if (!organizationSlug) {
         return Promise.reject("Aucune organisation active sélectionnée.");

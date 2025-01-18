@@ -10,9 +10,9 @@ import { TeamSwitcher } from "./team-switcher";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: session } = useSession();
-  const userRole = session?.user?.role.name;
+  const userRole = session?.user?.role.id;
 
-  const navigationItems = userRole === "User" ? UserMainNavigationItems.navMain : OrganisationNavigationItems.navMain;
+  const navigationItems = userRole === 2 ? UserMainNavigationItems.navMain : OrganisationNavigationItems.navMain;
 
   return (
     <Sidebar collapsible="icon" {...props}>

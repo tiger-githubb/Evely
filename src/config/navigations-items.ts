@@ -1,4 +1,3 @@
-import { useOrganizationStore } from "@/stores/organization-store";
 import { BadgeCheck, Bell, Building, Calendar, CreditCard, Heart, Home, LogOut, Settings2, SquareChartGantt } from "lucide-react";
 import { routes } from "./routes";
 
@@ -46,7 +45,7 @@ export const OrganisationNavigationItems = {
     },
     {
       title: "Événements",
-      url: routes.board.workspace.events.list(useOrganizationStore.getState().activeOrganization?.slug || ""),
+      url: "/board/events", // Use a default path initially
       icon: Calendar,
     },
 

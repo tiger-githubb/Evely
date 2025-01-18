@@ -42,7 +42,7 @@ export const AuthStatus = () => {
               <Link href={routes.board.profile}>Profil</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={routes.board.myevents}>Mes événements</Link>
+              <Link href={routes.board.mytickets}>Mes Tickets</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => signOut()}>Déconnexion</DropdownMenuItem>

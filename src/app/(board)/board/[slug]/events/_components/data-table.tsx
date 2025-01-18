@@ -78,6 +78,7 @@ export default function EventsTable() {
       data={data?.data || []}
       isLoading={isLoading}
       error={error}
+      filterColumn="title"
       errorMessage="Une erreur est survenue lors du chargement des événements."
       rowsPerPage={10}
       noResultsMessage="Aucun événement trouvé."

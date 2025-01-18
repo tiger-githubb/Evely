@@ -16,6 +16,7 @@ import { Input } from "../ui/input";
 import { AuthStatus } from "./auth-status";
 import { MobileMenu } from "./mobile-menu";
 import { Logo } from "./logo";
+import { ModeToggleFront } from "./mode-toggle-front";
 
 export const MainHeader = () => {
   return (
@@ -34,7 +35,7 @@ export const MainHeader = () => {
 
         <div className="flex lg:justify-center">
           <Link href={routes.home} className="flex items-center gap-2">
-        <Logo/>
+            <Logo />
           </Link>
         </div>
 
@@ -54,13 +55,17 @@ export const MainHeader = () => {
                       </>
                     ) : (
                       <>
-                        <NavigationMenuTrigger className="font-medium text-xs">{item.title}</NavigationMenuTrigger>
+                        <NavigationMenuTrigger className="font-medium text-xs">
+                          {item.title}
+                        </NavigationMenuTrigger>
                         <NavigationMenuContent className="!w-[450px] p-4">
                           <div className="flex flex-col lg:grid grid-cols-2 gap-4">
                             <div className="flex flex-col h-full justify-between">
                               <div className="flex flex-col">
                                 <p className="text-base">{item.title}</p>
-                                <p className="text-muted-foreground text-sm">{item.description}</p>
+                                <p className="text-muted-foreground text-sm">
+                                  {item.description}
+                                </p>
                               </div>
                               <Button size="sm" className="mt-10">
                                 Book a call today
@@ -87,6 +92,7 @@ export const MainHeader = () => {
               </NavigationMenuList>
             </NavigationMenu>
           </div>
+          <ModeToggleFront />
 
           <AuthStatus />
           <MobileMenu />

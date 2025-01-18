@@ -76,7 +76,7 @@
     --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
-    --primary: 24.6 95% 53.1%;
+    --primary: 10 80% 57%;
     --primary-foreground: 60 9.1% 97.8%;
     --secondary: 60 4.8% 95.9%;
     --secondary-foreground: 24 9.8% 10%;
@@ -158,6 +158,16 @@
     font-family: var(--font-plus-jakarta-sans);
   }
   :root {
-    --font-plus-jakarta-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-plus-jakarta-sans: "Plus Jakarta Sans", sans-serif;
   }
+}
+
+/* Default (Light Mode) */
+.logo-img {
+  content: url("/images/logos/logo-yala-light.png");
+}
+
+/* Dark Mode */
+html.dark .logo-img {
+  content: url("/images/logos/logo-yala-dark.png");
 }

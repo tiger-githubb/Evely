@@ -41,7 +41,7 @@ export const OrganisationNavigationItems = {
     },
     {
       title: "My Tickets",
-      url: routes.board.myevents,
+      url: routes.board.mytickets,
       icon: SquareChartGantt,
     },
     {
@@ -79,7 +79,7 @@ export const UserMainNavigationItems = {
     },
     {
       title: "My Tickets",
-      url: routes.board.myevents,
+      url: routes.board.mytickets,
       icon: SquareChartGantt,
     },
     {

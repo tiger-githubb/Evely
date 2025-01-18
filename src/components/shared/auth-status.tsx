@@ -11,10 +11,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { routes } from "@/config/routes";
 import { signOut, useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export const AuthStatus = () => {
   const { data: session } = useSession();
+  const t = useTranslations("AuthentificationStatus");
 
   const getUserInitials = (name: string) => {
     return name
@@ -31,32 +33,32 @@ export const AuthStatus = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="cursor-pointer">
-              <AvatarFallback>{getUserInitials(session.user.name || "U")}</AvatarFallback>
+              <AvatarFallback>{getUserInitials(session.user.name || t("userFallback"))}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem asChild>
-              <Link href={routes.board.dashboard}>Tableau de bord</Link>
+              <Link href={routes.board.dashboard}>{t("dashboard")}</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={routes.board.profile}>Profil</Link>
+              <Link href={routes.board.profile}>{t("profile")}</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={routes.board.myevents}>Mes événements</Link>
+              <Link href={routes.board.mytickets}>{t("myEvents")}</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => signOut()}>Déconnexion</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => signOut()}>{t("signOut")}</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
         <>
           <Link href={routes.auth.signIn}>
             <Button variant="outline" size={"sm"}>
-              Connexion
+              {t("signIn")}
             </Button>
           </Link>
           <Link href={routes.auth.signUp}>
-            <Button size={"sm"}>Inscription</Button>
+            <Button size={"sm"}>{t("signUp")}</Button>
           </Link>
         </>
       )}

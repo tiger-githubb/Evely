@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { fetchEventTickets } from "@/server/services/events-tickets.service";
+import { resolveSlug } from "@/server/services/slug-resolver.service";
 import { useOrganizationStore } from "@/stores/organization-store";
-import { formatDate, formatTime } from "@/utils/date-utils";
+import { FormattedDate, FormattedTime } from "@/utils/date-utils";
 import { useQuery } from "@tanstack/react-query";
 import { MoreVertical } from "lucide-react";
-import { toast } from "sonner";
 import { useEffect, useState } from "react";
-import { resolveSlug } from "@/server/services/slug-resolver.service";
+import { toast } from "sonner";
 
 interface TicketListProps {
   eventSlug: string;
@@ -20,7 +20,6 @@ export default function TicketList({ eventSlug }: TicketListProps) {
   const { activeOrganization } = useOrganizationStore();
   const organizationId = activeOrganization?.id;
   const [eventId, setEventId] = useState<number | null>(null);
-
 
   useEffect(() => {
     const fetchEventId = async () => {
@@ -36,8 +35,6 @@ export default function TicketList({ eventSlug }: TicketListProps) {
 
     fetchEventId();
   }, [organizationId, eventSlug]);
-
-
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["event-tickets", organizationId, eventId],
@@ -98,7 +95,8 @@ export default function TicketList({ eventSlug }: TicketListProps) {
               <div className="flex items-center space-x-2 mt-2">
                 <span className="text-green-500">● En vente</span>
                 <span>
-                  • Se termine {formatDate(ticket.saleEndDate)} à {formatTime(ticket.saleEndTime)}
+                  • Se termine {FormattedDate({ dateString: ticket.saleEndDate })} à{" "}
+                  {FormattedTime({ timeString: ticket.saleEndTime })}
                 </span>
               </div>
               <div className="flex justify-between mt-4">

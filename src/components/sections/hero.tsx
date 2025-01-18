@@ -9,7 +9,7 @@ import Image from "next/image";
 import Section from "../ui/custom/section";
 
 export const Hero = () => {
-  const t = useTranslations("Hero");
+  const t = useTranslations("HomePage.Hero");
   const images = [image1, image2, image3];
   const shuffledImages = [...images].sort(() => Math.random() - 0.5);
 
@@ -31,13 +31,13 @@ export const Hero = () => {
         </div>
         <div className="grid grid-cols-2 gap-4 h-full">
           <div className="relative rounded-md h-full overflow-hidden">
-            <Image src={shuffledImages[0]} alt="Événement" fill className="object-cover" />
+            <Image src={shuffledImages[0]} alt={t("imageAlt")} fill className="object-cover" />
           </div>
           <div className="relative rounded-md h-full row-span-2 overflow-hidden">
-            <Image src={shuffledImages[1]} alt="Événement" fill className="object-cover" />
+            <Image src={shuffledImages[1]} alt={t("imageAlt")} fill className="object-cover" />
           </div>
           <div className="relative rounded-md h-full overflow-hidden">
-            <Image src={shuffledImages[2]} alt="Événement" fill className="object-cover" />
+            <Image src={shuffledImages[2]} alt={t("imageAlt")} fill className="object-cover" />
           </div>
         </div>
       </div>

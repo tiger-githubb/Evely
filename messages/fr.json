@@ -1,34 +1,268 @@
 {
-  "AppLayout": {
-    "home": "Accueil",
-    "logout": "Déconnexion",
-    "profile": "Profil"
-  },
-  "Hero": {
-    "badge": "Créez, partagez, vivez.",
-    "title": "Pour ceux qui aiment vivre l'instant.",
-    "button": "Voir tous les événements"
-  },
-  "HomePage": {
-    "title": "Accueil"
-  },
   "LocaleSwitcher": {
     "fr": "Français",
     "en": "Anglais",
     "label": "Langue"
   },
-  "LoginPage": {
-    "credentials": "Identifiants: jane@doe.com / next-intl",
-    "description": "Veuillez saisir vos informations.",
-    "email": "Email",
-    "invalidCredentials": "Veuillez vérifier vos identifiants.",
-    "invalidEmail": "Veuillez saisir une adresse email valide.",
-    "invalidPassword": "Veuillez saisir un mot de passe.",
-    "login": "Se connecter",
-    "password": "Mot de passe",
-    "title": "Bon retour"
+  "FormattedDate": {
+    "invalidDate": "Date invalide",
+    "na": "N/A"
   },
-  "ProfilePage": {
-    "title": "Profil"
+  "FormattedTime": {
+    "invalidTime": "Heure invalide",
+    "na": "N/A"
+  },
+  "Auth": {
+    "notAuthenticated": "L'utilisateur n'est pas authentifié"
+  },
+  "Schemas": {
+    "EventFaq": {
+      "questionRequired": "La question est requise",
+      "responseRequired": "La réponse est requise",
+      "eventIdRequired": "L'ID de l'événement est requis"
+    },
+    "EventTicket": {
+      "nameMin": "Le nom du billet doit comporter au moins 2 caractères",
+      "descriptionMin": "La description doit comporter au moins 10 caractères",
+      "priceType": "Le prix doit être un nombre",
+      "priceMin": "Le prix doit être au moins 0",
+      "availableQuantityType": "La quantité disponible doit être un nombre",
+      "availableQuantityMin": "La quantité disponible doit être au moins 1",
+      "minTicketsType": "Le nombre minimum de billets par commande doit être un nombre",
+      "minTicketsMin": "Le nombre minimum de billets par commande doit être au moins 1",
+      "maxTicketsType": "Le nombre maximum de billets par commande doit être un nombre",
+      "maxTicketsMin": "Le nombre maximum de billets par commande doit être au moins 1",
+      "ticketTypeIdType": "Le type de billet doit être un nombre"
+    },
+    "EventCreate": {
+      "titleMin": "Le titre doit comporter au moins 3 caractères",
+      "contentMin": "Le contenu doit comporter au moins 10 caractères",
+      "summaryMin": "Le résumé doit comporter au moins 10 caractères",
+      "faqQuestionMin": "La question FAQ doit comporter au moins 5 caractères",
+      "faqResponseMin": "La réponse FAQ doit comporter au moins 5 caractères",
+      "agendaTitleMin": "Le titre de l'agenda doit comporter au moins 2 caractères",
+      "sessionTitleMin": "Le titre de la session doit comporter au moins 2 caractères",
+      "locationNameMin": "Le nom du lieu doit comporter au moins 2 caractères"
+    },
+    "OrganizationInvitation": {
+      "emailInvalid": "L'adresse email est invalide",
+      "roleIdRequired": "L'ID du rôle est requis"
+    },
+    "Order": {
+      "cartQuantityMin": "La quantité doit être au moins 1",
+      "firstNameMin": "Le prénom doit comporter au moins 2 caractères",
+      "lastNameMin": "Le nom doit comporter au moins 2 caractères",
+      "emailInvalid": "L'adresse email est invalide"
+    },
+    "SignUpForm": {
+      "firstNameRequired": "Le prénom est requis",
+      "lastNameRequired": "Le nom est requis",
+      "emailInvalid": "L'adresse email est invalide",
+      "passwordMin": "Le mot de passe doit comporter au moins 8 caractères",
+      "passwordSymbol": "Le mot de passe doit contenir au moins un symbole",
+      "passwordConfirmationMin": "Le mot de passe de confirmation doit comporter au moins 8 caractères",
+      "passwordMismatch": "Les mots de passe ne correspondent pas"
+    }
+  },
+  "Config": {
+    "Site": {
+      "title": "Yala",
+      "description": "La plateforme innovante de gestion d'événements au Togo - Découvrez, organisez et réservez vos événements en toute simplicité",
+      "url": "https://yala.events",
+      "locale": "fr_TG"
+    }
+  },
+  "Categories": {
+    "music": "Musique",
+    "nightLife": "Vie nocturne",
+    "performingArts": "Arts de la scène",
+    "parties": "Fêtes",
+    "meetings": "Rencontres",
+    "business": "Affaires",
+    "gastronomy": "Gastronomie"
+  },
+  "Common": {
+    "Logs": {
+      "noItemsFound": "Aucun élément trouvé",
+      "noItemsDescription": "Aucun élément à afficher pour le moment.",
+      "errorTitle": "Erreur",
+      "errorDescription": "Une erreur s'est produite. Veuillez réessayer plus tard.",
+      "successTitle": "Succès",
+      "successDescription": "L'opération a été effectuée avec succès.",
+      "warningTitle": "Attention",
+      "warningDescription": "Une action requiert votre attention.",
+      "fileUnsupported": "Format de fichier non supporté ou taille trop grande",
+      "dragDropActive": "Déposez l'image ici...",
+      "dragDropInactive": "Faites glisser une image ici ou cliquez pour en sélectionner une",
+      "fileDropActive": "Déposez les fichiers ici...",
+      "fileDropInactive": "Faites glisser des fichiers ici ou cliquez pour en sélectionner",
+      "someFileUnsupported": "Certains fichiers n'ont pas pu être ajoutés (format non supporté ou taille trop grande)"
+    },
+    "Buttons": {
+      "signIn": "Se connecter",
+      "signUp": "S'inscrire",
+      "signOut": "Se déconnecter"
+    },
+    "Menus": {
+      "dashboard": "Tableau de bord",
+      "profile": "Profil",
+      "myEvents": "Mes événements"
+    },
+    "Placeholders": {
+      "search": "Rechercher des événements...",
+      "userFallback": "U"
+    },
+    "Messages": {
+      "errorLoading": "Une erreur s'est produite lors du chargement.",
+      "noResults": "Aucun résultat trouvé."
+    }
+  },
+  "AuthentificationStatus": {
+    "userFallback": "U",
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "myEvents": "Mes événements",
+    "signOut": "Se déconnecter",
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire"
+  },
+
+  "HomePage": {
+    "Hero": {
+      "badge": "Créer, partager, vivre.",
+      "title": "Pour ceux qui aiment vivre l'instant.",
+      "button": "Voir tous les événements",
+      "imageAlt": "Événement"
+    },
+    "FilterHomepage": {
+      "all": "Tous",
+      "forYou": "Pour vous",
+      "online": "En ligne",
+      "today": "Aujourd'hui",
+      "weekend": "Ce week-end",
+      "free": "Gratuit",
+      "music": "Musique",
+      "food": "Nourriture",
+      "charity": "Charité"
+    }
+  },
+  "FollowButton": {
+    "followButton": "Suivre",
+    "unfollowButton": "Ne plus suivre",
+    "followSuccess": "Vous suivez maintenant l'organisation !",
+    "unfollowSuccess": "Vous ne suivez plus l'organisation.",
+    "errorMessage": "Une erreur s'est produite. Veuillez réessayer."
+  },
+
+  "ShareButton": {
+    "buttonText": "Partager",
+    "shareText": "Découvrez {organizationName} sur YALA Events.",
+    "copySuccess": "Lien copié dans le presse-papiers !",
+    "shareError": "Échec du partage. Veuillez réessayer."
+  },
+
+  "SignUpForm": {
+    "firstNameLabel": "Prénom",
+    "firstNamePlaceholder": "Jean",
+    "lastNameLabel": "Nom",
+    "lastNamePlaceholder": "Dupont",
+    "emailLabel": "Email",
+    "emailPlaceholder": "nom@example.com",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "Votre mot de passe",
+    "passwordConfirmationLabel": "Confirmer le mot de passe",
+    "passwordConfirmationPlaceholder": "Confirmez votre mot de passe",
+    "signUpButton": "S'inscrire",
+    "googleButton": "Google",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "signInLink": "Se connecter",
+    "orContinueWith": "Ou continuer avec",
+    "signUpError": "Erreur lors de l'inscription",
+    "googleSignInError": "Erreur lors de la connexion avec Google",
+    "unknownError": "Une erreur inconnue s'est produite"
+  },
+  "invitationForm": {
+    "inviteButton": "Inviter un membre",
+    "dialogTitle": "Inviter un nouveau membre",
+    "emailLabel": "Email",
+    "emailPlaceholder": "exemple@email.com",
+    "roleLabel": "Rôle",
+    "rolePlaceholder": "Sélectionner un rôle",
+    "submitButton": "Envoyer l'invitation",
+    "invitationSuccess": "Invitation envoyée avec succès",
+    "invitationError": "Une erreur s'est produite lors de l'envoi de l'invitation"
+  },
+  "roleForm": {
+    "createButton": "Créer un rôle",
+    "editButton": "Modifier le rôle",
+    "dialogTitleCreate": "Créer un rôle",
+    "dialogTitleEdit": "Modifier le rôle",
+    "nameLabel": "Nom du rôle",
+    "namePlaceholder": "Nom du rôle",
+    "moduleHeader": "Module",
+    "permissionsHeader": "Permissions",
+    "submitButtonCreate": "Créer le rôle",
+    "submitButtonEdit": "Modifier le rôle",
+    "creationSuccess": "Rôle créé avec succès",
+    "creationError": "Une erreur s'est produite lors de la création du rôle",
+    "updateSuccess": "Rôle modifié avec succès",
+    "updateError": "Une erreur s'est produite lors de la modification du rôle"
+  },
+
+  "organizationForm": {
+    "createTitle": "Créer une organisation",
+    "editTitle": "Modifier l'organisation",
+    "nameLabel": "Nom de l'organisation",
+    "namePlaceholder": "Mon organisation",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Décrivez votre organisation...",
+    "logoLabel": "Logo",
+    "logoDescription": "Formats acceptés : .jpg, .jpeg, .png et .webp. Max 5MB",
+    "coverImageLabel": "Image de couverture",
+    "coverImageDescription": "Formats acceptés : .jpg, .jpeg, .png et .webp. Max 5MB",
+    "websiteLabel": "Site web",
+    "websitePlaceholder": "https://www.monsite.com",
+    "createButton": "Créer l'organisation",
+    "editButton": "Modifier l'organisation",
+    "createSuccess": "Organisation créée avec succès",
+    "createError": "Une erreur s'est produite lors de la création de l'organisation",
+    "editSuccess": "Organisation modifiée avec succès",
+    "editError": "Une erreur s'est produite lors de la modification de l'organisation"
+  },
+  "eventForm": {
+    "createEvent": "Créer l'événement",
+    "updateEvent": "Mettre à jour l'événement",
+    "creatingEvent": "Création en cours...",
+    "updatingEvent": "Mise à jour en cours...",
+    "creationSuccess": "Événement créé avec succès",
+    "updateSuccess": "Événement mis à jour avec succès",
+    "creationError": "Une erreur s'est produite lors de la création de l'événement",
+    "updateError": "Une erreur s'est produite lors de la mise à jour de l'événement",
+    "sessionTitleMin": "Le titre de la session doit comporter au moins 2 caractères",
+    "agendaTitleMin": "Le titre de l'agenda doit comporter au moins 2 caractères",
+    "locationNameMin": "Le nom du lieu doit comporter au moins 2 caractères",
+    "faqQuestionMin": "La question FAQ doit comporter au moins 5 caractères",
+    "faqResponseMin": "La réponse FAQ doit comporter au moins 5 caractères",
+    "titleMin": "Le titre doit comporter au moins 3 caractères",
+    "contentMin": "Le contenu doit comporter au moins 10 caractères",
+    "summaryMin": "Le résumé doit comporter au moins 10 caractères"
+  },
+  "orderForm": {
+    "firstNameLabel": "Prénom",
+    "firstNamePlaceholder": "Entrez votre prénom",
+    "lastNameLabel": "Nom",
+    "lastNamePlaceholder": "Entrez votre nom",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Entrez votre adresse email",
+    "indicatifLabel": "Indicatif",
+    "indicatifPlaceholder": "+228",
+    "phoneLabel": "Téléphone",
+    "phonePlaceholder": "Entrez votre numéro de téléphone",
+    "loadingButton": "Création de la commande...",
+    "submitButton": "Vérifier la commande",
+    "cartQuantityMin": "La quantité minimale est 1",
+    "firstNameMin": "Le prénom doit comporter au moins 2 caractères",
+    "lastNameMin": "Le nom doit comporter au moins 2 caractères",
+    "emailInvalid": "Adresse email invalide"
   }
 }

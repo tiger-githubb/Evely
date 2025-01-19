@@ -45,7 +45,7 @@ export default function EventForm({ initialData }: EventFormProps) {
       newTags: [],
       faq: initialData?.faq || [],
       agendas: initialData?.agendas || [],
-      video: initialData?.video || "",
+      videoUrl: initialData?.videoUrl || "",
       covers: [],
     },
   });
@@ -127,7 +127,7 @@ export default function EventForm({ initialData }: EventFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full md:w-[60%]">
         <Card>
           <CardContent className="p-6">
             <div className="space-y-8">
@@ -144,8 +144,8 @@ export default function EventForm({ initialData }: EventFormProps) {
                 <Button type="submit" size="lg" disabled={isLoading}>
                   {isLoading
                     ? initialData
-                      ? t("loading.update")
-                      : t("loading.create")
+                      ? t("updatingEvent")
+                      : t("creatingEvent")
                     : initialData
                     ? t("actions.update")
                     : t("actions.create")}

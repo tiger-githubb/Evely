@@ -1,10 +1,12 @@
 "use client";
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { routes } from "@/config/routes";
 import { createOrder } from "@/server/services/orders.service";
 import { Event } from "@/types/api/event.type";
 import { Ticket } from "@/types/api/ticket.types";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { CheckoutForm } from "./checkout-form";
 
@@ -18,6 +20,7 @@ interface CheckoutModalProps {
 }
 
 export function CheckoutModal({ isOpen, onCloseAction, eventId, cart, event }: CheckoutModalProps) {
+  const t = useTranslations("checkoutModal");
   const router = useRouter();
 
   const createOrderMutation = useMutation({
@@ -31,7 +34,7 @@ export function CheckoutModal({ isOpen, onCloseAction, eventId, cart, event }: C
     <Dialog open={isOpen} onOpenChange={onCloseAction}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Finaliser votre commande</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
         </DialogHeader>
         <CheckoutForm
           eventId={eventId}

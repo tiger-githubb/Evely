@@ -3,6 +3,7 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { routes } from "@/config/routes";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -13,30 +14,31 @@ interface EventNavProps {
 
 export function EventNav({ eventId, organizationId }: EventNavProps) {
   const pathname = usePathname();
+  const t = useTranslations("eventNav");
 
   const eventNavItems = [
     {
-      title: "Vue d'ensemble",
+      title: t("overview"),
       href: routes.board.workspace.events.show(organizationId, eventId),
     },
     {
-      title: "Agendas",
+      title: t("agendas"),
       href: routes.board.workspace.events.agendas(organizationId, eventId),
     },
     {
-      title: "Médias",
+      title: t("media"),
       href: routes.board.workspace.events.media(organizationId, eventId),
     },
     {
-      title: "Statistiques",
+      title: t("stats"),
       href: routes.board.workspace.events.stats(organizationId, eventId),
     },
     {
-      title: "FAQ",
+      title: t("faq"),
       href: routes.board.workspace.events.faq(organizationId, eventId),
     },
     {
-      title: "Tickets",
+      title: t("tickets"),
       href: routes.board.workspace.events.tickets(organizationId, eventId),
     },
   ];

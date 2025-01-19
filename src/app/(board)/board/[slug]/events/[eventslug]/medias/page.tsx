@@ -1,6 +1,5 @@
-// app/board/[slug]/events/[eventId]/media/page.tsx
-
 import { fetchEvent } from "@/server/services/events.service";
+import { getTranslations } from "next-intl/server";
 import EventMedia from "./_components/event-media";
 
 interface MediaPageProps {
@@ -11,11 +10,12 @@ interface MediaPageProps {
 
 export default async function MediaPage({ params }: MediaPageProps) {
   const { eventslug } = await params;
+  const t = await getTranslations("MediaPage"); // Fetch translations for this page
 
   const eventResponse = await fetchEvent(eventslug);
 
   if (!eventResponse?.data) {
-    return <div>No media available for this event.</div>;
+    return <div>{t("noMediaAvailable")}</div>; // Use translated fallback message
   }
 
   const { covers, video } = eventResponse.data;

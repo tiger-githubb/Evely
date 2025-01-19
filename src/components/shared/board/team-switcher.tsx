@@ -18,11 +18,14 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { routes } from "@/config/routes";
 import { useOrganizationStore } from "@/stores/organization-store";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { TeamSwitcherSkeleton } from "../ui-skeletons";
+
 export function TeamSwitcher() {
   const { isMobile } = useSidebar();
   const { activeOrganization, setActiveOrganization } = useOrganizationStore();
+  const t = useTranslations("teamSwitcher");
 
   const {
     data: organizationsResponse,
@@ -46,7 +49,7 @@ export function TeamSwitcher() {
   }
 
   if (isError) {
-    return <div className="p-4 text-sm text-destructive">Une erreur est survenue lors du chargement des organisations</div>;
+    return <div className="p-4 text-sm text-destructive">{t("errorLoading")}</div>;
   }
 
   if (organizations.length === 0) {
@@ -75,7 +78,7 @@ export function TeamSwitcher() {
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold">{activeOrganization.name}</span>
-                    <span className="truncate text-xs">Membre</span>
+                    <span className="truncate text-xs">{t("member")}</span>
                   </div>
                   <ChevronsUpDown className="ml-auto" />
                 </>
@@ -88,13 +91,12 @@ export function TeamSwitcher() {
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="text-xs text-muted-foreground">Mes organisations</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-xs text-muted-foreground">{t("myOrganizations")}</DropdownMenuLabel>
             {organizations.map((org) => (
               <DropdownMenuItem
                 key={org.id}
                 onClick={() => {
                   setActiveOrganization(org);
-                  // Redirect to the organization workspace home
                   window.location.href = routes.board.workspace.home(org.slug.toString());
                 }}
                 className="gap-2 p-2"
@@ -102,7 +104,6 @@ export function TeamSwitcher() {
                 <div className="flex size-6 items-center justify-center rounded-sm border">
                   <Image src={getImageUrl(org.logo)} alt={org.name} width={24} height={24} className="rounded-sm object-cover" />
                 </div>
-
                 {org.name}
               </DropdownMenuItem>
             ))}
@@ -111,9 +112,8 @@ export function TeamSwitcher() {
               <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                 <Plus className="size-4" />
               </div>
-
               <div className="font-medium text-muted-foreground">
-                <Link href={routes.board.organization.add}>Ajouter une organisation</Link>
+                <Link href={routes.board.organization.add}>{t("addOrganization")}</Link>
               </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -122,7 +122,10 @@ export function TeamSwitcher() {
     </SidebarMenu>
   );
 }
+
 function AddOrganizationButton() {
+  const t = useTranslations("teamSwitcher");
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -132,8 +135,8 @@ function AddOrganizationButton() {
               <Plus className="size-4" />
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-semibold ">Nouvelle organisation</span>
-              <span className="truncate text-xs text-muted-foreground">Créer une organisation</span>
+              <span className="truncate font-semibold">{t("newOrganization")}</span>
+              <span className="truncate text-xs text-muted-foreground">{t("createOrganization")}</span>
             </div>
           </SidebarMenuButton>
         </Link>

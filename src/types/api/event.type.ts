@@ -13,7 +13,6 @@ export interface Event {
   id: number;
   title: string;
   slug: string;
-
   summary: string;
   content: string;
   date: string | Date;
@@ -22,6 +21,7 @@ export interface Event {
   draft: boolean;
   covers: string[];
   video: string | null;
+  videoUrl?: string;
   createdAt: string | Date;
   organizationId: number;
   typeId: number;

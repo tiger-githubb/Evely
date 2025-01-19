@@ -9,6 +9,7 @@ import { createOrderSchema } from "@/schemas/order.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
+import { parsePhoneNumber } from "react-phone-number-input";
 
 interface CheckoutFormProps {
   eventId: number;
@@ -27,7 +28,7 @@ export function CheckoutForm({ eventId, cart, onNextAction, isLoading }: Checkou
       firstName: "",
       lastName: "",
       email: "",
-      indicatif: "+228",
+      indicatif: "",
       phone: "",
       cart: Object.entries(cart).map(([ticketId, quantity]) => ({
         ticketId: Number(ticketId),
@@ -35,6 +36,21 @@ export function CheckoutForm({ eventId, cart, onNextAction, isLoading }: Checkou
       })),
     },
   });
+
+  // Handle phone input parsing
+  const handlePhoneChange = (value: string | undefined) => {
+    if (value) {
+      const parsedPhone = parsePhoneNumber(value);
+      if (parsedPhone) {
+        // Update form values with parsed country code and national number
+        form.setValue("indicatif", `+${parsedPhone.countryCallingCode}`);
+        form.setValue("phone", parsedPhone.nationalNumber);
+      }
+    } else {
+      form.setValue("indicatif", "");
+      form.setValue("phone", "");
+    }
+  };
 
   return (
     <Form {...form}>
@@ -82,36 +98,22 @@ export function CheckoutForm({ eventId, cart, onNextAction, isLoading }: Checkou
           )}
         />
 
-        <div className="grid grid-cols-3 gap-4">
-          <FormField
-            control={form.control}
-            name="indicatif"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("indicatifLabel")}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t("indicatifPlaceholder")} {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>{t("phoneLabel")}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t("phonePlaceholder")} {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div className="grid gap-4">
+          <FormItem>
+            <FormLabel>{t("indicatifLabel")}</FormLabel>
+            <FormControl>
+              {/* TODO: Check the schema of the phone input */}
+              <PhoneInput
+                value={form.getValues("indicatif") + form.getValues("phone")}
+                onChange={handlePhoneChange}
+                className="w-full"
+                placeholder={t("phonePlaceholder")}
+                defaultCountry="TG"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
         </div>
-
-        <PhoneInput />
 
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? t("loadingButton") : t("submitButton")}

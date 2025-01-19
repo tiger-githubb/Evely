@@ -1,18 +1,18 @@
 "use client";
 import { SearchEventCard } from "@/components/shared/search/search-event-card";
 import SearchFilter from "@/components/shared/search/search-filter";
-import { SearchMap } from "@/components/shared/search/search-map";
 import { EventGridSkeleton } from "@/components/shared/ui-skeletons";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { fetchEvents } from "@/server/services/events.service";
 import { Event } from "@/types/api/event.type";
+import { useDebounce, useLocalStorage, useMediaQuery } from "@uidotdev/usehooks";
 import { FilterIcon, MapIcon, XIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-import { useDebounce, useLocalStorage, useMediaQuery } from "@uidotdev/usehooks";
-
 export default function SearchContainer() {
+  const t = useTranslations();
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -26,14 +26,14 @@ export default function SearchContainer() {
         const response = await fetchEvents();
         setEvents(response.data);
       } catch (error) {
-        console.error("Error loading events:", error);
+        console.error(t("search.error"), error);
       } finally {
         setLoading(false);
       }
     };
 
     loadEvents();
-  }, [debouncedSearchParams]);
+  }, [debouncedSearchParams, t]);
 
   return (
     <div className="container mx-auto p-4">
@@ -41,7 +41,7 @@ export default function SearchContainer() {
       <div className="md:hidden mb-4">
         <Button onClick={() => setShowMobileFilters(!showMobileFilters)} className="w-full">
           <FilterIcon className="mr-2 h-4 w-4" />
-          Filters
+          {t("filters.filters")}
         </Button>
       </div>
 
@@ -51,7 +51,7 @@ export default function SearchContainer() {
           {showMobileFilters && (
             <Button onClick={() => setShowMobileFilters(false)} className="mb-4 md:hidden">
               <XIcon className="mr-2 h-4 w-4" />
-              Close
+              {t("filters.close")}
             </Button>
           )}
           <SearchFilter />
@@ -66,11 +66,7 @@ export default function SearchContainer() {
             </div>
 
             {/* Desktop Map */}
-            {isDesktop && (
-              <div className="hidden md:block">
-                <SearchMap events={events} />
-              </div>
-            )}
+            {isDesktop && <div className="hidden md:block">{/* <SearchMap events={events} /> */}</div>}
           </div>
         </div>
       </div>
@@ -85,11 +81,9 @@ export default function SearchContainer() {
           </DrawerTrigger>
           <DrawerContent className="h-[90vh]">
             <DrawerHeader>
-              <DrawerTitle>Map View</DrawerTitle>
+              <DrawerTitle>{t("map.map_view")}</DrawerTitle>
             </DrawerHeader>
-            <div className="h-full p-4">
-              <SearchMap events={events} />
-            </div>
+            <div className="h-full p-4">{/* <SearchMap events={events} /> */}</div>
           </DrawerContent>
         </Drawer>
       )}

@@ -1,7 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { routes } from "@/config/routes";
 import { Organization } from "@/types/api/organization.type";
 import { getImageUrl } from "@/utils/image-utils";
+import { useTranslations } from "next-intl"; // Importing useTranslations for translations
 import Image from "next/image";
 import Link from "next/link";
 import { PiPencilSimpleDuotone } from "react-icons/pi";
@@ -11,6 +14,8 @@ interface OrganizationHeaderProps {
 }
 
 export function OrganizationHeader({ organization }: OrganizationHeaderProps) {
+  const t = useTranslations("OrganizationHeaderBoard"); // Fetching translations for this component
+
   return (
     <div className="mt-0 ">
       <div className="relative -mx-4 h-36 sm:h-40 md:h-48 lg:-mx-6 lg:h-52 xl:h-60 2xl:h-72">
@@ -53,11 +58,11 @@ export function OrganizationHeader({ organization }: OrganizationHeaderProps) {
               <ul className=" flex flex-wrap items-center gap-4 text-sm lg:text-base">
                 <li className="flex items-center">
                   <span className="font-semibold ">{organization._count.followers}</span>
-                  <span className="ml-1.5 text-gray-500">Abonnés</span>
+                  <span className="ml-1.5 text-gray-500">{t("followers")}</span> {/* Translated */}
                 </li>
                 <li className="flex items-center">
                   <span className="font-semibold ">{organization._count.users}</span>
-                  <span className="ml-1.5 text-gray-500">Membres</span>
+                  <span className="ml-1.5 text-gray-500">{t("members")}</span> {/* Translated */}
                 </li>
               </ul>
             </div>

@@ -1,4 +1,5 @@
 "use client";
+
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -6,7 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { fetchEventCategories } from "@/server/services/event-categories.service";
 import { fetchEventFormats } from "@/server/services/event-formats.service";
 import { fetchEventLanguages } from "@/server/services/event-languages.service";
-import { fetchEventTags, fetchTopEventTags } from "@/server/services/event-tags.service";
+import { fetchTopEventTags } from "@/server/services/event-tags.service";
 import { fetchEventTypes } from "@/server/services/event-types.service";
 import { EventCategory } from "@/types/api/event-category.type";
 import { EventFormat } from "@/types/api/event-format.type";
@@ -16,9 +17,11 @@ import { EventType } from "@/types/api/event-type.type";
 import { SearchFilterSkeleton } from "../ui-skeletons";
 import { FilterSection } from "./filter-section";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 export default function SearchFilter() {
+  const t = useTranslations("searchPage");
   const [categories, setCategories] = useState<EventCategory[]>([]);
   const [formats, setFormats] = useState<EventFormat[]>([]);
   const [languages, setLanguages] = useState<EventLanguage[]>([]);
@@ -30,14 +33,14 @@ export default function SearchFilter() {
   const [loading, setLoading] = useState(true);
 
   const dateOptions = [
-    { value: "today", label: "Today" },
-    { value: "tomorrow", label: "Tomorrow" },
-    { value: "weekend", label: "This weekend" },
-    { value: "week", label: "This week" },
-    { value: "nextWeek", label: "Next week" },
-    { value: "month", label: "This month" },
-    { value: "nextMonth", label: "Next month" },
-    { value: "pickDate", label: "Pick a date..." },
+    { value: "today", label: t("dateOptions.today") },
+    { value: "tomorrow", label: t("dateOptions.tomorrow") },
+    { value: "weekend", label: t("dateOptions.weekend") },
+    { value: "week", label: t("dateOptions.week") },
+    { value: "nextWeek", label: t("dateOptions.nextWeek") },
+    { value: "month", label: t("dateOptions.month") },
+    { value: "nextMonth", label: t("dateOptions.nextMonth") },
+    { value: "pickDate", label: t("dateOptions.pickDate") },
   ];
 
   useEffect(() => {
@@ -48,7 +51,6 @@ export default function SearchFilter() {
           fetchEventFormats(),
           fetchEventLanguages(),
           fetchEventTypes(),
-          fetchEventTags(),
           fetchTopEventTags(),
         ]);
 
@@ -73,7 +75,7 @@ export default function SearchFilter() {
 
   return (
     <div className="space-y-6">
-      <FilterSection title="Categories" showViewMore>
+      <FilterSection titleKey="filterSection.categoriesTitle" showViewMore>
         {categories.map((category) => (
           <div key={category.id} className="flex items-center space-x-2">
             <Checkbox id={`category-${category.id}`} />
@@ -81,7 +83,8 @@ export default function SearchFilter() {
           </div>
         ))}
       </FilterSection>
-      <FilterSection title="Date">
+
+      <FilterSection titleKey="filterSection.dateTitle">
         <RadioGroup value={dateFilter} onValueChange={setDateFilter}>
           {dateOptions.map((option) => (
             <div key={option.value} className="flex items-center space-x-2">
@@ -96,7 +99,7 @@ export default function SearchFilter() {
         )}
       </FilterSection>
 
-      <FilterSection title="Event Type">
+      <FilterSection titleKey="filterSection.eventTypeTitle">
         <RadioGroup>
           {types.map((type) => (
             <div key={type.id} className="flex items-center space-x-2">
@@ -107,7 +110,7 @@ export default function SearchFilter() {
         </RadioGroup>
       </FilterSection>
 
-      <FilterSection title="Format" showViewMore>
+      <FilterSection titleKey="filterSection.formatTitle" showViewMore>
         {formats.map((format) => (
           <div key={format.id} className="flex items-center space-x-2">
             <Checkbox id={`format-${format.id}`} />
@@ -116,7 +119,7 @@ export default function SearchFilter() {
         ))}
       </FilterSection>
 
-      <FilterSection title="Language">
+      <FilterSection titleKey="filterSection.languageTitle">
         <RadioGroup>
           {languages.map((language) => (
             <div key={language.id} className="flex items-center space-x-2">
@@ -127,7 +130,7 @@ export default function SearchFilter() {
         </RadioGroup>
       </FilterSection>
 
-      <FilterSection title="Popular Tags" showViewMore>
+      <FilterSection titleKey="filterSection.popularTagsTitle" showViewMore>
         {topTags.map((tag) => (
           <div key={tag.id} className="flex items-center space-x-2">
             <Checkbox id={`tag-${tag.id}`} />

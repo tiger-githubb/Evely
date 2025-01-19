@@ -5,6 +5,7 @@ import { OrganisationNavigationItems, UserMainNavigationItems } from "@/config/n
 import { routes } from "@/config/routes";
 import { useOrganizationStore } from "@/stores/organization-store";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -14,14 +15,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: session } = useSession();
   const activeOrganization = useOrganizationStore((state) => state.activeOrganization);
   const userRole = session?.user?.role.id;
+  const t = useTranslations("OrganisationNavigationItems");
+  const t2 = useTranslations("UserMainNavigationItems");
 
-  const navigationItems = React.useMemo(() => {
+  // Function to get navigation items based on the user role and active organization
+  const getNavigationItems = () => {
     if (userRole === 2) {
-      return UserMainNavigationItems.navMain;
+      return UserMainNavigationItems(t2).navMain;
     }
 
-    // Update the events URL with the active organization
-    return OrganisationNavigationItems.navMain.map((item) => {
+    return OrganisationNavigationItems(t).navMain.map((item) => {
       if (item.title === "Événements" && activeOrganization) {
         return {
           ...item,
@@ -30,7 +33,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       }
       return item;
     });
-  }, [userRole, activeOrganization]);
+  };
+
+  const navigationItems = getNavigationItems(); // Get the updated navigation items
 
   return (
     <Sidebar collapsible="icon" {...props}>

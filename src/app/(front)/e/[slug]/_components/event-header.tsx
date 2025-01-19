@@ -1,19 +1,22 @@
+import { FollowButton } from "@/components/shared/ui/follow-button";
+import { ShareButton } from "@/components/shared/ui/share-button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { JSX } from "react";
 import { Separator } from "@/components/ui/separator";
+import { routes } from "@/config/routes";
 import { Event } from "@/types/api/event.type";
 import { getImageUrl } from "@/utils/image-utils";
 import { format } from "date-fns";
-import { fr } from "date-fns/locale/fr";
+import { enGB } from "date-fns/locale";
 import { CalendarDays, Globe, MapPin, MapPinIcon } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { routes } from "@/config/routes";
-import { ShareButton } from "@/components/shared/ui/share-button";
-import { FollowButton } from "@/components/shared/ui/follow-button";
+import { JSX } from "react";
 
-export function EventHeader({ event }: { event: Event }) {
+export async function EventHeader({ event }: { event: Event }) {
+  const t = await getTranslations();
+
   // Define icons for event types
   const eventTypeIcons: { [key: number]: JSX.Element } = {
     1: <MapPinIcon className="h-4 w-4" />, // MapPin for "Presentiel"
@@ -39,14 +42,9 @@ export function EventHeader({ event }: { event: Event }) {
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-muted-foreground">
               <div className="flex items-center gap-2">
                 <CalendarDays className="h-4 w-4" />
-                <span>
-                  {format(new Date(event.date), "PPP à HH:mm", { locale: fr })}
-                </span>
+                <span>{format(new Date(event.date), "PPP à HH:mm", { locale: enGB })}</span>
               </div>
-              <Separator
-                orientation="vertical"
-                className="hidden sm:block h-4"
-              />
+              <Separator orientation="vertical" className="hidden sm:block h-4" />
               {event.location && (
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
@@ -57,18 +55,14 @@ export function EventHeader({ event }: { event: Event }) {
 
             <Badge variant="secondary" className="flex items-center gap-1">
               {eventTypeIcons[event.type.id]}
-              {event.type.name}
+              {t(`eventTypes.${event.type.name}`)} {/* Translated string */}
             </Badge>
 
             {/* Event Category Badge */}
             <Badge variant="outline">{event.category.name}</Badge>
 
             {/* Language as plain text (not a badge) */}
-            {event.language?.name && (
-              <span className="text-sm text-muted-foreground">
-                {event.language.name}
-              </span>
-            )}
+            {/* {event.language?.name && <span className="text-sm text-muted-foreground">{event.language.name}</span>} */}
           </div>
           <div>
             <ShareButton organizationName={event.organization.name} />
@@ -83,20 +77,15 @@ export function EventHeader({ event }: { event: Event }) {
           <Link href={routes.organizations.details(event.organization.slug)}>
             <div className="flex items-center gap-4 hover:opacity-80 transition">
               <Avatar className="h-12 w-12">
-                <AvatarImage
-                  src={event.organization.logo}
-                  alt={event.organization.name}
-                />
+                <AvatarImage src={event.organization.logo} alt={event.organization.name} />
                 <AvatarFallback>{event.organization.name[0]}</AvatarFallback>
               </Avatar>
               <div>
                 <p className="font-medium">{event.organization.name}</p>
                 <p>
                   {[
-                    event.organization._count?.followers &&
-                      `${event.organization._count.followers} followers`,
-                    event.organization._count?.events &&
-                      `${event.organization._count.events} événements`,
+                    event.organization._count?.followers && `${event.organization._count.followers} ${t("followers")}`, // Translated string
+                    event.organization._count?.events && `${event.organization._count.events} ${t("events")}`, // Translated string
                   ]
                     .filter(Boolean)
                     .join(" • ")}
@@ -105,10 +94,7 @@ export function EventHeader({ event }: { event: Event }) {
             </div>
           </Link>
 
-          <FollowButton
-            organizationId={event.organization.id.toString()}
-            isFollowing={isFollowing}
-          />
+          <FollowButton organizationId={event.organization.id.toString()} isFollowing={isFollowing} />
         </div>
       </div>
     </div>

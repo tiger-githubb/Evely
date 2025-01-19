@@ -3,10 +3,13 @@
 import { CustomDataTable } from "@/components/ui/custom/custom-table";
 import { deleteOrganization, fetchOrganizations } from "@/server/services/organizations.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl"; // Import for translations
 import { toast } from "sonner";
-import { columns } from "./columns";
+import { Columns } from "./columns";
 
 export default function OrganizationsTable() {
+  const t = useTranslations("OrganizationsPage"); // Fetch translations for the Organizations page
+
   const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
@@ -18,31 +21,31 @@ export default function OrganizationsTable() {
     mutationFn: deleteOrganization,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["organizations"] });
-      toast.success("Organisation supprimée avec succès");
+      toast.success(t("deleteSuccess")); // Translate the success message
     },
     onError: () => {
-      toast.error("Une erreur est survenue lors de la suppression de l'organisation");
+      toast.error(t("deleteError")); // Translate the error message
     },
   });
 
   return (
     <CustomDataTable
-      columns={columns({
+      columns={Columns({
         onDelete: deleteMutation.mutate,
         isDeleting: deleteMutation.isPending,
       })}
       data={data?.data || []}
       isLoading={isLoading}
       error={error}
-      errorMessage="Une erreur est survenue lors du chargement des organisations."
+      errorMessage={t("errorMessage")} // Translate the error message for data loading
       filterColumn="name"
-      filterPlaceholder="Filtrer par nom..."
+      filterPlaceholder={t("filterByName")} // Translate the filter placeholder
       showColumnVisibility={true}
       showPagination={true}
       density="spacious"
       rowsPerPage={10}
-      noResultsMessage="Aucune organisation trouvée"
-      totalLabel="ligne(s)"
+      noResultsMessage={t("noResultsMessage")} // Translate the no results message
+      totalLabel={t("totalLabel")} // Translate the total label
       totalItems={data?.total}
     />
   );

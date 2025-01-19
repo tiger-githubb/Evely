@@ -3,26 +3,29 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { UseFormReturn } from "react-hook-form";
 import type { CreateEventType } from "@/schemas/event.schema";
+import { useTranslations } from "next-intl";
+import { UseFormReturn } from "react-hook-form";
 
 interface BasicInfoSectionProps {
   form: UseFormReturn<CreateEventType>;
 }
 
 export default function BasicInfoSection({ form }: BasicInfoSectionProps) {
+  const t = useTranslations("basicInfoSection");
+
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium">Informations de base</h3>
+      <h3 className="text-lg font-medium">{t("sectionTitle")}</h3>
 
       <FormField
         control={form.control}
         name="title"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Titre de l&apos;événement</FormLabel>
+            <FormLabel>{t("titleLabel")}</FormLabel>
             <FormControl>
-              <Input placeholder="Entrez le titre de l'événement" {...field} />
+              <Input placeholder={t("titlePlaceholder")} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -34,9 +37,9 @@ export default function BasicInfoSection({ form }: BasicInfoSectionProps) {
         name="summary"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Résumé</FormLabel>
+            <FormLabel>{t("summaryLabel")}</FormLabel>
             <FormControl>
-              <Textarea placeholder="Entrez un bref résumé de l'événement" className="resize-none" {...field} />
+              <Textarea placeholder={t("summaryPlaceholder")} className="resize-none" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -48,9 +51,9 @@ export default function BasicInfoSection({ form }: BasicInfoSectionProps) {
         name="content"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Description détaillée</FormLabel>
+            <FormLabel>{t("descriptionLabel")}</FormLabel>
             <FormControl>
-              <Textarea placeholder="Décrivez votre événement en détail" className="min-h-[200px] resize-none" {...field} />
+              <Textarea placeholder={t("descriptionPlaceholder")} className="min-h-[200px] resize-none" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

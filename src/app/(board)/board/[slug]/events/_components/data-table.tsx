@@ -5,11 +5,13 @@ import { routes } from "@/config/routes";
 import { deleteEvent, fetchOrganizationEvents, updateEventPublishStatus } from "@/server/services/events.service";
 import { useOrganizationStore } from "@/stores/organization-store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { columns } from "./columns";
+import { Columns } from "./columns";
 
 export default function EventsTable() {
+  const t = useTranslations("eventsdashboard");
   const queryClient = useQueryClient();
   const router = useRouter();
   const { activeOrganization } = useOrganizationStore();
@@ -22,7 +24,7 @@ export default function EventsTable() {
     queryKey: ["organization-events", organizationSlug, organizationId],
     queryFn: () => {
       if (!organizationSlug) {
-        return Promise.reject("Aucune organisation active sélectionnée.");
+        return Promise.reject(t("loadingError"));
       }
       return fetchOrganizationEvents(organizationId || 0);
     },
@@ -37,13 +39,13 @@ export default function EventsTable() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["organization-events"] });
-      toast.success("Événement supprimé avec succès");
+      toast.success(t("deleteSuccess"));
     },
-    onError: () => toast.error("Une erreur est survenue lors de la suppression"),
+    onError: () => toast.error(t("deleteError")),
   });
 
   const handleDelete = (eventId: number) => {
-    if (confirm("Êtes-vous sûr de vouloir supprimer cet événement ?")) {
+    if (confirm(t("deleteEvent"))) {
       deleteMutation.mutate(eventId);
     }
   };
@@ -56,12 +58,12 @@ export default function EventsTable() {
       } else {
         toast.error("Organization ID is undefined");
       }
-      toast.success(draft ? "L'événement a été dépublié avec succès !" : "L'événement a été publié avec succès !");
+      toast.success(draft ? t("unpublishSuccess") : t("publishSuccess"));
       queryClient.invalidateQueries({ queryKey: ["organization-events"] }); // Refresh the event list
     } catch (error) {
       console.log(error);
 
-      toast.error("Une erreur est survenue lors de la mise à jour du statut de l'événement.");
+      toast.error(t("publishError"));
     }
   };
   const handleView = (eventSlug: string) => {
@@ -74,14 +76,14 @@ export default function EventsTable() {
 
   return (
     <CustomDataTable
-      columns={columns(handleView, handleDelete, handlePublishToggle)}
+      columns={Columns(handleView, handleDelete, handlePublishToggle)}
       data={data?.data || []}
       isLoading={isLoading}
       error={error}
       filterColumn="title"
-      errorMessage="Une erreur est survenue lors du chargement des événements."
+      errorMessage={t("loadingError")}
       rowsPerPage={10}
-      noResultsMessage="Aucun événement trouvé."
+      noResultsMessage={t("noResults")}
     />
   );
 }

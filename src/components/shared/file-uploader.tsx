@@ -61,6 +61,7 @@ export function FileUploader({
 
   return (
     <div className="space-y-4">
+      <span className="text-xs text-muted-foreground/60">1380px * 920px</span>
       <div
         {...getRootProps()}
         className={cn(

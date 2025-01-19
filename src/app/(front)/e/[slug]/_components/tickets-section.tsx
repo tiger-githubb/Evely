@@ -6,16 +6,17 @@ import { fetchEventTickets } from "@/server/services/events.service";
 import { Event } from "@/types/api/event.type";
 import { useQuery } from "@tanstack/react-query";
 import { AlertCircle, TicketX } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { TicketsList } from "./tickets-list";
 import { TicketsTotal } from "./tickets-total";
-
 interface TicketCounter {
   [key: number]: number;
 }
 
 export function TicketsSection({ event, organizationId }: { event: Event; organizationId: number }) {
   const [ticketCounts, setTicketCounts] = useState<TicketCounter>({});
+  const t = useTranslations();
 
   const {
     data: tickets,
@@ -32,7 +33,7 @@ export function TicketsSection({ event, organizationId }: { event: Event; organi
     return (
       <Alert variant="destructive">
         <AlertCircle className="h-4 w-4" />
-        <AlertDescription>Une erreur est survenue lors du chargement des tickets</AlertDescription>
+        <AlertDescription>{t("tickets.loadError")}</AlertDescription>
       </Alert>
     );
   }
@@ -41,14 +42,14 @@ export function TicketsSection({ event, organizationId }: { event: Event; organi
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Tickets non disponibles</CardTitle>
+          <CardTitle>{t("ticket.notAvailableTitle")}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-center space-y-4">
             <div className="mx-auto w-12 h-12 rounded-full bg-muted flex items-center justify-center">
               <TicketX className="h-6 w-6 text-muted-foreground" />
             </div>
-            <p className="text-muted-foreground">Les tickets pour cet événement ne sont pas encore disponibles.</p>
+            <p className="text-muted-foreground">{t("ticket.notAvailableMessage")}</p>
           </div>
         </CardContent>
       </Card>
@@ -58,7 +59,7 @@ export function TicketsSection({ event, organizationId }: { event: Event; organi
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Tickets disponibles</CardTitle>
+        <CardTitle>{t("ticket.availableTitle")}</CardTitle>
       </CardHeader>
       <CardContent>
         <TicketsList tickets={tickets} onCountChange={setTicketCounts} />

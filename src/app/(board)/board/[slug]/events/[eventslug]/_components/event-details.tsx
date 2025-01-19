@@ -1,5 +1,6 @@
 import { fetchEvent } from "@/server/services/events.service";
 import { EventHeader } from "./event-header";
+import EventNotFound from "./event-not-found";
 
 interface EventLayoutProps {
   children: React.ReactNode;
@@ -10,7 +11,7 @@ export default async function EventLayout({ children, params }: EventLayoutProps
   const eventResponse = await fetchEvent(params.eventslug);
 
   if (!eventResponse?.data) {
-    return <p>Événement introuvable</p>; // Add a proper not-found component later
+    return <EventNotFound />; // Add a proper not-found component later
   }
 
   const event = eventResponse.data;

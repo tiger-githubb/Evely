@@ -1,5 +1,7 @@
 import EventForm from "@/components/shared/board/event-form";
 import { fetchEvent } from "@/server/services/events.service";
+import { getTranslations } from "next-intl/server";
+import EventNotFound from "../_components/event-not-found";
 
 interface EditEventPageProps {
   params: Promise<{
@@ -11,18 +13,15 @@ export default async function EditEventPage({ params }: EditEventPageProps) {
   const { eventslug } = await params;
   const event = await fetchEvent(eventslug);
 
+  const t = await getTranslations("EditEventPage");
+
   if (!event) {
-    return (
-      <div className="container">
-        <h3>Événement non trouvé</h3>
-        <p>Impossible de charger les détails de l&apos;événement. Veuillez réessayer plus tard.</p>
-      </div>
-    );
+    return <EventNotFound />;
   }
 
   return (
     <div className="container">
-      <h3>Modifier l&apos;Événement</h3>
+      <h3>{t("editEventTitle")}</h3>
       <EventForm initialData={event.data} />
     </div>
   );

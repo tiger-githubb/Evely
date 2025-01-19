@@ -5,6 +5,7 @@ import { getImageUrl } from "@/utils/image-utils";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarDays, MapPin } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,6 +14,8 @@ interface SearchEventCardProps {
 }
 
 export function SearchEventCard({ event }: SearchEventCardProps) {
+  const t = useTranslations("searchPage");
+
   const coverImage = getImageUrl(event.covers[0]);
   const organizationLogo = getImageUrl(event.organization.logo) || "/placeholder-avatar.jpg";
 
@@ -44,7 +47,7 @@ export function SearchEventCard({ event }: SearchEventCardProps) {
             )}
 
             <div className="mt-2 flex items-center gap-2">
-              <Image src={organizationLogo} alt={event.organization.name} width={16} height={16} className="rounded-full" />
+              <Image src={organizationLogo} alt={t("organizationLogoAlt")} width={16} height={16} className="rounded-full" />
               <span className="text-xs text-muted-foreground line-clamp-1">{event.organization.name}</span>
             </div>
           </CardContent>

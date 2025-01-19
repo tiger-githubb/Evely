@@ -3,15 +3,18 @@
 import { Button } from "@/components/ui/button";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { UseFormReturn, useFieldArray } from "react-hook-form";
-import { PlusCircle, Trash2 } from "lucide-react";
 import type { CreateEventType } from "@/schemas/event.schema";
+import { PlusCircle, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { UseFormReturn, useFieldArray } from "react-hook-form";
 
 interface AgendaSectionProps {
   form: UseFormReturn<CreateEventType>;
 }
 
 export default function AgendaSection({ form }: AgendaSectionProps) {
+  const t = useTranslations("agendaSection");
+
   const {
     fields: agendaFields,
     append: appendAgenda,
@@ -24,10 +27,10 @@ export default function AgendaSection({ form }: AgendaSectionProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">Programme</h3>
+        <h3 className="text-lg font-medium">{t("agendaTitle")}</h3>
         <Button type="button" variant="outline" size="sm" onClick={() => appendAgenda({ title: "", sessions: [] })}>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ajouter un agenda
+          {t("addAgenda")}
         </Button>
       </div>
 
@@ -39,7 +42,7 @@ export default function AgendaSection({ form }: AgendaSectionProps) {
               name={`agendas.${agendaIndex}.title`}
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>Titre de l&apos;agenda</FormLabel>
+                  <FormLabel>{t("agendaTitleLabel")}</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -65,6 +68,8 @@ interface SessionsFieldProps {
 }
 
 function SessionsField({ form, agendaIndex }: SessionsFieldProps) {
+  const t = useTranslations("agendaSection");
+
   const {
     fields: sessionFields,
     append: appendSession,
@@ -77,10 +82,10 @@ function SessionsField({ form, agendaIndex }: SessionsFieldProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h4 className="text-sm font-medium">Sessions</h4>
+        <h4 className="text-sm font-medium">{t("sessionsTitle")}</h4>
         <Button type="button" variant="outline" size="sm" onClick={() => appendSession({ title: "", startTime: "", endTime: "" })}>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ajouter une session
+          {t("addSession")}
         </Button>
       </div>
 
@@ -91,7 +96,7 @@ function SessionsField({ form, agendaIndex }: SessionsFieldProps) {
             name={`agendas.${agendaIndex}.sessions.${sessionIndex}.title`}
             render={({ field }) => (
               <FormItem className="sm:col-span-2">
-                <FormLabel>Titre de la session</FormLabel>
+                <FormLabel>{t("sessionTitleLabel")}</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -105,7 +110,7 @@ function SessionsField({ form, agendaIndex }: SessionsFieldProps) {
             name={`agendas.${agendaIndex}.sessions.${sessionIndex}.startTime`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Heure de début</FormLabel>
+                <FormLabel>{t("startTimeLabel")}</FormLabel>
                 <FormControl>
                   <Input type="time" {...field} />
                 </FormControl>
@@ -120,7 +125,7 @@ function SessionsField({ form, agendaIndex }: SessionsFieldProps) {
               name={`agendas.${agendaIndex}.sessions.${sessionIndex}.endTime`}
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>Heure de fin</FormLabel>
+                  <FormLabel>{t("endTimeLabel")}</FormLabel>
                   <FormControl>
                     <Input type="time" {...field} />
                   </FormControl>

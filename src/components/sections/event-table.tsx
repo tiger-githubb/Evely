@@ -41,7 +41,10 @@ export const EventTable = () => {
     isError,
   } = useQuery({
     queryKey: ["public-events"],
-    queryFn: fetchPublicEvents,
+    queryFn: () =>
+      fetchPublicEvents({
+        startDate: new Date().toISOString(),
+      }),
   });
 
   if (events?.data.length === 0)

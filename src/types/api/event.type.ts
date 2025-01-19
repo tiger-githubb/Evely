@@ -28,6 +28,7 @@ export interface Event {
   formatId: number;
   categoryId: number;
   languageId: number;
+  isFree: boolean;
   organization: Organization;
   type: EventType;
   category: EventCategory;

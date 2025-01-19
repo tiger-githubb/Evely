@@ -14,11 +14,10 @@ interface SearchEventCardProps {
 
 export function SearchEventCard({ event }: SearchEventCardProps) {
   const coverImage = getImageUrl(event.covers[0]);
-  const organizationLogo = getImageUrl(event.organization.logo) || "/placeholder-avatar.jpg";
 
   return (
     <Link href={routes.events.details(event.slug)}>
-      <Card className="group h-32 overflow-hidden transition-all hover:shadow-lg">
+      <Card className="group h-40 overflow-hidden transition-all hover:shadow-lg">
         <div className="flex h-full">
           <div className="relative w-32 h-full">
             {coverImage ? (
@@ -44,8 +43,7 @@ export function SearchEventCard({ event }: SearchEventCardProps) {
             )}
 
             <div className="mt-2 flex items-center gap-2">
-              <Image src={organizationLogo} alt={event.organization.name} width={16} height={16} className="rounded-full" />
-              <span className="text-xs text-muted-foreground line-clamp-1">{event.organization.name}</span>
+              <p className="text-sm line-clamp-2">{event.summary}</p>
             </div>
           </CardContent>
         </div>

@@ -47,6 +47,7 @@ export const generateMockEvents = (count: number = 10): Event[] => {
       formatId: faker.number.int({ min: 1, max: 3 }),
       categoryId: faker.number.int({ min: 1, max: 5 }),
       languageId: faker.number.int({ min: 1, max: 2 }),
+      isFree: faker.datatype.boolean(),
       organization: {
         id: faker.number.int({ min: 1, max: 10 }),
         name: faker.company.name(),

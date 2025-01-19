@@ -78,9 +78,27 @@ export const fetchPublishedEvents = async (): Promise<EventsResponse> => {
   }
 };
 
-export const fetchPublicEvents = async (): Promise<EventsResponse> => {
+export interface SearchParams {
+  search?: string;
+  categories?: string;
+  formats?: string;
+  languages?: string;
+  types?: string;
+  ticketTypes?: string;
+  startDate?: string;
+  endDate?: string;
+  currentPage?: number;
+}
+export const fetchPublicEvents = async (params: SearchParams): Promise<EventsResponse> => {
   try {
-    const { data } = await api.get("/events/published");
+    const queryParams = new URLSearchParams();
+
+    // Ajouter tous les paramètres de manière dynamique
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) queryParams.set(key, value);
+    });
+
+    const { data } = await api.get(`/events/published?${queryParams.toString()}`);
     return data;
   } catch (error) {
     return ApiErrorHandler.handle<EventsResponse>(error, "Une erreur est survenue lors de la récupération des événements");

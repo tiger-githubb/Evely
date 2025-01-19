@@ -318,3 +318,34 @@ export function PaymentMethodsSkeleton() {
     </div>
   );
 }
+
+export function SearchEventCardSkeleton() {
+  return (
+    <div className="h-32 rounded-lg border overflow-hidden">
+      <div className="flex h-full">
+        <div className="w-32 h-full">
+          <Skeleton className="h-full" />
+        </div>
+
+        <div className="flex-1 p-4 space-y-4">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-4 w-4" />
+            <Skeleton className="h-4 w-32" />
+          </div>
+
+          <Skeleton className="h-6 w-3/4" />
+
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-4 w-4" />
+            <Skeleton className="h-4 w-40" />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-6 w-6 rounded-full" />
+            <Skeleton className="h-4 w-32" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

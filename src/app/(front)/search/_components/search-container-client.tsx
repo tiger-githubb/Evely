@@ -2,16 +2,19 @@
 
 import { SearchEventCard } from "@/components/shared/search/search-event-card";
 import SearchFilter from "@/components/shared/search/search-filter";
+import { SearchForm } from "@/components/shared/search/search-form";
 import { SearchMap } from "@/components/shared/search/search-map";
 import { SearchEventCardSkeleton } from "@/components/shared/ui-skeletons";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { EventsResponse, fetchPublicEvents } from "@/server/services/events.service";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { FilterIcon, MapIcon, RefreshCw, Search, XIcon } from "lucide-react";
+import { FilterIcon, MapIcon, RefreshCw, Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
 import { useInView } from "react-intersection-observer";
 
 interface SearchContainerProps {
@@ -23,7 +26,16 @@ export default function SearchContainerClient({ searchTerm }: SearchContainerPro
   const searchParams = useSearchParams();
   const { ref, inView } = useInView();
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
+
+  const hasActiveFilters = () => {
+    return (
+      searchParams.has("categories") ||
+      searchParams.has("formats") ||
+      searchParams.has("types") ||
+      searchParams.has("startDate") ||
+      searchParams.has("endDate")
+    );
+  };
 
   const handleReset = () => {
     const newParams = new URLSearchParams();
@@ -51,22 +63,50 @@ export default function SearchContainerClient({ searchTerm }: SearchContainerPro
 
   return (
     <div className="container mx-auto p-4">
-      <div className="md:hidden mb-4">
-        <Button onClick={() => setShowMobileFilters(!showMobileFilters)} className="w-full">
-          <FilterIcon className="mr-2 h-4 w-4" />
-          Filters
-        </Button>
+      <div className="md:hidden mb-4 space-y-6">
+        <SearchForm />
+        <div className="flex gap-2">
+          <Drawer>
+            <DrawerTrigger asChild>
+              <Button className="flex-1">
+                <FilterIcon className="mr-2 h-4 w-4" />
+                Filters
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent className="h-[90vh]">
+              <DrawerHeader className="sticky top-0 z-10 bg-background border-b">
+                <DrawerTitle>Filtres</DrawerTitle>
+              </DrawerHeader>
+              <div className="flex-1 overflow-y-auto px-4">
+                <div className="pb-16">
+                  {" "}
+                  {/* Added padding bottom for visibility */}
+                  <SearchFilter />
+                  <Button variant="outline" onClick={handleReset} className="w-full mt-4 gap-2">
+                    <RefreshCw className="w-4 h-4" />
+                    Réinitialiser les filtres
+                  </Button>
+                </div>
+              </div>
+            </DrawerContent>
+          </Drawer>
+
+          {hasActiveFilters() && (
+            <Button variant="outline" onClick={handleReset} className="gap-2">
+              <RefreshCw className="h-4 w-4" />
+              Réinitialiser
+            </Button>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-        <div className={`md:col-span-3 ${showMobileFilters ? "fixed inset-0 z-50 bg-white p-4 overflow-y-auto" : "hidden md:block"}`}>
-          {showMobileFilters && (
-            <Button onClick={() => setShowMobileFilters(false)} className="mb-4 md:hidden">
-              <XIcon className="mr-2 h-4 w-4" />
-              Close
-            </Button>
-          )}
+        <div className="hidden md:block md:col-span-3">
           <SearchFilter />
+          <Button variant="outline" onClick={handleReset} className="w-full mt-4 gap-2">
+            <RefreshCw className="w-4 h-4" />
+            Réinitialiser les filtres
+          </Button>
         </div>
 
         <div className="md:col-span-9">
@@ -117,21 +157,21 @@ export default function SearchContainerClient({ searchTerm }: SearchContainerPro
       </div>
 
       {!isDesktop && (
-        <Drawer>
-          <DrawerTrigger asChild>
+        <Dialog>
+          <DialogTrigger asChild>
             <Button className="fixed left-1/2 -translate-x-1/2 bottom-4 z-50 md:hidden rounded-full shadow-lg size-12">
               <MapIcon />
             </Button>
-          </DrawerTrigger>
-          <DrawerContent className="h-[90vh]">
-            <DrawerHeader>
-              <DrawerTitle>Map View</DrawerTitle>
-            </DrawerHeader>
-            <div className="h-full p-4">
+          </DialogTrigger>
+          <DialogContent className="h-[90vh] sm:max-w-[90vw]">
+            <DialogHeader>
+              <DialogTitle>Carte</DialogTitle>
+            </DialogHeader>
+            <div className="h-full">
               <SearchMap events={data?.pages.flatMap((page) => page.data) || []} />
             </div>
-          </DrawerContent>
-        </Drawer>
+          </DialogContent>
+        </Dialog>
       )}
     </div>
   );

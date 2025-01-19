@@ -1,13 +1,13 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { routes } from "@/config/routes";
 import { Event } from "@/types/api/event.type";
 import { getImageUrl } from "@/utils/image-utils";
 import Image from "next/image";
 import Link from "next/link";
-import { PiPencilSimpleDuotone } from "react-icons/pi";
-import { Badge } from "@/components/ui/badge";
 import { useParams } from "next/navigation";
+import { PiPencilSimpleDuotone } from "react-icons/pi";
 
 interface EventHeaderProps {
   event: Event;
@@ -26,11 +26,11 @@ export function EventHeader({ event }: EventHeaderProps) {
         )}
       </div>
 
-      <div className="mx-auto w-full max-w-7xl px-4 lg:px-6">
+      <div className="mx-auto w-full max-w-7xl px-4 lg:px-6 py-8">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between">
           <div className="flex gap-4">
             <div className="py-2">
-              <h1 className="text-lg font-bold capitalize text-gray-900 sm:text-xl lg:text-2xl">{event.title}</h1>
+              <h1 className="text-lg font-bold capitalize sm:text-xl lg:text-2xl">{event.title}</h1>
               <p className="text-sm text-gray-500">{event.summary}</p>
               <div className="flex gap-2 mt-2">
                 {event.tags.map((tag) => (

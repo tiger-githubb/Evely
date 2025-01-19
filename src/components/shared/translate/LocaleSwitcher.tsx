@@ -17,6 +17,14 @@ export default function LocaleSwitcher() {
           value: "fr",
           label: t("fr"),
         },
+        {
+          value: "es",
+          label: t("es"),
+        },
+        {
+          value: "pt",
+          label: t("pt"),
+        },
       ]}
       label={t("label")}
     />

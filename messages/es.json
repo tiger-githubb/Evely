@@ -1,0 +1,909 @@
+{
+  "LocaleSwitcher": {
+    "fr": "Francés",
+    "en": "Inglés",
+    "es": "Español",
+    "pt": "Português",
+    "label": "Idioma"
+  },
+  "FormattedDate": {
+    "invalidDate": "Fecha inválida",
+    "na": "N/A"
+  },
+  "FormattedTime": {
+    "invalidTime": "Hora inválida",
+    "na": "N/A"
+  },
+  "Auth": {
+    "notAuthenticated": "Usuario no autenticado"
+  },
+  "Schemas": {
+    "EventFaq": {
+      "questionRequired": "La pregunta es requerida",
+      "responseRequired": "La respuesta es requerida",
+      "eventIdRequired": "El ID del evento es requerido"
+    },
+    "EventTicket": {
+      "nameMin": "El nombre del boleto debe tener al menos 2 caracteres",
+      "descriptionMin": "La descripción debe tener al menos 10 caracteres",
+      "priceType": "El precio debe ser un número",
+      "priceMin": "El precio debe ser al menos 0",
+      "availableQuantityType": "La cantidad disponible debe ser un número",
+      "availableQuantityMin": "La cantidad disponible debe ser al menos 1",
+      "minTicketsType": "El mínimo de boletos por pedido debe ser un número",
+      "minTicketsMin": "El mínimo de boletos por pedido debe ser al menos 1",
+      "maxTicketsType": "El máximo de boletos por pedido debe ser un número",
+      "maxTicketsMin": "El máximo de boletos por pedido debe ser al menos 1",
+      "ticketTypeIdType": "El tipo de boleto debe ser un número"
+    },
+    "EventCreate": {
+      "titleMin": "El título debe tener al menos 3 caracteres",
+      "contentMin": "El contenido debe tener al menos 10 caracteres",
+      "summaryMin": "El resumen debe tener al menos 10 caracteres",
+      "faqQuestionMin": "La pregunta de la FAQ debe tener al menos 5 caracteres",
+      "faqResponseMin": "La respuesta de la FAQ debe tener al menos 5 caracteres",
+      "agendaTitleMin": "El título de la agenda debe tener al menos 2 caracteres",
+      "sessionTitleMin": "El título de la sesión debe tener al menos 2 caracteres",
+      "locationNameMin": "El nombre del lugar debe tener al menos 2 caracteres"
+    },
+    "OrganizationInvitation": {
+      "emailInvalid": "La dirección de correo electrónico no es válida",
+      "roleIdRequired": "El ID del rol es requerido"
+    },
+    "Order": {
+      "cartQuantityMin": "La cantidad debe ser al menos 1",
+      "firstNameMin": "El nombre debe tener al menos 2 caracteres",
+      "lastNameMin": "El apellido debe tener al menos 2 caracteres",
+      "emailInvalid": "La dirección de correo electrónico no es válida"
+    },
+    "SignUpForm": {
+      "firstNameRequired": "El nombre es obligatorio",
+      "lastNameRequired": "El apellido es obligatorio",
+      "emailInvalid": "La dirección de correo electrónico no es válida",
+      "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+      "passwordSymbol": "La contraseña debe contener al menos un símbolo",
+      "passwordConfirmationMin": "La contraseña de confirmación debe tener al menos 8 caracteres",
+      "passwordMismatch": "Las contraseñas no coinciden"
+    }
+  },
+  "Config": {
+    "Site": {
+      "title": "Yala",
+      "description": "La plataforma innovadora de gestión de eventos en Togo - Descubre, organiza y reserva tus eventos con facilidad",
+      "url": "https://yala.events",
+      "locale": "fr_TG"
+    }
+  },
+  "Categories": {
+    "music": "Música",
+    "nightLife": "Vida Nocturna",
+    "performingArts": "Artes Escénicas",
+    "parties": "Fiestas",
+    "meetings": "Reuniones",
+    "business": "Negocios",
+    "gastronomy": "Gastronomía"
+  },
+  "Common": {
+    "Logs": {
+      "noItemsFound": "No se encontraron elementos",
+      "noItemsDescription": "No hay elementos para mostrar en este momento.",
+      "noEventsTitle": "No se encontraron eventos",
+      "noEventsDescription": "No hay eventos para mostrar en este momento.",
+      "errorTitle": "Error",
+      "errorDescription": "Se produjo un error. Por favor, inténtelo de nuevo más tarde.",
+      "successTitle": "Éxito",
+      "successDescription": "La operación se completó con éxito.",
+      "warningTitle": "Advertencia",
+      "warningDescription": "Una acción requiere su atención.",
+      "fileUnsupported": "Formato de archivo no compatible o tamaño demasiado grande",
+      "dragDropActive": "Suelta la imagen aquí...",
+      "dragDropInactive": "Arrastra una imagen aquí o haz clic para seleccionar",
+      "fileDropActive": "Suelta los archivos aquí...",
+      "fileDropInactive": "Arrastra los archivos aquí o haz clic para seleccionar",
+      "someFileUnsupported": "Algunos archivos no se pudieron agregar (formato no compatible o tamaño demasiado grande)"
+    },
+    "Buttons": {
+      "signIn": "Iniciar sesión",
+      "signUp": "Registrarse",
+      "signOut": "Cerrar sesión"
+    },
+    "Menus": {
+      "dashboard": "Panel",
+      "profile": "Perfil",
+      "myEvents": "Mis Eventos"
+    },
+    "Placeholders": {
+      "search": "Buscar eventos...",
+      "userFallback": "U"
+    },
+    "Messages": {
+      "errorLoading": "Se produjo un error durante la carga.",
+      "noResults": "No se encontraron resultados."
+    }
+  },
+  "AuthentificationStatus": {
+    "userFallback": "U",
+    "dashboard": "Panel",
+    "profile": "Perfil",
+    "myEvents": "Mis Eventos",
+    "signOut": "Cerrar sesión",
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse"
+  },
+
+  "HomePage": {
+    "Hero": {
+      "badge": "Crea, comparte, vive.",
+      "title": "Para aquellos que aman vivir el momento.",
+      "button": "Ver todos los eventos",
+      "imageAlt": "Evento"
+    },
+    "FilterHomepage": {
+      "all": "Todos",
+      "forYou": "Para ti",
+      "online": "En línea",
+      "today": "Hoy",
+      "weekend": "Fin de semana",
+      "free": "Gratis",
+      "music": "Música",
+      "food": "Comida",
+      "charity": "Caridad"
+    }
+  },
+  "FollowButton": {
+    "followButton": "Seguir",
+    "unfollowButton": "Dejar de seguir",
+    "followSuccess": "¡Ahora estás siguiendo la organización!",
+    "unfollowSuccess": "Has dejado de seguir a la organización.",
+    "errorMessage": "Se produjo un error. Por favor, inténtalo de nuevo."
+  },
+
+  "ShareButton": {
+    "buttonText": "Compartir",
+    "shareText": "Descubre {organizationName} en YALA Events.",
+    "copySuccess": "¡Enlace copiado al portapapeles!",
+    "shareError": "Error al compartir. Por favor, inténtalo de nuevo."
+  },
+
+  "SignUpForm": {
+    "firstNameLabel": "Nombre",
+    "firstNamePlaceholder": "Juan",
+    "lastNameLabel": "Apellido",
+    "lastNamePlaceholder": "Doe",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "nombre@ejemplo.com",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Tu contraseña",
+    "passwordConfirmationLabel": "Confirmar contraseña",
+    "passwordConfirmationPlaceholder": "Confirma tu contraseña",
+    "signUpButton": "Registrarse",
+    "googleButton": "Google",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "signInLink": "Iniciar sesión",
+    "orContinueWith": "O continúa con",
+    "signUpError": "Error al registrarse",
+    "googleSignInError": "Error al iniciar sesión con Google",
+    "unknownError": "Se produjo un error desconocido"
+  },
+  "invitationForm": {
+    "inviteButton": "Invitar a un miembro",
+    "dialogTitle": "Invitar a un nuevo miembro",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "ejemplo@email.com",
+    "roleLabel": "Rol",
+    "rolePlaceholder": "Seleccionar un rol",
+    "submitButton": "Enviar invitación",
+    "invitationSuccess": "Invitación enviada con éxito",
+    "invitationError": "Se produjo un error al enviar la invitación"
+  },
+  "roleForm": {
+    "createButton": "Crear Rol",
+    "editButton": "Editar Rol",
+    "dialogTitleCreate": "Crear Rol",
+    "dialogTitleEdit": "Editar Rol",
+    "nameLabel": "Nombre del Rol",
+    "namePlaceholder": "Nombre del Rol",
+    "moduleHeader": "Módulo",
+    "permissionsHeader": "Permisos",
+    "submitButtonCreate": "Crear Rol",
+    "submitButtonEdit": "Editar Rol",
+    "creationSuccess": "Rol creado con éxito",
+    "creationError": "Se produjo un error al crear el rol",
+    "updateSuccess": "Rol actualizado con éxito",
+    "updateError": "Se produjo un error al actualizar el rol"
+  },
+
+  "organizationForm": {
+    "createTitle": "Crear Organización",
+    "editTitle": "Editar Organización",
+    "nameLabel": "Nombre de la Organización",
+    "namePlaceholder": "Mi Organización",
+    "descriptionLabel": "Descripción",
+    "descriptionPlaceholder": "Describe tu organización...",
+    "logoLabel": "Logotipo",
+    "logoDescription": "Formatos aceptados: .jpg, .jpeg, .png y .webp. Máximo 5MB",
+    "coverImageLabel": "Imagen de portada",
+    "coverImageDescription": "Formatos aceptados: .jpg, .jpeg, .png y .webp. Máximo 5MB",
+    "websiteLabel": "Sitio web",
+    "websitePlaceholder": "https://www.miesitio.com",
+    "createButton": "Crear Organización",
+    "editButton": "Editar Organización",
+    "createSuccess": "Organización creada con éxito",
+    "createError": "Se produjo un error al crear la organización",
+    "editSuccess": "Organización actualizada con éxito",
+    "editError": "Se produjo un error al actualizar la organización"
+  },
+  "eventForm": {
+    "createEvent": "Crear Evento",
+    "updateEvent": "Actualizar Evento",
+    "creatingEvent": "Creando...",
+    "updatingEvent": "Actualizando...",
+    "creationSuccess": "Evento creado con éxito",
+    "updateSuccess": "Evento actualizado con éxito",
+    "creationError": "Se produjo un error al crear el evento",
+    "updateError": "Se produjo un error al actualizar el evento",
+    "sessionTitleMin": "El título de la sesión debe tener al menos 2 caracteres",
+    "agendaTitleMin": "El título de la agenda debe tener al menos 2 caracteres",
+    "locationNameMin": "El nombre del lugar debe tener al menos 2 caracteres",
+    "faqQuestionMin": "La pregunta de la FAQ debe tener al menos 5 caracteres",
+    "faqResponseMin": "La respuesta de la FAQ debe tener al menos 5 caracteres",
+    "titleMin": "El título debe tener al menos 3 caracteres",
+    "contentMin": "El contenido debe tener al menos 10 caracteres",
+    "summaryMin": "El resumen debe tener al menos 10 caracteres",
+    "actions": {
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "create": "Crear",
+      "uptate": "Actualizar"
+    }
+  },
+  "orderForm": {
+    "firstNameLabel": "Nombre",
+    "firstNamePlaceholder": "Ingrese su nombre",
+    "lastNameLabel": "Apellido",
+    "lastNamePlaceholder": "Ingrese su apellido",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "Ingrese su dirección de correo electrónico",
+    "indicatifLabel": "Indicativo",
+    "indicatifPlaceholder": "+228",
+    "phoneLabel": "Teléfono",
+    "phonePlaceholder": "Ingrese su número de teléfono",
+    "loadingButton": "Creando pedido...",
+    "submitButton": "Verificar Pedido",
+    "cartQuantityMin": "La cantidad mínima es 1",
+    "firstNameMin": "El nombre debe tener al menos 2 caracteres",
+    "lastNameMin": "El apellido debe tener al menos 2 caracteres",
+    "emailInvalid": "Dirección de correo electrónico no válida"
+  },
+  "navigationItems": {
+    "createEvent": "Crear un evento",
+    "bookAcall": "Reservar una llamada",
+    "help": {
+      "title": "Ayuda",
+      "description": "Centro de ayuda y soporte",
+      "items": {
+        "findTicket": "Encontrar mi boleto",
+        "buyTicket": "Comprar un boleto",
+        "contactOrganizer": "Contactar al organizador"
+      }
+    }
+  },
+  "OrganisationNavigationItems": {
+    "navMain": {
+      "dashboard": "Yala",
+      "myTickets": "Mis Boletos",
+      "events": "Eventos",
+      "settings": {
+        "title": "Configuración",
+        "items": {
+          "ticketFees": "Tarifas de boletos"
+        }
+      }
+    }
+  },
+  "UserMainNavigationItems": {
+    "navMain": {
+      "dashboard": "Yala",
+      "myTickets": "Mis Boletos",
+      "favorites": "Favoritos"
+    }
+  },
+  "userNavigationItems": {
+    "account": "Cuenta",
+    "organizations": "Organizaciones",
+    "billing": "Facturación",
+    "notifications": "Notificaciones",
+    "logout": "Cerrar sesión"
+  },
+  "SignInForm": {
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "nombre@ejemplo.com",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Tu contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "submitButton": "Iniciar sesión",
+    "googleSignIn": "Continuar con Google",
+    "loading": "Iniciando sesión...",
+    "googleSignInError": "Error al iniciar sesión con Google",
+    "noAccount": "¿No tienes una cuenta?",
+    "createAccount": "Crea una",
+    "signInError": "Correo electrónico o contraseña incorrectos",
+    "signInSuccess": "Inicio de sesión exitoso, redireccionando a la página de inicio"
+  },
+
+  "AuthWrapper": {
+    "signInTitle": "Iniciar sesión",
+    "signInDescription": "Ingrese sus credenciales para acceder a su cuenta.",
+    "signUpLinkText": "Registrarse",
+    "signUpTitle": "Registrarse",
+    "signUpDescription": "Crea una cuenta Yala para administrar tus eventos con facilidad.",
+    "signInLinkText": "Iniciar sesión",
+    "legalNotice": {
+      "start": "Al continuar, aceptas nuestros",
+      "terms": "Términos de servicio",
+      "privacy": "Política de privacidad",
+      "and": "y"
+    }
+  },
+  "searchPage": {
+    "filterSection": {
+      "categoriesTitle": "Categorías",
+      "dateTitle": "Fecha",
+      "eventTypeTitle": "Tipo de evento",
+      "formatTitle": "Formato",
+      "languageTitle": "Idioma",
+      "popularTagsTitle": "Etiquetas populares",
+      "viewMore": "Ver más",
+      "viewLess": "Ver menos"
+    },
+    "dateOptions": {
+      "today": "Hoy",
+      "tomorrow": "Mañana",
+      "weekend": "Fin de semana",
+      "week": "Esta semana",
+      "nextWeek": "Próxima semana",
+      "month": "Este mes",
+      "nextMonth": "Próximo mes",
+      "pickDate": "Seleccionar una fecha..."
+    },
+    "searchMap": {
+      "searchRadius": "Radio de búsqueda",
+      "distanceLabel": "Distancia:",
+      "viewMap": "Ver mapa",
+      "pickDate": "Seleccionar una fecha...",
+      "today": "Hoy",
+      "tomorrow": "Mañana",
+      "weekend": "Fin de semana",
+      "week": "Esta semana",
+      "nextWeek": "Próxima semana",
+      "month": "Este mes",
+      "nextMonth": "Próximo mes"
+    },
+    "searchEventCard": {
+      "placeholderImageAlt": "Imagen de marcador de posición",
+      "organizationLogoAlt": "Logotipo de la organización"
+    }
+  },
+
+  "checkoutPage": {
+    "buttonContinue": "Continuar",
+    "ticketsList": "Tus boletos",
+    "ticketsTotal": "Total"
+  },
+  "checkoutModal": {
+    "title": "Finalizar tu pedido"
+  },
+  "checkoutSummary": {
+    "orderSummary": "Resumen del pedido",
+    "confirmAndPay": "Confirmar y pagar"
+  },
+  "navUser": {
+    "guest": "Invitado",
+    "emailNotVerified": "Tu correo electrónico no ha sido verificado. Por favor, revisa tu buzón.",
+    "signOutSuccess": "Cierre de sesión exitoso",
+    "seeYouSoon": "¡Hasta pronto en Yala!",
+    "account": "Cuenta",
+    "organizations": "Organizaciones",
+    "billing": "Facturación",
+    "notifications": "Notificaciones",
+    "logout": "Cerrar sesión"
+  },
+
+  "teamSwitcher": {
+    "errorLoading": "Se produjo un error al cargar las organizaciones.",
+    "member": "Miembro",
+    "myOrganizations": "Mis Organizaciones",
+    "addOrganization": "Agregar Organización",
+    "newOrganization": "Nueva Organización",
+    "createOrganization": "Crear una organización"
+  },
+  "agendaSection": {
+    "agendaTitle": "Agenda",
+    "addAgenda": "Agregar Agenda",
+    "agendaTitleLabel": "Título de la agenda",
+    "sessionsTitle": "Sesiones",
+    "addSession": "Agregar Sesión",
+    "sessionTitleLabel": "Título de la sesión",
+    "startTimeLabel": "Hora de inicio",
+    "endTimeLabel": "Hora de finalización"
+  },
+  "basicInfoSection": {
+    "sectionTitle": "Información básica",
+    "titleLabel": "Título del evento",
+    "titlePlaceholder": "Ingrese el título del evento",
+    "summaryLabel": "Resumen",
+    "summaryPlaceholder": "Ingrese un breve resumen del evento",
+    "descriptionLabel": "Descripción detallada",
+    "descriptionPlaceholder": "Describe tu evento en detalle"
+  },
+  "categoriesSection": {
+    "sectionTitle": "Categorías y Formato",
+    "typeLabel": "Tipo de evento",
+    "typePlaceholder": "Seleccionar un tipo",
+    "categoryLabel": "Categoría",
+    "categoryPlaceholder": "Seleccionar una categoría",
+    "formatLabel": "Formato",
+    "formatPlaceholder": "Seleccionar un formato",
+    "languageLabel": "Idioma",
+    "languagePlaceholder": "Seleccionar un idioma"
+  },
+  "dateTimeSection": {
+    "sectionTitle": "Fecha y Horarios",
+    "dateLabel": "Fecha",
+    "startTimeLabel": "Hora de inicio",
+    "endTimeLabel": "Hora de finalización"
+  },
+  "faqSection": {
+    "sectionTitle": "Preguntas frecuentes",
+    "addQuestion": "Agregar pregunta",
+    "questionLabel": "Pregunta",
+    "questionPlaceholder": "Ingrese la pregunta",
+    "responseLabel": "Respuesta",
+    "responsePlaceholder": "Ingrese la respuesta"
+  },
+  "locationSection": {
+    "sectionTitle": "Ubicación",
+    "placeNameLabel": "Nombre del lugar",
+    "placeNamePlaceholder": "Buscar un lugar",
+    "loadingMessage": "Cargando..."
+  },
+  "mediaSection": {
+    "sectionTitle": "Medios",
+    "coverImagesLabel": "Imágenes de portada",
+    "videoLabel": "Vídeo (URL)",
+    "videoPlaceholder": "Enlace del vídeo (por ejemplo, https://youtube.com/...)"
+  },
+  "tagsSection": {
+    "sectionTitle": "Etiquetas",
+    "tagsLabel": "Seleccionar o crear etiquetas",
+    "placeholder": "Buscar o crear una etiqueta"
+  },
+  "signInModal": {
+    "title": "Iniciar sesión"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Página no encontrada",
+    "description": "Aquí hay algunas páginas que podrían interesarte:",
+    "returnHome": "Volver a la Página de inicio",
+    "pages": {
+      "home": {
+        "title": "Inicio",
+        "description": "Descubre nuestras últimas noticias y eventos"
+      },
+      "search": {
+        "title": "Buscar",
+        "description": "Buscar eventos y más"
+      },
+      "contact": {
+        "title": "Contacto",
+        "description": "Ponte en contacto con nuestro equipo"
+      }
+    }
+  },
+
+  "emailVerification": {
+    "verifying": {
+      "title": "Verificando tu correo electrónico...",
+      "description": "Espera mientras verificamos tu dirección de correo electrónico."
+    },
+    "success": {
+      "title": "¡Correo electrónico verificado con éxito!",
+      "description": "Serás redireccionado a la página de inicio de sesión en breve..."
+    },
+    "error": {
+      "title": "Error de verificación",
+      "description": "El enlace de verificación es inválido o ha caducado."
+    }
+  },
+  "paymentSuccess": {
+    "leftSection": {
+      "title": "¡Pago realizado con éxito!",
+      "description": "Tu transacción se ha procesado con éxito"
+    },
+    "title": "Pago Confirmado",
+    "thanksMessage": "¡Gracias por tu compra!",
+    "emailConfirmation": "Se ha enviado un correo electrónico de confirmación a tu dirección.",
+    "processingTime": "Tiempo de procesamiento: unos segundos",
+    "viewTicketsButton": "Ver mis boletos",
+    "returnHomeButton": "Volver a la Página de inicio",
+    "supportMessage": "¿Tienes alguna pregunta? Comunícate con nuestro equipo de soporte"
+  },
+  "paymentFailed": {
+    "leftSection": {
+      "title": "Pago Fallido",
+      "description": "Se produjo un error durante tu transacción"
+    },
+    "title": "Pago No Completado",
+    "message1": "No se pudo procesar tu pago.",
+    "message2": "Por favor, verifica tu información e inténtalo de nuevo.",
+    "retryButton": "Reintentar",
+    "backButton": "Atrás",
+    "supportMessage": "¿Necesitas ayuda? Nuestro equipo de soporte está disponible 24/7"
+  },
+  "paymentForm": {
+    "leftSection": {
+      "title": "Pago Seguro",
+      "description": "Tus transacciones están protegidas con encriptación de extremo a extremo"
+    },
+    "title": "Elige tu Método de Pago",
+    "empty": {
+      "title": "No hay Métodos de Pago Disponibles",
+      "description": "Por favor, inténtalo de nuevo más tarde o comunícate con el soporte."
+    },
+    "error": {
+      "title": "Error al Cargar Métodos de Pago",
+      "description": "Se produjo un error al cargar los métodos de pago.",
+      "retry": "Reintentar"
+    },
+    "methodName": "Pagar con {name}",
+    "methodDescription": "Tarjetas de crédito, Mobile Money, Transferencias bancarias",
+    "back": "Atrás",
+    "terms": "Al realizar este pago, aceptas nuestros términos y condiciones."
+  },
+  "organizationActions": {
+    "follow": "Seguir",
+    "unfollow": "Dejar de seguir",
+    "share": "Compartir",
+    "followSuccess": "¡Ahora estás siguiendo esta organización!",
+    "unfollowSuccess": "Ya no estás siguiendo esta organización",
+    "actionError": "Se produjo un error. Por favor, inténtalo de nuevo.",
+    "shareText": "Descubre {name} en YALA Events",
+    "copySuccess": "Enlace copiado al portapapeles",
+    "shareError": "Error al compartir el enlace"
+  },
+  "organizationContent": {
+    "about": "Acerca de",
+    "website": "Sitio web oficial",
+    "upcomingEvents": "Próximos Eventos",
+    "pastEvents": "Eventos Pasados"
+  },
+  "organizationHeader": {
+    "followers": "{count} seguidores",
+    "events": "{count} eventos",
+    "sections": {
+      "about": "Acerca de",
+      "events": "Eventos",
+      "photos": "Fotos",
+      "followers": "Seguidores"
+    },
+    "buttons": {
+      "navigate": "Navegar a {section}"
+    }
+  },
+  "filters": {
+    "filters": "Filtros",
+    "close": "Cerrar"
+  },
+  "results": {
+    "events": "Eventos",
+    "no_results": "No se encontraron eventos"
+  },
+  "map": {
+    "map_view": "Vista de mapa"
+  },
+  "search": {
+    "loading": "Cargando eventos...",
+    "error": "Error al cargar eventos"
+  },
+  "event": {
+    "event_details": "Detalles del evento",
+    "event_date": "Fecha del evento",
+    "location": "Ubicación",
+    "event_description": "Descripción del evento",
+    "view_more": "Ver más"
+  },
+  "search_filter": {
+    "categories": "Categorías",
+    "types": "Tipos",
+    "date": "Fecha",
+    "location": "Ubicación",
+    "clear_all": "Borrar todo"
+  },
+  "buttons": {
+    "apply_filters": "Aplicar filtros",
+    "see_map": "Ver mapa",
+    "back_to_home": "Volver a la Página de inicio"
+  },
+  "ttd": {
+    "hero": {
+      "title": "Qué hacer",
+      "description": "Descubre los mejores eventos y actividades para hacer en Togo. Desde conciertos hasta talleres, encuentra tu próxima aventura aquí."
+    }
+  },
+  "error": {
+    "title": "¡Vaya! Algo salió mal.",
+    "description": "Encontramos un error inesperado. Por favor, intenta las siguientes acciones:",
+    "action1": "Verifica tu conexión a internet.",
+    "action2": "Actualiza la página.",
+    "action3": "Contacta al soporte si el problema persiste.",
+    "goHomeButton": "Ir a la Página de inicio",
+    "retryButton": "Reintentar"
+  },
+  "goHomeButton": "Ir a la Página de inicio",
+  "eventTypes": {
+    "Presentiel": "Presencial",
+    "En ligne": "En línea"
+  },
+  "followers": "seguidores",
+  "events": "eventos",
+  "about": "Acerca de",
+  "program": "Programa",
+  "faq": "Preguntas frecuentes",
+  "ticket": {
+    "maxLimit": "Has alcanzado el límite máximo de {{limit}} boletos para este tipo de ",
+    "showLess": "Mostrar menos",
+    "showMore": "Mostrar más",
+    "remaining": "Restantes: {remaining} boletos",
+    "loadError": "Se produjo un error al cargar los boletos",
+    "notAvailableTitle": "Boletos No Disponibles",
+    "notAvailableMessage": "Los boletos para este evento aún no están disponibles.",
+    "availableTitle": "Boletos Disponibles",
+    "total": "Total",
+    "confirm": "Confirmar"
+  },
+  "FavoriteEvents": {
+    "favoriteEventsTitle": "Eventos Favoritos",
+    "noFavoritesText": "Aún no tienes eventos favoritos",
+    "discoverEventsButton": "Descubrir Eventos"
+  },
+  "OrdersSection": {
+    "ordersTitle": "Pedidos",
+    "noOrdersText": "No hay pedidos pendientes"
+  },
+  "QuickActions": {
+    "quickActions": "Acciones Rápidas",
+    "createEvent": "Crear un Evento",
+    "becomeOrganizer": "Convertirse en Organizador",
+    "becomeSeller": "Convertirse en Vendedor"
+  },
+  "UserInterests": {
+    "interests": "Intereses",
+    "description": "Personaliza tus intereses para descubrir eventos que coincidan con tus preferencias."
+  },
+  "OrganizationHeader": {
+    "title": "Organización {organizationSlug}",
+    "description": "Administra tus eventos y rastrea tu rendimiento",
+    "createEvent": "Crear un evento",
+    "viewAllEvents": "Ver todos los eventos"
+  },
+  "recentEvents": {
+    "title": "Eventos Recientes",
+    "selectOrganizationMessage": "Selecciona una organización",
+    "errorLoadingRecentEvents": "Se produjo un error al cargar los eventos recientes",
+    "titleColumn": "Título",
+    "dateColumn": "Fecha",
+    "categoryColumn": "Categoría"
+  },
+  "revenueChart": {
+    "title": "Ingresos Mensuales"
+  },
+  "upcomingEvents": {
+    "title": "Próximos Eventos",
+    "selectOrganization": "Por favor, selecciona una organización para ver los eventos.",
+    "errorLoading": "Ocurrió un error al cargar los próximos eventos.",
+    "titleColumn": "Título del Evento",
+    "dateColumn": "Fecha del Evento",
+    "categoryColumn": "Categoría"
+  },
+  "eventsPage": {
+    "title": "Lista de Eventos",
+    "createEventButton": "Crear un Evento"
+  },
+  "createEventPage": {
+    "title": "Crear Nuevo Evento"
+  },
+  "eventTable": {
+    "title": "Título",
+    "summary": "Resumen",
+    "status": "Estado",
+    "draft": "Borrador",
+    "published": "Publicado",
+    "actions": "Acciones",
+    "publish": "Publicar",
+    "unpublish": "Despublicar"
+  },
+  "eventsdashboard": {
+    "title": "Título",
+    "summary": "Resumen",
+    "status": "Estado",
+    "draft": "Borrador",
+    "published": "Publicado",
+    "actions": "Acciones",
+    "publish": "Publicar",
+    "unpublish": "Despublicar",
+    "deleteEvent": "¿Estás seguro de que deseas eliminar este evento?",
+    "deleteSuccess": "Evento eliminado con éxito",
+    "deleteError": "Se produjo un error al eliminar el evento",
+    "publishSuccess": "¡El evento se publicó con éxito!",
+    "unpublishSuccess": "¡El evento se despublicó con éxito!",
+    "publishError": "Se produjo un error al actualizar el estado del evento",
+    "noResults": "No se encontraron eventos.",
+    "loadingError": "Se produjo un error al cargar los eventos."
+  },
+  "eventNav": {
+    "overview": "Visión general",
+    "agendas": "Agendas",
+    "media": "Medios",
+    "stats": "Estadísticas",
+    "faq": "Preguntas frecuentes",
+    "tickets": "Boletos"
+  },
+  "eventNotFound": {
+    "title": "Evento no encontrado",
+    "description": "El evento que estás buscando no existe o no tienes los permisos necesarios para acceder a él.",
+    "viewEvents": "Ver Eventos",
+    "backToDashboard": "Volver al Panel"
+  },
+  "EventAgendas": {
+    "noAgendasTitle": "No hay Agendas Disponibles",
+    "noAgendasMessage": "Este evento actualmente no tiene agendas.",
+    "startTimeLabel": "Inicio",
+    "endTimeLabel": "Fin"
+  },
+  "EditEventPage": {
+    "editEventTitle": "Editar Evento"
+  },
+  "EventFaqAccordion": {
+    "loading": "Cargando",
+    "errorLoading": "Se produjo un error al cargar las preguntas frecuentes.",
+    "noFaqsAvailable": "No hay preguntas frecuentes disponibles para este evento."
+  },
+  "EventMedia": {
+    "covers": "Portadas",
+    "eventCover": "Portada del Evento",
+    "eventVideo": "Vídeo del Evento",
+    "videoNotSupported": "Tu navegador no admite la etiqueta de vídeo."
+  },
+  "MediaPage": {
+    "noMediaAvailable": "No hay medios disponibles para este evento."
+  },
+  "StatsPage": {
+    "noStatsAvailable": "No hay estadísticas disponibles para este evento."
+  },
+  "EventStats": {
+    "dateAndTime": "Fecha y Hora",
+    "date": "Fecha",
+    "startTime": "Hora de Inicio",
+    "endTime": "Hora de Finalización",
+    "tags": "Etiquetas",
+    "noTags": "No hay etiquetas asociadas a este evento"
+  },
+  "tickets": {
+    "ticketGeneration": {
+      "createTicket": "Crear Boleto"
+    },
+    "ticketGenerationForm": {
+      "ticketName": "Nombre del Boleto",
+      "ticketDescription": "Descripción",
+      "ticketPrice": "Precio (0 para gratuito)",
+      "ticketQuantity": "Cantidad Disponible",
+      "ticketMinQuantity": "Mínimo por pedido",
+      "ticketMaxQuantity": "Máximo por pedido",
+      "ticketSaleStartDate": "Fecha de Inicio de Venta",
+      "ticketSaleStartTime": "Hora de Inicio de Venta",
+      "ticketSaleEndDate": "Fecha de Fin de Venta",
+      "ticketSaleEndTime": "Hora de Fin de Venta",
+      "ticketType": "Tipo de Boleto",
+      "createTicketButton": "Crear Boleto",
+      "loadingTicketTypes": "Cargando tipos de boletos...",
+      "noTags": "No hay etiquetas asociadas a este evento",
+      "ticketCreated": "Boleto creado con éxito.",
+      "ticketError": "Se produjo un error al crear el boleto."
+    },
+    "ticketList": {
+      "ticketListTitle": "Lista de Boletos",
+      "loadingTickets": "Cargando boletos...",
+      "errorLoadingTickets": "Error al cargar boletos.",
+      "ticketModify": "Modificar boleto",
+      "ticketDelete": "Eliminar boleto",
+      "noTickets": "No se encontraron boletos.",
+      "ticketOnSale": "Boleto en venta",
+      "endsOn": "Finaliza el",
+      "at": "a"
+    },
+    "ticketNotFound": {
+      "title": "Boleto no encontrado",
+      "message": "El boleto que estás buscando no existe o no tienes los permisos necesarios para acceder a él."
+    },
+    "ticketStats": {
+      "statsTitle": "Estadísticas de Boletos",
+      "totalTickets": "Total de Boletos",
+      "soldTickets": "Boletos Vendidos",
+      "price": "Precio"
+    }
+  },
+  "organizations": {
+    "organizationsTitle": "Organizaciones"
+  },
+  "ImageUpload": {
+    "invalidFileFormat": "Formato de archivo no compatible o tamaño del archivo demasiado grande",
+    "dropImageHere": "Suelta la imagen aquí...",
+    "clickOrDragImage": "Haz clic o arrastra una imagen aquí para seleccionarla"
+  },
+  "AcceptInvitationPage": {
+    "invalidToken": "Token de invitación no válido",
+    "invitationAccepted": "Invitación aceptada con éxito",
+    "acceptInvitationTitle": "Aceptar Invitación",
+    "acceptInvitationDescription": "Estás a punto de unirte a una organización. Haz clic en el botón de abajo para aceptar la invitación.",
+    "processing": "Procesando...",
+    "acceptInvitationButton": "Aceptar Invitación"
+  },
+  "OrganizationPage": {
+    "organization": "Organización",
+    "members": "Miembros",
+    "createdAt": "Fecha de creación",
+    "deleteMessage": "¿Estás seguro de que deseas eliminar esta organización?"
+  },
+  "OrganizationsPage": {
+    "deleteSuccess": "Organización eliminada con éxito",
+    "deleteError": "Se produjo un error al eliminar la organización",
+    "errorMessage": "Se produjo un error al cargar las organizaciones.",
+    "filterByName": "Filtrar por nombre...",
+    "noResultsMessage": "No se encontraron organizaciones",
+    "totalLabel": "línea(s)"
+  },
+  "OrganizationDetailsDialog": {
+    "organizationProfile": "Perfil de la Organización",
+    "openOrganizationPage": "Abrir Página de la Organización",
+    "error": "Se produjo un error",
+    "errorMessage": "No se pudieron cargar los detalles de la organización. Inténtalo de nuevo más tarde.",
+    "about": "Acerca de",
+    "roles": "Roles",
+    "system": "Sistema",
+    "statistics": "Estadísticas",
+    "members": "Miembros",
+    "followers": "Seguidores",
+    "links": "Enlaces",
+    "website": "Sitio web",
+    "memberSince": "Miembro desde"
+  },
+  "OrganizationHeaderBoard": {
+    "followers": "Seguidores",
+    "members": "Miembros"
+  },
+  "OrganizationInfo": {
+    "about": "Acerca de",
+    "memberSince": "Miembro desde",
+    "roles": "Roles",
+    "system": "Sistema"
+  },
+  "OrganizationNav": {
+    "overview": "Visión general",
+    "members": "Miembros",
+    "invitations": "Invitaciones",
+    "roles": "Roles",
+    "followers": "Seguidores"
+  },
+  "OrganizationNotFound": {
+    "organizationNotFoundTitle": "Organización no encontrada",
+    "organizationNotFoundDescription": "La organización que estás buscando no existe o no tienes los permisos necesarios para acceder a ella.",
+    "viewOrganizations": "Ver mis organizaciones",
+    "backToDashboard": "Volver al panel"
+  },
+  "OrganizationStats": {
+    "detailedStats": "Estadísticas detalladas",
+    "members": "Miembros",
+    "followers": "Seguidores"
+  }
+}

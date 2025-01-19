@@ -3,17 +3,20 @@
 import { FileUploader } from "@/components/shared/file-uploader";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input"; // Assuming Input is your reusable input component
-import { UseFormReturn } from "react-hook-form";
 import type { CreateEventType } from "@/schemas/event.schema";
+import { useTranslations } from "next-intl";
+import { UseFormReturn } from "react-hook-form";
 
 interface MediaSectionProps {
   form: UseFormReturn<CreateEventType>;
 }
 
 export default function MediaSection({ form }: MediaSectionProps) {
+  const t = useTranslations("mediaSection");
+
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium">Médias</h3>
+      <h3 className="text-lg font-medium">{t("sectionTitle")}</h3>
 
       <div className="grid gap-6">
         {/* Cover images uploader */}
@@ -22,7 +25,7 @@ export default function MediaSection({ form }: MediaSectionProps) {
           name="covers"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Images de couverture</FormLabel>
+              <FormLabel>{t("coverImagesLabel")}</FormLabel>
               <FormControl>
                 <FileUploader
                   value={field.value}
@@ -30,7 +33,7 @@ export default function MediaSection({ form }: MediaSectionProps) {
                   accept={{ "image/*": [] }}
                   maxFiles={3}
                   preview
-                  className="aspect-video h-auto w-full"
+                  className="aspect-video h-[150px] w-full"
                 />
               </FormControl>
               <FormMessage />
@@ -41,13 +44,13 @@ export default function MediaSection({ form }: MediaSectionProps) {
         {/* Video URL input */}
         <FormField
           control={form.control}
-          name="video"
+          name="videoUrl"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Vidéo (URL)</FormLabel>
+              <FormLabel>{t("videoLabel")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Lien de la vidéo (ex: https://youtube.com/...)"
+                  placeholder={t("videoPlaceholder")}
                   {...field}
                   value={field.value || ""}
                   onChange={(e) => field.onChange(e.target.value)}

@@ -2,22 +2,25 @@
 
 import { motion } from "framer-motion";
 import { CalendarPlus, Store, Users } from "lucide-react";
+import { useTranslations } from "next-intl"; // Import the useTranslations hook
 import Link from "next/link";
 
 export function QuickActions() {
+  const t = useTranslations("QuickActions"); // Load translations for this component
+
   const actions = [
     {
-      title: "Créer un événement",
+      title: t("createEvent"), // Use translation for the title
       icon: CalendarPlus,
       href: "/create-event",
     },
     {
-      title: "Devenir organisateur",
+      title: t("becomeOrganizer"), // Use translation for the title
       icon: Users,
       href: "/become-organizer",
     },
     {
-      title: "Devenir vendeur",
+      title: t("becomeSeller"), // Use translation for the title
       icon: Store,
       href: "/become-seller",
     },
@@ -31,7 +34,7 @@ export function QuickActions() {
         className="rounded-lg bg-white dark:bg-gray-800 shadow-sm"
       >
         <div className="p-4 border-b dark:border-gray-700">
-          <h3 className="font-medium text-base dark:text-gray-100">Actions rapides</h3>
+          <h3 className="font-medium text-base dark:text-gray-100">{t("quickActions")}</h3> {/* Use translation for the header */}
         </div>
         <div className="p-2">
           {actions.map((action) => (

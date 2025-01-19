@@ -9,27 +9,30 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Loader } from "lucide-react";
-
-const eventColumns: ColumnDef<Event, string>[] = [
-  {
-    accessorKey: "title",
-    header: "Titre",
-    cell: ({ row }) => <div className="font-medium">{row.original.title}</div>,
-  },
-  {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ row }) => format(new Date(row.original.date), "dd MMMM yyyy", { locale: fr }),
-  },
-  {
-    accessorKey: "category.name",
-    header: "Catégorie",
-    cell: ({ row }) => row.original.category.name,
-  },
-];
+import { useTranslations } from "next-intl";
 
 export function UpcomingEvents() {
   const { activeOrganization } = useOrganizationStore();
+  const t = useTranslations("upcomingEvents"); // Namespace for translations
+
+  // Define columns with translated headers
+  const eventColumns: ColumnDef<Event, string>[] = [
+    {
+      accessorKey: "title",
+      header: t("titleColumn"), // Translate the column header
+      cell: ({ row }) => <div className="font-medium">{row.original.title}</div>,
+    },
+    {
+      accessorKey: "date",
+      header: t("dateColumn"), // Translate the column header
+      cell: ({ row }) => format(new Date(row.original.date), "dd MMMM yyyy", { locale: fr }),
+    },
+    {
+      accessorKey: "category.name",
+      header: t("categoryColumn"), // Translate the column header
+      cell: ({ row }) => row.original.category.name,
+    },
+  ];
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["dashboard-stats", activeOrganization?.id],
@@ -40,7 +43,7 @@ export function UpcomingEvents() {
   if (isLoading) {
     return (
       <div className="rounded-lg border p-6">
-        <h2 className="text-xl font-semibold mb-4">Événements à venir</h2>
+        <h2 className="text-xl font-semibold mb-4">{t("title")}</h2>
         <div className="flex justify-center items-center py-4">
           <Loader className="w-6 h-6" />
         </div>
@@ -51,21 +54,21 @@ export function UpcomingEvents() {
   if (!activeOrganization?.id || activeOrganization.id === 0) {
     return (
       <div className="rounded-lg border p-6">
-        <h2 className="text-xl font-semibold mb-4">Événements à venir</h2>
-        <div className="text-center py-4">Veuillez sélectionner une organisation</div>
+        <h2 className="text-xl font-semibold mb-4">{t("title")}</h2>
+        <div className="text-center py-4">{t("selectOrganization")}</div>
       </div>
     );
   }
 
   return (
     <div className="rounded-lg border p-6">
-      <h2 className="text-xl font-semibold mb-4">Événements à venir</h2>
+      <h2 className="text-xl font-semibold mb-4">{t("title")}</h2>
       <CustomDataTable
         columns={eventColumns}
         data={data?.upcomingEvents || []}
         isLoading={isLoading}
         error={error}
-        errorMessage="Une erreur est survenue lors du chargement des événements à venir."
+        errorMessage={t("errorLoading")}
         showPagination={false}
         showFilterInput={false}
         showColumnVisibility={false}

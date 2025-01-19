@@ -7,19 +7,23 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { fetchEventTickets } from "@/server/services/events-tickets.service";
 import { resolveSlug } from "@/server/services/slug-resolver.service";
 import { useOrganizationStore } from "@/stores/organization-store";
-import { FormattedDate, FormattedTime } from "@/utils/date-utils";
+import { formatDate, formatTime } from "@/utils/date-utils";
 import { useQuery } from "@tanstack/react-query";
 import { MoreVertical } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface TicketListProps {
   eventSlug: string;
 }
+
 export default function TicketList({ eventSlug }: TicketListProps) {
   const { activeOrganization } = useOrganizationStore();
   const organizationId = activeOrganization?.id;
   const [eventId, setEventId] = useState<number | null>(null);
+  const t = useTranslations("tickets.ticketList");
+  const tStats = useTranslations("tickets.ticketStats");
 
   useEffect(() => {
     const fetchEventId = async () => {
@@ -45,7 +49,7 @@ export default function TicketList({ eventSlug }: TicketListProps) {
   if (!organizationId || !eventId || isLoading) {
     return (
       <div className="container mx-auto py-6">
-        <h1 className="text-2xl font-bold">Liste des tickets</h1>
+        <h1 className="text-2xl font-bold">{t("ticketListTitle")}</h1>
         <TicketGridSkeleton />
       </div>
     );
@@ -54,22 +58,22 @@ export default function TicketList({ eventSlug }: TicketListProps) {
   if (error || !data) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <p className="text-gray-500">Erreur lors du chargement des tickets.</p>
+        <p className="text-gray-500">{t("errorLoadingTickets")}</p>
       </div>
     );
   }
 
   const handleEdit = (ticketId: number) => {
-    toast.success(`Modifier le ticket ${ticketId}`);
+    toast.success(`${t("ticketModify")} ${ticketId}`);
   };
 
   const handleDelete = (ticketId: number) => {
-    toast.error(`Supprimer le ticket ${ticketId}`);
+    toast.error(`${t("ticketDelete")} ${ticketId}`);
   };
 
   return (
     <div className="container mx-auto py-6 space-y-4">
-      <h1 className="text-2xl font-bold">Liste des tickets</h1>
+      <h1 className="text-2xl font-bold">{t("ticketListTitle")}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
         {data.data.map((ticket) => (
           <Card key={ticket.id} className="relative">
@@ -84,28 +88,42 @@ export default function TicketList({ eventSlug }: TicketListProps) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => handleEdit(ticket.id)}>Modifier</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleDelete(ticket.id)}>Supprimer</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleEdit(ticket.id)}>{t("ticketModify")}</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleDelete(ticket.id)}>{t("ticketDelete")}</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
             </CardHeader>
-            <CardContent>
-              <p className="text-gray-500">{ticket.description}</p>
-              <div className="flex items-center space-x-2 mt-2">
-                <span className="text-green-500">● En vente</span>
-                <span>
-                  • Se termine {FormattedDate({ dateString: ticket.saleEndDate })} à{" "}
-                  {FormattedTime({ timeString: ticket.saleEndTime })}
-                </span>
+            <CardContent className="p-6 bg-gray-50 rounded-lg shadow-sm space-y-4">
+              <p className="text-gray-700 text-sm leading-relaxed">{ticket.description}</p>
+
+              <div className="flex flex-col items-start space-y-2">
+                <div className="flex items-center space-x-2">
+                  <span className="inline-flex items-center justify-center w-5 h-5 bg-green-500 text-white rounded-full text-xs font-bold">
+                    ✔
+                  </span>
+                  <span className="text-green-600 text-sm font-medium">{t("ticketOnSale")}</span>
+                </div>
+                <div className="text-gray-500 text-sm">
+                  {/* Format date and time */}
+                  {t("endsOn")} <span className="font-semibold text-gray-700">{formatDate(ticket.saleEndDate)}</span> {t("at")}{" "}
+                  <span className="font-semibold text-gray-700">{formatTime(ticket.saleEndTime)}</span>
+                </div>
               </div>
-              <div className="flex justify-between mt-4">
-                <p>
-                  <strong>Vendus :</strong> {ticket._count.inscriptions}/{ticket.availableQuantity}
-                </p>
-                <p>
-                  <strong>Prix :</strong> {ticket.price === 0 ? "Gratuit" : `${ticket.price} FCFA`}
-                </p>
+
+              <div className="border-t pt-4 grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-gray-500 text-sm">{tStats("soldTickets")}</p>
+                  <p className="text-lg font-semibold text-gray-800">
+                    {ticket._count.inscriptions}/{ticket.availableQuantity}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-500 text-sm">{tStats("price")}</p>
+                  <p className={`text-lg font-semibold ${ticket.price === 0 ? "text-green-600" : "text-gray-800"}`}>
+                    {ticket.price === 0 ? t("free") : `${ticket.price} FCFA`}
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>

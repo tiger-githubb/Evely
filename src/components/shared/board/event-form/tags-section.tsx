@@ -5,6 +5,7 @@ import { FormField, FormItem, FormLabel } from "@/components/ui/form";
 import type { CreateEventType } from "@/schemas/event.schema";
 import { fetchEventTags } from "@/server/services/event-tags.service";
 import { EventTag } from "@/types/api/event-tag.type";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 
@@ -13,6 +14,7 @@ interface TagsSectionProps {
 }
 
 export default function TagsSection({ form }: TagsSectionProps) {
+  const t = useTranslations("tagsSection");
   const [availableTags, setAvailableTags] = useState<EventTag[]>([]);
   const [selectedTags, setSelectedTags] = useState<Array<{ value: number | string; label: string }>>([]);
 
@@ -61,19 +63,20 @@ export default function TagsSection({ form }: TagsSectionProps) {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium">Tags</h3>
+      <h3 className="text-lg font-medium">{t("sectionTitle")}</h3>
       <FormField
         control={form.control}
         name="tags"
         render={() => (
           <FormItem>
-            <FormLabel></FormLabel>
+            <FormLabel>{t("tagsLabel")}</FormLabel>
             <Combobox
               options={tagOptions}
               selectedValues={selectedTags}
               onSelect={handleSelect}
               onRemove={handleRemove}
               onCreateNew={(value) => handleSelect({ value, label: value })}
+              placeholder={t("placeholder")}
             />
           </FormItem>
         )}

@@ -1,21 +1,24 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BadgeCell } from "@/components/shared/table/badge-cell";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 
 interface EventAgendasProps {
   agendas: { id: number; name: string; description: string; startTime: string; endTime: string }[];
 }
 
 export default function EventAgendas({ agendas }: EventAgendasProps) {
+  const t = useTranslations("EventAgendas");
+
   if (!agendas.length) {
     return (
       <Card className="shadow-sm">
         <CardHeader>
-          <CardTitle>No Agendas Available</CardTitle>
+          <CardTitle>{t("noAgendasTitle")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-500">This event currently has no agendas.</p>
+          <p className="text-gray-500">{t("noAgendasMessage")}</p>
         </CardContent>
       </Card>
     );
@@ -31,8 +34,8 @@ export default function EventAgendas({ agendas }: EventAgendasProps) {
           <CardContent>
             <p className="text-gray-500 mb-2">{agenda.description}</p>
             <div className="flex justify-between text-sm">
-              <BadgeCell value={`Start: ${agenda.startTime}`} variant="secondary" />
-              <BadgeCell value={`End: ${agenda.endTime}`} variant="secondary" />
+              <BadgeCell value={`${t("startTimeLabel")}: ${agenda.startTime}`} variant="secondary" />
+              <BadgeCell value={`${t("endTimeLabel")}: ${agenda.endTime}`} variant="secondary" />
             </div>
           </CardContent>
         </Card>

@@ -3,11 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { navigationItems } from "@/config/navigations-items";
 import { Menu, MoveRight, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 
 export const MobileMenu = () => {
   const [isOpen, setOpen] = useState(false);
+  const t = useTranslations("navigationItems");
 
   return (
     <div className="flex w-12 shrink lg:hidden items-end justify-end">
@@ -16,7 +18,7 @@ export const MobileMenu = () => {
       </Button>
       {isOpen && (
         <div className="absolute top-20 border-t flex flex-col w-full right-0 bg-background shadow-lg py-4 container gap-8">
-          {navigationItems.map((item) => (
+          {navigationItems(t).map((item) => (
             <div key={item.title}>
               <div className="flex flex-col gap-2">
                 {item.href ? (

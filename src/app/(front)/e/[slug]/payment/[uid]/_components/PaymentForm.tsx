@@ -1,38 +1,44 @@
 "use client";
-import { Card } from "@/components/ui/card";
 import { PaymentMethodsSkeleton } from "@/components/shared/ui-skeletons";
+import { Card } from "@/components/ui/card";
 import { createPayment, fetchPaymentMethods } from "@/server/services/payments.service";
 import { getImageUrl } from "@/utils/image-utils";
 import sideImage from "@public/images/sliders/women-fiesta.jpg";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ArrowLeft, Loader2, AlertCircle } from "lucide-react";
+import { AlertCircle, ArrowLeft, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 
 function EmptyPaymentMethods() {
+  const t = useTranslations("paymentForm.empty");
+
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center">
       <AlertCircle className="h-12 w-12 text-muted-foreground mb-4" />
-      <h3 className="text-lg font-semibold">Aucun moyen de paiement disponible</h3>
-      <p className="text-sm text-muted-foreground mt-2">Veuillez réessayer ultérieurement ou contacter le support.</p>
+      <h3 className="text-lg font-semibold">{t("title")}</h3>
+      <p className="text-sm text-muted-foreground mt-2">{t("description")}</p>
     </div>
   );
 }
 
 function ErrorPaymentMethods() {
+  const t = useTranslations("paymentForm.error");
+
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center">
       <AlertCircle className="h-12 w-12 text-destructive mb-4" />
-      <h3 className="text-lg font-semibold">Erreur de chargement</h3>
-      <p className="text-sm text-muted-foreground mt-2">Une erreur est survenue lors du chargement des moyens de paiement.</p>
+      <h3 className="text-lg font-semibold">{t("title")}</h3>
+      <p className="text-sm text-muted-foreground mt-2">{t("description")}</p>
       <button onClick={() => window.location.reload()} className="mt-4 text-sm text-primary hover:underline">
-        Réessayer
+        {t("retry")}
       </button>
     </div>
   );
 }
 
 export function PaymentForm({ uid }: { uid: string }) {
+  const t = useTranslations("paymentForm");
   const {
     data: paymentMethodsResponse,
     isLoading,
@@ -45,8 +51,8 @@ export function PaymentForm({ uid }: { uid: string }) {
   const paymentMethods =
     paymentMethodsResponse?.data.map((method) => ({
       id: method.id,
-      name: `Payer avec ${method.name}`,
-      description: "Carte bancaire, Mobile Money, Transfert bancaire",
+      name: t("methodName", { name: method.name }),
+      description: t("methodDescription"),
       logo: method.icon,
       isAvailable: true,
     })) || [];
@@ -94,29 +100,27 @@ export function PaymentForm({ uid }: { uid: string }) {
 
   return (
     <div className="grid h-[90vh] lg:grid-cols-2">
-      {/* Left side with image remains unchanged */}
       <div className="relative hidden bg-muted lg:block">
         <Image src={sideImage.src} alt="Image" fill className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.6]" />
         <div className="absolute inset-0" />
         <div className="absolute bottom-6 left-6 text-white">
-          <h2 className="text-2xl font-bold text-white">Paiement sécurisé</h2>
-          <p className="mt-2">Vos transactions sont protégées par un cryptage de bout en bout</p>
+          <h2 className="text-2xl font-bold text-white">{t("leftSection.title")}</h2>
+          <p className="mt-2">{t("leftSection.description")}</p>
         </div>
       </div>
 
-      {/* Right side with payment methods */}
       <div className="flex flex-col p-6 md:p-10">
         <Link href=".." className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8">
           <ArrowLeft size={20} />
-          <span>Retour</span>
+          <span>{t("back")}</span>
         </Link>
 
-        <h1 className="text-2xl font-bold mb-6">Choisissez votre mode de paiement</h1>
+        <h1 className="text-2xl font-bold mb-6">{t("title")}</h1>
 
         {renderContent()}
 
         <div className="mt-auto pt-8 text-center text-sm text-muted-foreground">
-          <p>En effectuant ce paiement, vous acceptez nos conditions générales de vente</p>
+          <p>{t("terms")}</p>
         </div>
       </div>
     </div>

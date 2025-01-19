@@ -11,6 +11,7 @@ import { fetchOrganization } from "@/server/services/organizations.service";
 import { getImageUrl } from "@/utils/image-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Building2, Calendar, ExternalLink, Shield, Users, XCircle } from "lucide-react";
+import { useTranslations } from "next-intl"; // Import for translations
 import Image from "next/image";
 import Link from "next/link";
 
@@ -21,6 +22,7 @@ interface OrganizationDetailsDialogProps {
 }
 
 export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }: OrganizationDetailsDialogProps) {
+  const t = useTranslations("OrganizationDetailsDialog"); // Fetch translations for the dialog
   const {
     data: organizationResponse,
     isLoading,
@@ -37,11 +39,11 @@ export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Profil de l&apos;organisation</DialogTitle>
+          <DialogTitle>{t("organizationProfile")}</DialogTitle>
 
           <Link href={routes.board.organization.show(organizationId)} rel="noopener noreferrer">
             <Button variant="link" className="text-muted-foreground m-0 p-0">
-              Ouvrir la page de l&apos;organisation <ExternalLink className="h-4 w-4" />
+              {t("openOrganizationPage")} <ExternalLink className="h-4 w-4" />
             </Button>
           </Link>
         </DialogHeader>
@@ -53,13 +55,11 @@ export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-destructive">
                 <XCircle className="h-5 w-5" />
-                Une erreur est survenue
+                {t("error")}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                Impossible de charger les détails de l&apos;organisation. Veuillez réessayer plus tard.
-              </p>
+              <p className="text-muted-foreground">{t("errorMessage")}</p>
             </CardContent>
           </Card>
         ) : (
@@ -91,7 +91,7 @@ export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <Calendar className="h-4 w-4" />
                         <span className="text-sm">
-                          Membre depuis <DateCell date={organization.createdAt} />
+                          {t("memberSince")} <DateCell date={organization.createdAt} />
                         </span>
                       </div>
                     </CardHeader>
@@ -100,7 +100,8 @@ export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }
                   <Card className="border-none shadow-none">
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
-                        <Building2 className="h-5 w-5" />À propos
+                        <Building2 className="h-5 w-5" />
+                        {t("about")}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -112,7 +113,7 @@ export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <Shield className="h-5 w-5" />
-                        Rôles
+                        {t("roles")}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -120,7 +121,7 @@ export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }
                         {organization.roles.map((role) => (
                           <div key={role.role.id} className="flex items-center justify-between p-3 rounded-lg bg-muted">
                             <span>{role.role.name}</span>
-                            {!role.role.editable && <BadgeCell value="Système" variant="secondary" />}
+                            {!role.role.editable && <BadgeCell value={t("system")} variant="secondary" />}
                           </div>
                         ))}
                       </div>
@@ -132,20 +133,20 @@ export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }
                 <div className="space-y-6">
                   <Card className="border-none shadow-none">
                     <CardHeader>
-                      <CardTitle>Statistiques</CardTitle>
+                      <CardTitle>{t("statistics")}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Users className="h-5 w-5 text-muted-foreground" />
-                          <span>Membres</span>
+                          <span>{t("members")}</span>
                         </div>
                         <BadgeCell value={organization._count.users} variant="secondary" />
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Users className="h-5 w-5 text-muted-foreground" />
-                          <span>Followers</span>
+                          <span>{t("followers")}</span>
                         </div>
                         <BadgeCell value={organization._count.followers} variant="secondary" />
                       </div>
@@ -155,7 +156,7 @@ export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }
                   {organization.website && (
                     <Card className="border-none shadow-none">
                       <CardHeader>
-                        <CardTitle>Liens</CardTitle>
+                        <CardTitle>{t("links")}</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <a
@@ -165,7 +166,7 @@ export function OrganizationDetailsDialog({ organizationId, open, onOpenChange }
                           className="flex items-center gap-2 text-primary hover:underline"
                         >
                           <ExternalLink className="h-4 w-4" />
-                          Site web
+                          {t("website")}
                         </a>
                       </CardContent>
                     </Card>

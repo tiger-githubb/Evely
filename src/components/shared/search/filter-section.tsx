@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, RotateCcw } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 
 interface FilterSectionProps {
@@ -20,6 +21,7 @@ export function FilterSection({
   onClear,
 }: FilterSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const t = useTranslations("searchPage");
 
   const childrenArray = React.Children.toArray(children);
   const hasMore = childrenArray.length > initialItemsToShow;
@@ -42,12 +44,12 @@ export function FilterSection({
             {isExpanded ? (
               <>
                 <ChevronUp className="mr-2 h-4 w-4" />
-                View Less
+                {t("filterSection.viewLess")}
               </>
             ) : (
               <>
                 <ChevronDown className="mr-2 h-4 w-4" />
-                View More
+                {t("filterSection.viewMore")}
               </>
             )}
           </Button>

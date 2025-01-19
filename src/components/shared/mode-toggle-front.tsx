@@ -2,19 +2,35 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function ModeToggleFront() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  const handleToggleTheme = useCallback(() => {
+    // Your theme toggle logic here
+    setTheme(theme === "light" ? "dark" : "light");
+  }, [theme, setTheme]);
+
   useEffect(() => {
     setMounted(true);
-  }, []);
 
-  const handleToggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
+    // Function to handle the theme toggle when 'L' is pressed
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.key === "l" && document.activeElement === document.body) {
+        handleToggleTheme(); // Toggle the theme when 'L' is pressed and root (body) is focused
+      }
+    };
+
+    // Add the keydown event listener for 'L'
+    window.addEventListener("keydown", handleKeydown);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("keydown", handleKeydown);
+    };
+  }, [handleToggleTheme]);
 
   if (!mounted) {
     return (

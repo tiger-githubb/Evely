@@ -2,6 +2,8 @@
   "LocaleSwitcher": {
     "fr": "French",
     "en": "English",
+    "es": "Spanish",
+    "pt": "Portuguese",
     "label": "Language"
   },
   "FormattedDate": {
@@ -84,6 +86,8 @@
   "Common": {
     "Logs": {
       "noItemsFound": "No items found",
+      "noEventsTitle": "No events found",
+      "noEventsDescription": "There are no events to display at the moment.",
       "noItemsDescription": "There are no items to display at the moment.",
       "errorTitle": "Error",
       "errorDescription": "An error occurred. Please try again later.",
@@ -245,7 +249,13 @@
     "faqResponseMin": "The FAQ response must be at least 5 characters",
     "titleMin": "The title must be at least 3 characters",
     "contentMin": "The content must be at least 10 characters",
-    "summaryMin": "The summary must be at least 10 characters"
+    "summaryMin": "The summary must be at least 10 characters",
+    "actions": {
+      "cancel": "Cancel",
+      "save": "Save",
+      "create": "Create",
+      "update": "Update"
+    }
   },
   "orderForm": {
     "firstNameLabel": "First Name",
@@ -264,5 +274,635 @@
     "firstNameMin": "The first name must be at least 2 characters",
     "lastNameMin": "The last name must be at least 2 characters",
     "emailInvalid": "Invalid email address"
+  },
+  "navigationItems": {
+    "createEvent": "Create an event",
+    "bookAcall": "Book a call",
+    "help": {
+      "title": "Help",
+      "description": "Help and support center",
+      "items": {
+        "findTicket": "Find my ticket",
+        "buyTicket": "Buy a ticket",
+        "contactOrganizer": "Contact the organizer"
+      }
+    }
+  },
+  "OrganisationNavigationItems": {
+    "navMain": {
+      "dashboard": "Yala",
+      "myTickets": "My Tickets",
+      "events": "Events",
+      "settings": {
+        "title": "Settings",
+        "items": {
+          "ticketFees": "Ticket Fees"
+        }
+      }
+    }
+  },
+  "UserMainNavigationItems": {
+    "navMain": {
+      "dashboard": "Yala",
+      "myTickets": "My Tickets",
+      "favorites": "Favorites"
+    }
+  },
+  "userNavigationItems": {
+    "account": "Account",
+    "organizations": "Organizations",
+    "billing": "Billing",
+    "notifications": "Notifications",
+    "logout": "Log out"
+  },
+  "SignInForm": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "name@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Your password",
+    "forgotPassword": "Forgot password?",
+    "submitButton": "Sign in",
+    "googleSignIn": "Continue with Google",
+    "loading": "Signing in...",
+    "googleSignInError": "Error signing in with Google",
+    "noAccount": "Don’t have an account?",
+    "createAccount": "Create one",
+    "signInError": "Incorrect email or password",
+    "signInSuccess": "Successfully signed in, redirecting to the homepage"
+  },
+
+  "AuthWrapper": {
+    "signInTitle": "Sign In",
+    "signInDescription": "Enter your credentials to access your account.",
+    "signUpLinkText": "Sign Up",
+    "signUpTitle": "Sign Up",
+    "signUpDescription": "Create a Yala account to manage your events effortlessly.",
+    "signInLinkText": "Sign In",
+    "legalNotice": {
+      "start": "By continuing, you agree to our",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "and": "and"
+    }
+  },
+  "searchPage": {
+    "filterSection": {
+      "categoriesTitle": "Categories",
+      "dateTitle": "Date",
+      "eventTypeTitle": "Event Type",
+      "formatTitle": "Format",
+      "languageTitle": "Language",
+      "popularTagsTitle": "Popular Tags",
+      "viewMore": "View More",
+      "viewLess": "View Less"
+    },
+    "dateOptions": {
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "weekend": "This weekend",
+      "week": "This week",
+      "nextWeek": "Next week",
+      "month": "This month",
+      "nextMonth": "Next month",
+      "pickDate": "Pick a date..."
+    },
+    "searchMap": {
+      "searchRadius": "Search Radius",
+      "distanceLabel": "Distance:",
+      "viewMap": "View Map",
+      "pickDate": "Pick a date...",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "weekend": "This weekend",
+      "week": "This week",
+      "nextWeek": "Next week",
+      "month": "This month",
+      "nextMonth": "Next month"
+    },
+    "searchEventCard": {
+      "placeholderImageAlt": "Placeholder",
+      "organizationLogoAlt": "Organization logo"
+    }
+  },
+
+  "checkoutPage": {
+    "buttonContinue": "Continue",
+    "ticketsList": "Your Tickets",
+    "ticketsTotal": "Total Amount"
+  },
+  "checkoutModal": {
+    "title": "Finalize your order"
+  },
+  "checkoutSummary": {
+    "orderSummary": "Order Summary",
+    "confirmAndPay": "Confirm and Pay"
+  },
+  "navUser": {
+    "guest": "Guest",
+    "emailNotVerified": "Your email is not verified. Please check your mailbox.",
+    "signOutSuccess": "Sign out successful",
+    "seeYouSoon": "See you soon on Yala!",
+    "account": "Account",
+    "organizations": "Organizations",
+    "billing": "Billing",
+    "notifications": "Notifications",
+    "logout": "Log out"
+  },
+  "teamSwitcher": {
+    "errorLoading": "An error occurred while loading organizations.",
+    "member": "Member",
+    "myOrganizations": "My Organizations",
+    "addOrganization": "Add Organization",
+    "newOrganization": "New Organization",
+    "createOrganization": "Create an organization"
+  },
+  "agendaSection": {
+    "agendaTitle": "Agenda",
+    "addAgenda": "Add Agenda",
+    "agendaTitleLabel": "Agenda Title",
+    "sessionsTitle": "Sessions",
+    "addSession": "Add Session",
+    "sessionTitleLabel": "Session Title",
+    "startTimeLabel": "Start Time",
+    "endTimeLabel": "End Time"
+  },
+  "basicInfoSection": {
+    "sectionTitle": "Basic Information",
+    "titleLabel": "Event Title",
+    "titlePlaceholder": "Enter the event title",
+    "summaryLabel": "Summary",
+    "summaryPlaceholder": "Enter a brief summary of the event",
+    "descriptionLabel": "Detailed Description",
+    "descriptionPlaceholder": "Describe your event in detail"
+  },
+  "categoriesSection": {
+    "sectionTitle": "Categories and Format",
+    "typeLabel": "Event Type",
+    "typePlaceholder": "Select a type",
+    "categoryLabel": "Category",
+    "categoryPlaceholder": "Select a category",
+    "formatLabel": "Format",
+    "formatPlaceholder": "Select a format",
+    "languageLabel": "Language",
+    "languagePlaceholder": "Select a language"
+  },
+  "dateTimeSection": {
+    "sectionTitle": "Date and Times",
+    "dateLabel": "Date",
+    "startTimeLabel": "Start Time",
+    "endTimeLabel": "End Time"
+  },
+  "faqSection": {
+    "sectionTitle": "FAQ",
+    "addQuestion": "Add Question",
+    "questionLabel": "Question",
+    "questionPlaceholder": "Enter the question",
+    "responseLabel": "Response",
+    "responsePlaceholder": "Enter the response"
+  },
+  "locationSection": {
+    "sectionTitle": "Location",
+    "placeNameLabel": "Place Name",
+    "placeNamePlaceholder": "Search for a place",
+    "loadingMessage": "Loading..."
+  },
+  "mediaSection": {
+    "sectionTitle": "Media",
+    "coverImagesLabel": "Cover Images",
+    "videoLabel": "Video (URL)",
+    "videoPlaceholder": "Video link (e.g., https://youtube.com/...)"
+  },
+  "tagsSection": {
+    "sectionTitle": "Tags",
+    "tagsLabel": "Select or create tags",
+    "placeholder": "Search or create a tag"
+  },
+  "signInModal": {
+    "title": "Sign In"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Page not found",
+    "description": "Here are some pages you might find interesting:",
+    "returnHome": "Return to Home",
+    "pages": {
+      "home": {
+        "title": "Home",
+        "description": "Discover our latest news and events"
+      },
+      "search": {
+        "title": "Search",
+        "description": "Search for events and more"
+      },
+      "contact": {
+        "title": "Contact",
+        "description": "Get in touch with our team"
+      }
+    }
+  },
+
+  "emailVerification": {
+    "verifying": {
+      "title": "Verifying your email...",
+      "description": "Please wait while we verify your email address."
+    },
+    "success": {
+      "title": "Email successfully verified!",
+      "description": "You will be redirected to the login page shortly..."
+    },
+    "error": {
+      "title": "Verification failed",
+      "description": "The verification link is invalid or has expired."
+    }
+  },
+  "paymentSuccess": {
+    "leftSection": {
+      "title": "Payment Successful!",
+      "description": "Your transaction has been successfully processed"
+    },
+    "title": "Payment Confirmed",
+    "thanksMessage": "Thank you for your purchase!",
+    "emailConfirmation": "A confirmation email has been sent to your address.",
+    "processingTime": "Processing time: a few seconds",
+    "viewTicketsButton": "View My Tickets",
+    "returnHomeButton": "Return to Home",
+    "supportMessage": "Have a question? Contact our support team"
+  },
+  "paymentFailed": {
+    "leftSection": {
+      "title": "Payment Failed",
+      "description": "An error occurred during your transaction"
+    },
+    "title": "Payment Not Completed",
+    "message1": "Your payment could not be processed.",
+    "message2": "Please check your information and try again.",
+    "retryButton": "Retry Payment",
+    "backButton": "Back",
+    "supportMessage": "Need help? Our support team is available 24/7"
+  },
+  "paymentForm": {
+    "leftSection": {
+      "title": "Secure Payment",
+      "description": "Your transactions are protected with end-to-end encryption"
+    },
+    "title": "Choose Your Payment Method",
+    "empty": {
+      "title": "No Payment Methods Available",
+      "description": "Please try again later or contact support."
+    },
+    "error": {
+      "title": "Error Loading Payment Methods",
+      "description": "An error occurred while loading payment methods.",
+      "retry": "Retry"
+    },
+    "methodName": "Pay with {name}",
+    "methodDescription": "Bank cards, Mobile Money, Bank transfers",
+    "back": "Back",
+    "terms": "By making this payment, you agree to our terms and conditions."
+  },
+  "organizationActions": {
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "share": "Share",
+    "followSuccess": "You are now following this organization",
+    "unfollowSuccess": "You are no longer following this organization",
+    "actionError": "An error occurred. Please try again.",
+    "shareText": "Discover {name} on YALA Events",
+    "copySuccess": "Link copied to clipboard",
+    "shareError": "Failed to share the link"
+  },
+  "organizationContent": {
+    "about": "About",
+    "website": "Official Website",
+    "upcomingEvents": "Upcoming Events",
+    "pastEvents": "Past Events"
+  },
+  "organizationHeader": {
+    "followers": "{count} followers",
+    "events": "{count} events",
+    "sections": {
+      "about": "About",
+      "events": "Events",
+      "photos": "Photos",
+      "followers": "Followers"
+    },
+    "buttons": {
+      "navigate": "Navigate to {section}"
+    }
+  },
+  "filters": {
+    "filters": "Filters",
+    "close": "Close"
+  },
+  "results": {
+    "events": "Events",
+    "no_results": "No events found"
+  },
+  "map": {
+    "map_view": "Map View"
+  },
+  "search": {
+    "loading": "Loading events...",
+    "error": "Error loading events"
+  },
+  "event": {
+    "event_details": "Event Details",
+    "event_date": "Event Date",
+    "location": "Location",
+    "event_description": "Event Description",
+    "view_more": "View More"
+  },
+  "search_filter": {
+    "categories": "Categories",
+    "types": "Types",
+    "date": "Date",
+    "location": "Location",
+    "clear_all": "Clear All"
+  },
+  "buttons": {
+    "apply_filters": "Apply Filters",
+    "see_map": "See Map",
+    "back_to_home": "Back to Home"
+  },
+  "ttd": {
+    "hero": {
+      "title": "Things To Do",
+      "description": "Discover the best events and activities to do in Togo. From concerts to workshops, find your next adventure here."
+    }
+  },
+  "error": {
+    "title": "Oops! Something went wrong.",
+    "description": "We encountered an unexpected error. Please try the following actions:",
+    "action1": "Check your internet connection.",
+    "action2": "Refresh the page.",
+    "action3": "Contact support if the problem persists.",
+    "goHomeButton": "Go to Home Page",
+    "retryButton": "Try Again"
+  },
+  "goHomeButton": "Go to Home",
+  "eventTypes": {
+    "Presentiel": "In-person",
+    "En ligne": "Online"
+  },
+  "followers": "followers",
+  "events": "events",
+  "about": "About",
+  "program": "Program",
+  "faq": "Frequently Asked Questions",
+  "ticket": {
+    "maxLimit": "You have reached the maximum limit of {{limit}} tickets for this type of ",
+    "showLess": "Show less",
+    "showMore": "Show more",
+    "remaining": "Remaining: {remaining} tickets",
+    "loadError": "An error occurred while loading the tickets",
+    "notAvailableTitle": "Tickets Not Available",
+    "notAvailableMessage": "Tickets for this event are not yet available.",
+    "availableTitle": "Available Tickets",
+    "total": "Total",
+    "confirm": "Confirm"
+  },
+  "FavoriteEvents": {
+    "favoriteEventsTitle": "Favorite Events",
+    "noFavoritesText": "You don't have any favorite events yet",
+    "discoverEventsButton": "Discover Events"
+  },
+  "OrdersSection": {
+    "ordersTitle": "Orders",
+    "noOrdersText": "No upcoming orders"
+  },
+  "QuickActions": {
+    "quickActions": "Quick Actions",
+    "createEvent": "Create an Event",
+    "becomeOrganizer": "Become an Organizer",
+    "becomeSeller": "Become a Seller"
+  },
+  "UserInterests": {
+    "interests": "Interests",
+    "description": "Customize your interests to discover events that match your preferences."
+  },
+  "OrganizationHeader": {
+    "title": "Organization {organizationSlug}",
+    "description": "Manage your events and track your performance",
+    "createEvent": "Create an event",
+    "viewAllEvents": "View all events"
+  },
+  "recentEvents": {
+    "title": "Recent Events",
+    "selectOrganizationMessage": "Please select an organization",
+    "errorLoadingRecentEvents": "An error occurred while loading recent events",
+    "titleColumn": "Title",
+    "dateColumn": "Date",
+    "categoryColumn": "Category"
+  },
+  "revenueChart": {
+    "title": "Monthly Revenue"
+  },
+  "upcomingEvents": {
+    "title": "Upcoming Events",
+    "selectOrganization": "Please select an organization to view events.",
+    "errorLoading": "An error occurred while loading upcoming events.",
+    "titleColumn": "Event Title",
+    "dateColumn": "Event Date",
+    "categoryColumn": "Category"
+  },
+  "eventsPage": {
+    "title": "Event List",
+    "createEventButton": "Create an Event"
+  },
+  "createEventPage": {
+    "title": "Create New Event"
+  },
+  "eventTable": {
+    "title": "Title",
+    "summary": "Summary",
+    "status": "Status",
+    "draft": "Draft",
+    "published": "Published",
+    "actions": "Actions",
+    "publish": "Publish",
+    "unpublish": "Unpublish"
+  },
+  "eventsdashboard": {
+    "title": "Title",
+    "summary": "Summary",
+    "status": "Status",
+    "draft": "Draft",
+    "published": "Published",
+    "actions": "Actions",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "deleteEvent": "Are you sure you want to delete this event?",
+    "deleteSuccess": "Event successfully deleted",
+    "deleteError": "An error occurred while deleting the event",
+    "publishSuccess": "The event was published successfully!",
+    "unpublishSuccess": "The event was unpublished successfully!",
+    "publishError": "An error occurred while updating the event status",
+    "noResults": "No events found.",
+    "loadingError": "An error occurred while loading the events."
+  },
+  "eventNav": {
+    "overview": "Overview",
+    "agendas": "Agendas",
+    "media": "Media",
+    "stats": "Statistics",
+    "faq": "FAQ",
+    "tickets": "Tickets"
+  },
+  "eventNotFound": {
+    "title": "Event Not Found",
+    "description": "The event you're looking for doesn't exist or you don't have the necessary permissions to access it.",
+    "viewEvents": "View Events",
+    "backToDashboard": "Back to Dashboard"
+  },
+  "EventAgendas": {
+    "noAgendasTitle": "No Agendas Available",
+    "noAgendasMessage": "This event currently has no agendas.",
+    "startTimeLabel": "Start",
+    "endTimeLabel": "End"
+  },
+  "EditEventPage": {
+    "editEventTitle": "Edit Event"
+  },
+  "EventFaqAccordion": {
+    "loading": "Loading",
+    "errorLoading": "An error occurred while loading the FAQs.",
+    "noFaqsAvailable": "No FAQs available for this event."
+  },
+  "EventMedia": {
+    "covers": "Covers",
+    "eventCover": "Event Cover",
+    "eventVideo": "Event Video",
+    "videoNotSupported": "Your browser does not support the video tag."
+  },
+  "MediaPage": {
+    "noMediaAvailable": "No media available for this event."
+  },
+  "StatsPage": {
+    "noStatsAvailable": "No stats available for this event."
+  },
+  "EventStats": {
+    "dateAndTime": "Date and Time",
+    "date": "Date",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "tags": "Tags",
+    "noTags": "No tags associated with this event"
+  },
+  "tickets": {
+    "ticketGeneration": {
+      "createTicket": "Create Ticket"
+    },
+    "ticketGenerationForm": {
+      "ticketName": "Ticket Name",
+      "ticketDescription": "Description",
+      "ticketPrice": "Price (0 for free)",
+      "ticketQuantity": "Available Quantity",
+      "ticketMinQuantity": "Minimum per order",
+      "ticketMaxQuantity": "Maximum per order",
+      "ticketSaleStartDate": "Sale Start Date",
+      "ticketSaleStartTime": "Sale Start Time",
+      "ticketSaleEndDate": "Sale End Date",
+      "ticketSaleEndTime": "Sale End Time",
+      "ticketType": "Ticket Type",
+      "createTicketButton": "Create Ticket",
+      "loadingTicketTypes": "Loading ticket types...",
+      "noTags": "No tags associated with this event",
+      "ticketCreated": "Ticket created successfully.",
+      "ticketError": "An error occurred while creating the ticket."
+    },
+    "ticketList": {
+      "ticketListTitle": "Ticket List",
+      "loadingTickets": "Loading tickets...",
+      "errorLoadingTickets": "Error loading tickets.",
+      "ticketModify": "Modify ticket",
+      "ticketDelete": "Delete ticket",
+      "noTickets": "No tickets found.",
+      "ticketOnSale": "Tickets on sale",
+      "endsOn": "Ends on",
+      "at": "at"
+    },
+    "ticketNotFound": {
+      "title": "Ticket not found",
+      "message": "The ticket you're looking for doesn't exist or you don't have the necessary permissions to access it."
+    },
+    "ticketStats": {
+      "statsTitle": "Ticket Statistics",
+      "totalTickets": "Total Tickets",
+      "soldTickets": "Sold Tickets",
+      "price": "Price"
+    }
+  },
+  "organizations": {
+    "organizationsTitle": "Organizations"
+  },
+  "ImageUpload": {
+    "invalidFileFormat": "Unsupported file format or file size is too large",
+    "dropImageHere": "Drop the image here...",
+    "clickOrDragImage": "Click or drag an image here to select one"
+  },
+  "AcceptInvitationPage": {
+    "invalidToken": "Invalid invitation token",
+    "invitationAccepted": "Invitation accepted successfully",
+    "acceptInvitationTitle": "Accept Invitation",
+    "acceptInvitationDescription": "You are about to join an organization. Click the button below to accept the invitation.",
+    "processing": "Processing...",
+    "acceptInvitationButton": "Accept Invitation"
+  },
+  "OrganizationPage": {
+    "organization": "Organization",
+    "members": "Members",
+    "createdAt": "Date Created",
+    "deleteMessage": "Are you sure you want to delete this organization?"
+  },
+  "OrganizationsPage": {
+    "deleteSuccess": "Organization successfully deleted",
+    "deleteError": "An error occurred while deleting the organization",
+    "errorMessage": "An error occurred while loading organizations.",
+    "filterByName": "Filter by name...",
+    "noResultsMessage": "No organizations found",
+    "totalLabel": "line(s)"
+  },
+  "OrganizationDetailsDialog": {
+    "organizationProfile": "Organization Profile",
+    "openOrganizationPage": "Open Organization Page",
+    "error": "An error occurred",
+    "errorMessage": "Unable to load the organization details. Please try again later.",
+    "about": "About",
+    "roles": "Roles",
+    "system": "System",
+    "statistics": "Statistics",
+    "members": "Members",
+    "followers": "Followers",
+    "links": "Links",
+    "website": "Website",
+    "memberSince": "Member since"
+  },
+  "OrganizationHeaderBoard": {
+    "followers": "Followers",
+    "members": "Members"
+  },
+  "OrganizationInfo": {
+    "about": "About",
+    "memberSince": "Member since",
+    "roles": "Roles",
+    "system": "System"
+  },
+  "OrganizationNav": {
+    "overview": "Overview",
+    "members": "Members",
+    "invitations": "Invitations",
+    "roles": "Roles",
+    "followers": "Followers"
+  },
+  "OrganizationNotFound": {
+    "organizationNotFoundTitle": "Organization Not Found",
+    "organizationNotFoundDescription": "The organization you are looking for does not exist or you do not have the necessary permissions to access it.",
+    "viewOrganizations": "View my organizations",
+    "backToDashboard": "Back to dashboard"
+  },
+  "OrganizationStats": {
+    "detailedStats": "Detailed Statistics",
+    "members": "Members",
+    "followers": "Followers"
   }
 }

@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 interface SearchFormData {
@@ -15,9 +15,9 @@ interface SearchFormData {
   startDate?: string;
   endDate?: string;
 }
-
 export const SearchForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [formData, setFormData] = useState<SearchFormData>({
     search: "",
   });
@@ -25,16 +25,18 @@ export const SearchForm = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const queryParams = new URLSearchParams();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value) {
-        queryParams.append(key, value);
-      }
-    });
+    // Créer un nouvel objet URLSearchParams avec les paramètres existants
+    const queryParams = new URLSearchParams(searchParams.toString());
+
+    // Mettre à jour uniquement le terme de recherche
+    if (formData.search) {
+      queryParams.set("search", formData.search);
+    } else {
+      queryParams.delete("search");
+    }
 
     router.push(`/search?${queryParams.toString()}`);
   };
-
   return (
     <form onSubmit={handleSubmit} className="relative w-full">
       <Input

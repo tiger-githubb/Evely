@@ -90,20 +90,20 @@ interface SearchParams {
 }
 
 export const fetchPublicEvents = async (params: SearchParams): Promise<EventsResponse> => {
-  try {
-    const headers = await getAuthHeaders();
-    const queryParams = new URLSearchParams();
+    try {
+      const headers = await getAuthHeaders();
+      const queryParams = new URLSearchParams();
 
-    if (params.search) queryParams.set("search", params.search);
-    if (params.categories) queryParams.set("categories", params.categories);
-    if (params.formats) queryParams.set("formats", params.formats);
-    if (params.types) queryParams.set("types", params.types);
+      // Ajouter tous les paramètres de manière dynamique
+      Object.entries(params).forEach(([key, value]) => {
+        if (value) queryParams.set(key, value);
+      });
 
-    const { data } = await api.get(`/events/published?${queryParams.toString()}`, { headers });
-    return data;
-  } catch (error) {
-    return ApiErrorHandler.handle<EventsResponse>(error, "Une erreur est survenue lors de la récupération des événements");
-  }
+      const { data } = await api.get(`/events/published?${queryParams.toString()}`, { headers });
+      return data;
+    } catch (error) {
+      return ApiErrorHandler.handle<EventsResponse>(error, "Une erreur est survenue lors de la récupération des événements");
+    }
 };
 
 // Fetch single public event by slug (no authentication required)

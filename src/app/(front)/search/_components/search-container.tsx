@@ -30,7 +30,6 @@ interface SearchContainerProps {
 
 export default function SearchContainer({ searchTerm }: SearchContainerProps) {
   const searchParams = useSearchParams();
-
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -41,16 +40,18 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
     const loadEvents = async () => {
       setLoading(true);
       try {
-        const categories = searchParams.get("categories");
-        const formats = searchParams.get("formats");
-        const types = searchParams.get("types");
-
-        const response = await fetchPublicEvents({
+        const params = {
           search: debouncedSearchTerm,
-          categories: categories || undefined,
-          formats: formats || undefined,
-          types: types || undefined,
-        });
+          categories: searchParams.get("categories") || undefined,
+          formats: searchParams.get("formats") || undefined,
+          types: searchParams.get("types") || undefined,
+          languages: searchParams.get("languages") || undefined,
+          ticketTypes: searchParams.get("ticketTypes") || undefined,
+          startDate: searchParams.get("startDate") || undefined,
+          endDate: searchParams.get("endDate") || undefined,
+        };
+
+        const response = await fetchPublicEvents(params);
         setEvents(response.data);
       } catch (error) {
         console.error("Error loading events:", error);

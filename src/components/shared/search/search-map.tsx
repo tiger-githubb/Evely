@@ -13,12 +13,6 @@ const mapContainerStyle = {
   height: "100%",
 };
 
-const customMarkerIcon = {
-  url: "/map-marker.svg",
-  scaledSize: window.google?.maps ? new window.google.maps.Size(40, 40) : null,
-  origin: window.google?.maps ? new window.google.maps.Point(0, 0) : null,
-  anchor: window.google?.maps ? new window.google.maps.Point(20, 40) : null,
-};
 const mapStyles = [
   {
     featureType: "all",
@@ -44,10 +38,6 @@ const DEFAULT_LOME_CENTER: MapCenter = {
   placeId: "ChIJGVQYE8HhIxARHUGvLEK1JDI",
 };
 
-interface SearchMapProps {
-  events: Event[];
-}
-
 import { useGoogleMaps } from "@/hooks/useGoogleMaps";
 import { EventMapCard } from "../map/event-map-card";
 
@@ -58,6 +48,18 @@ export function SearchMap({ events }: SearchMapProps) {
   const [radius, setRadius] = useState(15000);
   const [showMap, setShowMap] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [customMarkerIcon, setCustomMarkerIcon] = useState<google.maps.Icon | undefined>(undefined);
+
+  useEffect(() => {
+    if (window.google?.maps) {
+      setCustomMarkerIcon({
+        url: "/map-marker.svg",
+        scaledSize: new window.google.maps.Size(40, 40),
+        origin: new window.google.maps.Point(0, 0),
+        anchor: new window.google.maps.Point(20, 40),
+      });
+    }
+  }, [isLoaded]);
 
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
     const R = 6371;
@@ -123,7 +125,7 @@ export function SearchMap({ events }: SearchMapProps) {
           }}
         >
           <EventMapCard
-            event={selectedEvent as Event} // Type assertion since we know it's not null here
+            event={selectedEvent as Event}
             userLocation={userLocation || undefined}
             onClose={() => setSelectedEvent(null)}
             calculateDistance={calculateDistance}

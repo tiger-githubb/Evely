@@ -52,7 +52,7 @@ export const AuthStatus = () => {
         </DropdownMenu>
       ) : (
         <>
-          <Link href={routes.auth.signIn}>
+          <Link href={routes.auth.signIn} className="hidden md:block">
             <Button variant="outline" size={"default"}>
               {t("signIn")}
             </Button>

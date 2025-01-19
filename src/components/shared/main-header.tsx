@@ -17,6 +17,7 @@ import { MobileMenu } from "./mobile-menu";
 import { ModeToggleFront } from "./mode-toggle-front";
 import { SearchForm } from "./search/search-form";
 import LocaleSwitcher from "./translate/LocaleSwitcher";
+import { MobileSearchTrigger } from "./search/mobile-search-trigger";
 
 export const MainHeader = () => {
   return (
@@ -84,6 +85,7 @@ export const MainHeader = () => {
           </div>
           <ModeToggleFront />
 
+          <MobileSearchTrigger />
           <AuthStatus />
           <MobileMenu />
         </div>

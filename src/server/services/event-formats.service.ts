@@ -1,6 +1,5 @@
 import { EventFormat } from "@/types/api/event-format.type";
 import { ApiErrorHandler } from "@/utils/api-error";
-import { getAuthHeaders } from "@/utils/auth-utils";
 import api from "@/utils/axios-instance";
 
 export interface EventFormatsResponse {
@@ -13,8 +12,7 @@ export interface EventFormatsResponse {
 
 export const fetchEventFormats = async (): Promise<EventFormatsResponse> => {
   try {
-    const headers = await getAuthHeaders();
-    const { data } = await api.get("/events-formats", { headers });
+    const { data } = await api.get("/events-formats");
     return data;
   } catch (error) {
     return ApiErrorHandler.handle<EventFormatsResponse>(

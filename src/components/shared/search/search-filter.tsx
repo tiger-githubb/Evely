@@ -67,6 +67,22 @@ export default function SearchFilter() {
     { value: "pickDate", label: "Pick a date..." },
   ];
 
+  const handleCalendarSelect = (date: Date | undefined) => {
+    setSelectedDate(date);
+    const params = new URLSearchParams(searchParams);
+
+    if (date) {
+      const formattedDate = date.toISOString().split("T")[0];
+      params.set("startDate", formattedDate);
+      params.set("endDate", formattedDate);
+    } else {
+      params.delete("startDate");
+      params.delete("endDate");
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   const handleCategoryChange = (categoryId: string) => {
     const params = new URLSearchParams(searchParams);
 
@@ -120,13 +136,107 @@ export default function SearchFilter() {
     router.push(`${pathname}?${params.toString()}`);
   };
 
+  const handleDateChange = (value: string) => {
+    const params = new URLSearchParams(searchParams);
+    setDateFilter(value);
+
+    const today = new Date();
+    let startDate: Date | null = null;
+    let endDate: Date | null = null;
+
+    switch (value) {
+      case "today":
+        startDate = today;
+        endDate = today;
+        break;
+      case "tomorrow":
+        startDate = new Date(today.setDate(today.getDate() + 1));
+        endDate = startDate;
+        break;
+      case "weekend":
+        // Get next Friday if today is after Sunday
+        const daysUntilFriday = (5 - today.getDay() + 7) % 7;
+        startDate = new Date(today.setDate(today.getDate() + daysUntilFriday));
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 2); // Sunday
+        break;
+      case "week":
+        startDate = today;
+        endDate = new Date(today.setDate(today.getDate() + 7));
+        break;
+      case "nextWeek":
+        startDate = new Date(today.setDate(today.getDate() + 7));
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 7);
+        break;
+      case "month":
+        startDate = today;
+        endDate = new Date(today.setMonth(today.getMonth() + 1));
+        break;
+      case "nextMonth":
+        startDate = new Date(today.setMonth(today.getMonth() + 1));
+        endDate = new Date(startDate);
+        endDate.setMonth(startDate.getMonth() + 1);
+        break;
+      case "pickDate":
+        if (selectedDate) {
+          startDate = selectedDate;
+          endDate = selectedDate;
+        }
+        break;
+      default:
+        params.delete("startDate");
+        params.delete("endDate");
+        router.push(`${pathname}?${params.toString()}`);
+        return;
+    }
+
+    if (startDate && endDate) {
+      params.set("startDate", startDate.toISOString().split("T")[0]);
+      params.set("endDate", endDate.toISOString().split("T")[0]);
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handleClearCategories = () => {
+    const params = new URLSearchParams(searchParams);
+    setSelectedCategories([]);
+    params.delete("categories");
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handleClearFormats = () => {
+    const params = new URLSearchParams(searchParams);
+    setSelectedFormats([]);
+    params.delete("formats");
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handleClearType = () => {
+    const params = new URLSearchParams(searchParams);
+    setSelectedType("");
+    params.delete("types");
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handleClearDate = () => {
+    const params = new URLSearchParams(searchParams);
+    setDateFilter("");
+    setSelectedDate(undefined);
+    params.delete("startDate");
+    params.delete("endDate");
+    params.delete("dateFilter");
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   if (isLoading) {
     return <SearchFilterSkeleton />;
   }
 
   return (
     <div className="space-y-6">
-      <FilterSection title="Categories" showViewMore>
+      <FilterSection title="Categories" showViewMore hasActiveFilters={selectedCategories.length > 0} onClear={handleClearCategories}>
         {categoriesResponse?.data.map((category) => (
           <div key={category.id} className="flex items-center space-x-2">
             <Checkbox
@@ -138,8 +248,7 @@ export default function SearchFilter() {
           </div>
         ))}
       </FilterSection>
-
-      <FilterSection title="Format" showViewMore>
+      <FilterSection title="Format" showViewMore hasActiveFilters={selectedFormats.length > 0} onClear={handleClearFormats}>
         {formatsResponse?.data.map((format) => (
           <div key={format.id} className="flex items-center space-x-2">
             <Checkbox
@@ -151,8 +260,7 @@ export default function SearchFilter() {
           </div>
         ))}
       </FilterSection>
-
-      <FilterSection title="Event Type">
+      <FilterSection title="Event Type" hasActiveFilters={!!selectedType} onClear={handleClearType}>
         <RadioGroup value={selectedType} onValueChange={handleTypeChange}>
           {typesResponse?.data.map((type) => (
             <div key={type.id} className="flex items-center space-x-2">
@@ -162,9 +270,8 @@ export default function SearchFilter() {
           ))}
         </RadioGroup>
       </FilterSection>
-
-      <FilterSection title="Date">
-        <RadioGroup value={dateFilter} onValueChange={setDateFilter}>
+      <FilterSection title="Date" hasActiveFilters={!!dateFilter} onClear={handleClearDate}>
+        <RadioGroup value={dateFilter} onValueChange={handleDateChange}>
           {dateOptions.map((option) => (
             <div key={option.value} className="flex items-center space-x-2">
               <RadioGroupItem value={option.value} id={option.value} />
@@ -174,7 +281,7 @@ export default function SearchFilter() {
         </RadioGroup>
 
         {dateFilter === "pickDate" && (
-          <Calendar mode="single" selected={selectedDate} onSelect={setSelectedDate} className="rounded-md border mt-2" />
+          <Calendar mode="single" selected={selectedDate} onSelect={handleCalendarSelect} className="rounded-md border mt-2" />
         )}
       </FilterSection>
     </div>

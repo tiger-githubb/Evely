@@ -17,7 +17,7 @@ export function SearchEventCard({ event }: SearchEventCardProps) {
 
   return (
     <Link href={routes.events.details(event.slug)}>
-      <Card className="group h-32 overflow-hidden transition-all hover:shadow-lg">
+      <Card className="group h-40 overflow-hidden transition-all hover:shadow-lg">
         <div className="flex h-full">
           <div className="relative w-32 h-full">
             {coverImage ? (

@@ -1,7 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Loader2, Search, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
@@ -19,6 +20,7 @@ interface SearchFormData {
 export const SearchForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<SearchFormData>({
     search: searchParams.get("search") || "",
   });
@@ -32,8 +34,9 @@ export const SearchForm = () => {
     return () => window.removeEventListener("resetFilters", handleReset);
   }, []);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const queryParams = new URLSearchParams(searchParams.toString());
 
@@ -43,19 +46,43 @@ export const SearchForm = () => {
       queryParams.delete("search");
     }
 
+    try {
+      await router.push(`/search?${queryParams.toString()}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleClear = () => {
+    const queryParams = new URLSearchParams(searchParams.toString());
+    queryParams.delete("search");
+    setFormData((prev) => ({ ...prev, search: "" }));
     router.push(`/search?${queryParams.toString()}`);
   };
 
   return (
     <form onSubmit={handleSubmit} className="relative w-full">
       <Input
-        type="search"
         value={formData.search}
         onChange={(e) => setFormData((prev) => ({ ...prev, search: e.target.value }))}
         placeholder="Search events..."
-        className="pl-10 pr-4 py-2 w-full rounded-full border-muted-foreground/20"
+        className="pl-10 pr-12 py-2 w-full rounded-full border-muted-foreground/20"
       />
       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+
+      {formData.search && (
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-transparent"
+          onClick={handleClear}
+        >
+          <X className="h-4 w-4" />
+        </Button>
+      )}
+
+      {isLoading && <Loader2 className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 animate-spin" />}
     </form>
   );
 };

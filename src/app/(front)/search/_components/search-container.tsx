@@ -9,14 +9,20 @@ import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { fetchPublicEvents } from "@/server/services/events.service";
 import { Event } from "@/types/api/event.type";
-
+import { useQueryClient } from "@tanstack/react-query";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { FilterIcon, MapIcon, RefreshCw, Search, XIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 interface SearchContainerProps {
   searchTerm: string;
 }
 
 export default function SearchContainer({ searchTerm }: SearchContainerProps) {
-    const t = useTranslations();
+  const t = useTranslations();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [events, setEvents] = useState<Event[]>([]);
@@ -58,8 +64,7 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
     };
 
     loadEvents();
-
-  }, [searchTerm, searchParams]);
+  }, [searchTerm, searchParams, t]);
 
   return (
     <div className="container mx-auto p-4">
@@ -91,7 +96,7 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
                   ))}
                 </div>
               ) : events.length > 0 ? (
-                events.map((event) => <SearchEventCard key={event.id} event={event} />)
+                events.map((event: Event) => <SearchEventCard key={event.id} event={event} />)
               ) : (
                 <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
                   <div className="bg-muted/30 rounded-full p-6 mb-6">
@@ -109,7 +114,6 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
                 </div>
               )}
             </div>
-
 
             {isDesktop && (
               <div className="hidden md:block">

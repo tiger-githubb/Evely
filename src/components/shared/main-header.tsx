@@ -12,19 +12,19 @@ import {
 import { navigationItems } from "@/config/navigations-items"; // Assuming navigationItems is an array
 import { routes } from "@/config/routes";
 
-import { useTranslations } from "next-intl";
 import { MoveRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { AuthStatus } from "./auth-status";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 import { ModeToggleFront } from "./mode-toggle-front";
+import { MobileSearchTrigger } from "./search/mobile-search-trigger";
 import { SearchForm } from "./search/search-form";
 import LocaleSwitcher from "./translate/LocaleSwitcher";
-import { MobileSearchTrigger } from "./search/mobile-search-trigger";
 
 export const MainHeader = () => {
-  const t = useTranslations("Common.Placeholders");
+  // const t = useTranslations("Common.Placeholders");
   const t2 = useTranslations("navigationItems");
 
   return (

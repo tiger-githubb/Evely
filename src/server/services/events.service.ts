@@ -91,7 +91,6 @@ export interface SearchParams {
 }
 export const fetchPublicEvents = async (params: SearchParams): Promise<EventsResponse> => {
   try {
-    const headers = await getAuthHeaders();
     const queryParams = new URLSearchParams();
 
     // Ajouter tous les paramètres de manière dynamique
@@ -99,7 +98,7 @@ export const fetchPublicEvents = async (params: SearchParams): Promise<EventsRes
       if (value) queryParams.set(key, value);
     });
 
-    const { data } = await api.get(`/events/published?${queryParams.toString()}`, { headers });
+    const { data } = await api.get(`/events/published?${queryParams.toString()}`);
     return data;
   } catch (error) {
     return ApiErrorHandler.handle<EventsResponse>(error, "Une erreur est survenue lors de la récupération des événements");

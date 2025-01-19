@@ -33,17 +33,31 @@ const mapStyles = [
   },
 ];
 
-export function SearchMap({ events }: SearchMapProps) {
-  const [center, setCenter] = useState({
-    lat: 14.7167,
-    lng: -17.4677,
-  });
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-  const [radius, setRadius] = useState(15000);
-  const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral | null>(null);
-  const [showMap, setShowMap] = useState(false);
+type MapCenter = {
+  lat: number;
+  lng: number;
+  placeId: string;
+};
 
-  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+const DEFAULT_LOME_CENTER: MapCenter = {
+  lat: 6.182486,
+  lng: 1.164289,
+  placeId: "ChIJGVQYE8HhIxARHUGvLEK1JDI",
+};
+
+interface SearchMapProps {
+  events: Event[];
+}
+
+export function SearchMap({ events }: SearchMapProps) {
+  const [center, setCenter] = useState<MapCenter>(DEFAULT_LOME_CENTER);
+
+  const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral | null>(null);
+  const [radius, setRadius] = useState(15000);
+  const [showMap, setShowMap] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
+  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
     const R = 6371;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
     const dLon = ((lon2 - lon1) * Math.PI) / 180;
@@ -54,20 +68,7 @@ export function SearchMap({ events }: SearchMapProps) {
     return R * c;
   };
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const newCenter = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        setCenter(newCenter);
-        setUserLocation(newCenter);
-      });
-    }
-  }, []);
-
-  const filteredEvents = events.filter((event) => {
+  const filteredEvents = events.filter((event: Event) => {
     if (!userLocation || !event.location) return true;
     const distance = calculateDistance(
       userLocation.lat,
@@ -77,6 +78,29 @@ export function SearchMap({ events }: SearchMapProps) {
     );
     return distance <= radius / 1000;
   });
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCenter({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+            placeId: DEFAULT_LOME_CENTER.placeId,
+          });
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        () => {
+          setCenter(DEFAULT_LOME_CENTER);
+        }
+      );
+    } else {
+      setCenter(DEFAULT_LOME_CENTER);
+    }
+  }, []);
 
   return (
     <div className="space-y-4">
@@ -100,7 +124,7 @@ export function SearchMap({ events }: SearchMapProps) {
               <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 center={center}
-                zoom={11}
+                zoom={12}
                 options={{
                   styles: mapStyles,
                   zoomControl: true,
@@ -139,29 +163,19 @@ export function SearchMap({ events }: SearchMapProps) {
                 <MarkerClusterer>
                   {(clusterer) => (
                     <>
-                      {filteredEvents.map(
-                        (event) =>
-                          event.location && (
-                            <Marker
-                              key={event.id}
-                              position={{
-                                lat: parseFloat(event.location.lat),
-                                lng: parseFloat(event.location.long),
-                              }}
-                              icon={{
-                                url: customMarkerIcon.url,
-                                scaledSize: new window.google.maps.Size(
-                                  customMarkerIcon.scaledSize.width,
-                                  customMarkerIcon.scaledSize.height
-                                ),
-                                origin: new window.google.maps.Point(customMarkerIcon.origin.x, customMarkerIcon.origin.y),
-                                anchor: new window.google.maps.Point(customMarkerIcon.anchor.x, customMarkerIcon.anchor.y),
-                              }}
-                              onClick={() => setSelectedEvent(event)}
-                              clusterer={clusterer}
-                              animation={google.maps.Animation.DROP}
-                            />
-                          )
+                      {filteredEvents.map((event) =>
+                        event.location ? (
+                          <Marker
+                            key={event.id}
+                            position={{
+                              lat: parseFloat(event.location.lat),
+                              lng: parseFloat(event.location.long),
+                            }}
+                            icon={customMarkerIcon}
+                            onClick={() => setSelectedEvent(event)}
+                            clusterer={clusterer}
+                          />
+                        ) : null
                       )}
                     </>
                   )}

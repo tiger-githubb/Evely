@@ -3,6 +3,7 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { routes } from "@/config/routes";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl"; // Importing useTranslations
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -12,26 +13,27 @@ interface OrganizationNavProps {
 
 export function OrganizationNav({ organizationId }: OrganizationNavProps) {
   const pathname = usePathname();
+  const t = useTranslations("OrganizationNav"); // Fetching translations for OrganizationNav component
 
   const organizationNavItems = [
     {
-      title: "Vue d'ensemble",
+      title: t("overview"), // Translated text for overview
       href: routes.board.organization.show(organizationId),
     },
     {
-      title: "Membres",
+      title: t("members"), // Translated text for members
       href: routes.board.organization.members(organizationId),
     },
     {
-      title: "Invitations",
+      title: t("invitations"), // Translated text for invitations
       href: routes.board.organization.invitations(organizationId),
     },
     {
-      title: "Rôles",
+      title: t("roles"), // Translated text for roles
       href: routes.board.organization.roles(organizationId),
     },
     {
-      title: "Followers",
+      title: t("followers"), // Translated text for followers
       href: routes.board.organization.followers(organizationId),
     },
   ];

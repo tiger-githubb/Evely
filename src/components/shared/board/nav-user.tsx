@@ -18,6 +18,7 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/c
 import { userNavigationItems } from "@/config/navigations-items";
 import { routes } from "@/config/routes";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
@@ -26,9 +27,11 @@ export function NavUser() {
   const { data: session } = useSession();
   const { isMobile } = useSidebar();
   const pathname = usePathname();
+  const t = useTranslations("navUser");
+  const t2 = useTranslations("userNavigationItems");
 
   const user = {
-    name: session?.user?.name || "Guest",
+    name: session?.user?.name || t("guest"),
     email: session?.user?.email || "",
     avatar: session?.user?.image || "",
     emailVerified: session?.user?.emailVerified || false,
@@ -36,8 +39,8 @@ export function NavUser() {
 
   const handleSignOut = () => {
     signOut({ callbackUrl: routes.auth.signIn });
-    toast.success("Déconnexion réussie", {
-      description: "À bientôt sur Yala!",
+    toast.success(t("signOutSuccess"), {
+      description: t("seeYouSoon"),
     });
   };
 
@@ -52,7 +55,7 @@ export function NavUser() {
           <Alert className="mb-4 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center">
             <Info className="h-4 w-4 text-destructive" color="red" />
             <AlertDescription className="text-destructive group-data-[collapsible=icon]:hidden">
-              Your email is not verified. Please check your mailbox.
+              {t("emailNotVerified")}
             </AlertDescription>
           </Alert>
         </SidebarMenuItem>
@@ -96,7 +99,7 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              {userNavigationItems.map((item) => (
+              {userNavigationItems(t2).map((item) => (
                 <DropdownMenuItem
                   key={item.title}
                   asChild

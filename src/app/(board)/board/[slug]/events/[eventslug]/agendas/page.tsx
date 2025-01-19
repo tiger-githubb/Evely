@@ -12,10 +12,6 @@ export default async function AgendasPage({ params }: PageProps) {
 
   const eventResponse = await fetchEvent(eventslug);
 
-  if (!eventResponse?.data) {
-    return <div>No agendas found for this event.</div>;
-  }
-
   const { agendas } = eventResponse.data;
 
   return <EventAgendas agendas={agendas} />;

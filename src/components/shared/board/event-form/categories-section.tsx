@@ -11,6 +11,7 @@ import type { EventCategory } from "@/types/api/event-category.type";
 import type { EventFormat } from "@/types/api/event-format.type";
 import type { EventLanguage } from "@/types/api/event-language.type";
 import type { EventType } from "@/types/api/event-type.type";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 
@@ -19,6 +20,8 @@ interface CategoriesSectionProps {
 }
 
 export default function CategoriesSection({ form }: CategoriesSectionProps) {
+  const t = useTranslations("categoriesSection");
+
   const [types, setTypes] = useState<EventType[]>([]);
   const [categories, setCategories] = useState<EventCategory[]>([]);
   const [formats, setFormats] = useState<EventFormat[]>([]);
@@ -34,7 +37,7 @@ export default function CategoriesSection({ form }: CategoriesSectionProps) {
       ]);
 
       setTypes(typesRes.data);
-      setCategories(categoriesRes.data); // Uncomment and add .data to match the API response structure
+      setCategories(categoriesRes.data);
       setFormats(formatsRes.data);
       setLanguages(languagesRes.data);
     };
@@ -44,7 +47,7 @@ export default function CategoriesSection({ form }: CategoriesSectionProps) {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium">Catégories et format</h3>
+      <h3 className="text-lg font-medium">{t("sectionTitle")}</h3>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <FormField
@@ -52,11 +55,11 @@ export default function CategoriesSection({ form }: CategoriesSectionProps) {
           name="typeId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Type d&apos;événement</FormLabel>
+              <FormLabel>{t("typeLabel")}</FormLabel>
               <Select onValueChange={(value) => field.onChange(Number(value))} value={field.value?.toString()}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Sélectionner un type" />
+                    <SelectValue placeholder={t("typePlaceholder")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -77,11 +80,11 @@ export default function CategoriesSection({ form }: CategoriesSectionProps) {
           name="categoryId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Catégorie</FormLabel>
+              <FormLabel>{t("categoryLabel")}</FormLabel>
               <Select onValueChange={(value) => field.onChange(Number(value))} value={field.value?.toString()}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Sélectionner une catégorie" />
+                    <SelectValue placeholder={t("categoryPlaceholder")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -102,11 +105,11 @@ export default function CategoriesSection({ form }: CategoriesSectionProps) {
           name="formatId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Format</FormLabel>
+              <FormLabel>{t("formatLabel")}</FormLabel>
               <Select onValueChange={(value) => field.onChange(Number(value))} value={field.value?.toString()}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Sélectionner un format" />
+                    <SelectValue placeholder={t("formatPlaceholder")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -127,11 +130,11 @@ export default function CategoriesSection({ form }: CategoriesSectionProps) {
           name="languageId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Langue</FormLabel>
+              <FormLabel>{t("languageLabel")}</FormLabel>
               <Select onValueChange={(value) => field.onChange(Number(value))} value={field.value?.toString()}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Sélectionner une langue" />
+                    <SelectValue placeholder={t("languagePlaceholder")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>

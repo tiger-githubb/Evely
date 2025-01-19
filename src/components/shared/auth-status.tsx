@@ -53,12 +53,12 @@ export const AuthStatus = () => {
       ) : (
         <>
           <Link href={routes.auth.signIn}>
-            <Button variant="outline" size={"sm"}>
+            <Button variant="outline" size={"default"}>
               {t("signIn")}
             </Button>
           </Link>
           <Link href={routes.auth.signUp}>
-            <Button size={"sm"}>{t("signUp")}</Button>
+            <Button size={"default"}>{t("signUp")}</Button>
           </Link>
         </>
       )}

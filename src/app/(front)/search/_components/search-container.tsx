@@ -1,4 +1,5 @@
 "use client";
+
 import { SearchEventCard } from "@/components/shared/search/search-event-card";
 import SearchFilter from "@/components/shared/search/search-filter";
 import { SearchMap } from "@/components/shared/search/search-map";
@@ -7,34 +8,28 @@ import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { fetchPublicEvents } from "@/server/services/events.service";
 import { Event } from "@/types/api/event.type";
-import { FilterIcon, MapIcon, XIcon } from "lucide-react";
+import { FilterIcon, MapIcon, XIcon, Search, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
-
 import { useDebounce, useMediaQuery } from "@uidotdev/usehooks";
-import { useSearchParams } from "next/navigation";
-
-// interface SearchContainerProps {
-//   search?: string;
-//   categories?: string;
-//   formats?: string;
-//   languages?: string;
-//   types?: string;
-//   ticketTypes?: string;
-//   startDate?: string;
-//   endDate?: string;
-// }
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface SearchContainerProps {
   searchTerm: string;
 }
 
 export default function SearchContainer({ searchTerm }: SearchContainerProps) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  const handleReset = () => {
+    const newParams = new URLSearchParams();
+    router.push(`/search?${newParams.toString()}`);
+  };
 
   useEffect(() => {
     const loadEvents = async () => {
@@ -65,7 +60,6 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
 
   return (
     <div className="container mx-auto p-4">
-      {/* Mobile Filter Toggle */}
       <div className="md:hidden mb-4">
         <Button onClick={() => setShowMobileFilters(!showMobileFilters)} className="w-full">
           <FilterIcon className="mr-2 h-4 w-4" />
@@ -74,7 +68,6 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-        {/* Filters */}
         <div className={`md:col-span-3 ${showMobileFilters ? "fixed inset-0 z-50 bg-white p-4 overflow-y-auto" : "hidden md:block"}`}>
           {showMobileFilters && (
             <Button onClick={() => setShowMobileFilters(false)} className="mb-4 md:hidden">
@@ -85,10 +78,8 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
           <SearchFilter />
         </div>
 
-        {/* Results and Map Grid */}
         <div className="md:col-span-9">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Results */}
             <div className="flex flex-col gap-4">
               {loading ? (
                 <div className="flex flex-col gap-4">
@@ -96,12 +87,26 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
                     <SearchEventCardSkeleton key={i} />
                   ))}
                 </div>
-              ) : (
+              ) : events.length > 0 ? (
                 events.map((event) => <SearchEventCard key={event.id} event={event} />)
-              )}{" "}
+              ) : (
+                <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
+                  <div className="bg-muted/30 rounded-full p-6 mb-6">
+                    <Search className="w-12 h-12 text-muted-foreground" />
+                  </div>
+                  <h3 className="text-2xl font-semibold mb-2">Aucun événement trouvé</h3>
+                  <p className="text-muted-foreground max-w-md mb-6">
+                    Nous n&apos;avons trouvé aucun événement correspondant à vos critères. Essayez de modifier vos filtres ou votre
+                    recherche.
+                  </p>
+                  <Button variant="outline" onClick={handleReset} className="gap-2">
+                    <RefreshCw className="w-4 h-4" />
+                    Réinitialiser les filtres
+                  </Button>
+                </div>
+              )}
             </div>
 
-            {/* Desktop Map */}
             {isDesktop && (
               <div className="hidden md:block">
                 <SearchMap events={events} />
@@ -111,7 +116,6 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
         </div>
       </div>
 
-      {/* Mobile Map Drawer */}
       {!isDesktop && (
         <Drawer>
           <DrawerTrigger asChild>

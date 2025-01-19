@@ -11,14 +11,15 @@ import {
 } from "@/components/ui/navigation-menu";
 import { navigationItems } from "@/config/navigations-items"; // Assuming navigationItems is an array
 import { routes } from "@/config/routes";
-import { MoveRight, Search } from "lucide-react";
+
 import { useTranslations } from "next-intl";
+import { MoveRight } from "lucide-react";
 import Link from "next/link";
-import { Input } from "../ui/input";
 import { AuthStatus } from "./auth-status";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 import { ModeToggleFront } from "./mode-toggle-front";
+import { SearchForm } from "./search/search-form";
 import LocaleSwitcher from "./translate/LocaleSwitcher";
 
 export const MainHeader = () => {
@@ -31,14 +32,8 @@ export const MainHeader = () => {
         {/* Search and LocaleSwitcher */}
         <div className="hidden lg:flex items-center max-w-md w-full gap-4">
           <LocaleSwitcher />
-          <div className="relative w-full">
-            <Input
-              type="search"
-              placeholder={t("search")}
-              className="pl-10 pr-4 py-2 w-full rounded-full border-muted-foreground/20"
-            />
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          </div>
+
+          <SearchForm />
         </div>
 
         {/* Logo */}

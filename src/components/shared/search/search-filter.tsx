@@ -5,29 +5,28 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { fetchEventCategories } from "@/server/services/event-categories.service";
 import { fetchEventFormats } from "@/server/services/event-formats.service";
-import { fetchEventLanguages } from "@/server/services/event-languages.service";
-import { fetchEventTags, fetchTopEventTags } from "@/server/services/event-tags.service";
 import { fetchEventTypes } from "@/server/services/event-types.service";
 import { EventCategory } from "@/types/api/event-category.type";
 import { EventFormat } from "@/types/api/event-format.type";
-import { EventLanguage } from "@/types/api/event-language.type";
-import { EventTag } from "@/types/api/event-tag.type";
 import { EventType } from "@/types/api/event-type.type";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SearchFilterSkeleton } from "../ui-skeletons";
 import { FilterSection } from "./filter-section";
 
-import { useEffect, useState } from "react";
-
 export default function SearchFilter() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
   const [categories, setCategories] = useState<EventCategory[]>([]);
   const [formats, setFormats] = useState<EventFormat[]>([]);
-  const [languages, setLanguages] = useState<EventLanguage[]>([]);
   const [types, setTypes] = useState<EventType[]>([]);
-
-  const [topTags, setTopTags] = useState<EventTag[]>([]);
-  const [dateFilter, setDateFilter] = useState<string>("");
-  const [selectedDate, setSelectedDate] = useState<Date>();
   const [loading, setLoading] = useState(true);
+
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedFormats, setSelectedFormats] = useState<string[]>([]);
+  const [selectedType, setSelectedType] = useState<string>("");
 
   const dateOptions = [
     { value: "today", label: "Today" },
@@ -40,23 +39,21 @@ export default function SearchFilter() {
     { value: "pickDate", label: "Pick a date..." },
   ];
 
+  const [dateFilter, setDateFilter] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date>();
+
   useEffect(() => {
     const fetchFiltersData = async () => {
       try {
-        const [categoriesResponse, formatsResponse, languagesResponse, typesResponse, topTagsResponse] = await Promise.all([
+        const [categoriesResponse, formatsResponse, typesResponse] = await Promise.all([
           fetchEventCategories(),
           fetchEventFormats(),
-          fetchEventLanguages(),
           fetchEventTypes(),
-          fetchEventTags(),
-          fetchTopEventTags(),
         ]);
 
         setCategories(categoriesResponse.data);
         setFormats(formatsResponse.data);
-        setLanguages(languagesResponse.data);
         setTypes(typesResponse.data);
-        setTopTags(topTagsResponse.data);
       } catch (error) {
         console.error("Error fetching filter data:", error);
       } finally {
@@ -67,6 +64,59 @@ export default function SearchFilter() {
     fetchFiltersData();
   }, []);
 
+  const handleCategoryChange = (categoryId: string) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (selectedCategories.includes(categoryId)) {
+      const filtered = selectedCategories.filter((id) => id !== categoryId);
+      setSelectedCategories(filtered);
+      if (filtered.length === 0) {
+        params.delete("categories");
+      } else {
+        params.set("categories", filtered.join(","));
+      }
+    } else {
+      const newCategories = [...selectedCategories, categoryId];
+      setSelectedCategories(newCategories);
+      params.set("categories", newCategories.join(","));
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handleFormatChange = (formatId: string) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (selectedFormats.includes(formatId)) {
+      const filtered = selectedFormats.filter((id) => id !== formatId);
+      setSelectedFormats(filtered);
+      if (filtered.length === 0) {
+        params.delete("formats");
+      } else {
+        params.set("formats", filtered.join(","));
+      }
+    } else {
+      const newFormats = [...selectedFormats, formatId];
+      setSelectedFormats(newFormats);
+      params.set("formats", newFormats.join(","));
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handleTypeChange = (typeId: string) => {
+    const params = new URLSearchParams(searchParams);
+    setSelectedType(typeId);
+
+    if (typeId) {
+      params.set("types", typeId);
+    } else {
+      params.delete("types");
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   if (loading) {
     return <SearchFilterSkeleton />;
   }
@@ -76,11 +126,40 @@ export default function SearchFilter() {
       <FilterSection title="Categories" showViewMore>
         {categories.map((category) => (
           <div key={category.id} className="flex items-center space-x-2">
-            <Checkbox id={`category-${category.id}`} />
+            <Checkbox
+              id={`category-${category.id}`}
+              checked={selectedCategories.includes(category.id.toString())}
+              onCheckedChange={() => handleCategoryChange(category.id.toString())}
+            />
             <Label htmlFor={`category-${category.id}`}>{category.name}</Label>
           </div>
         ))}
       </FilterSection>
+
+      <FilterSection title="Format" showViewMore>
+        {formats.map((format) => (
+          <div key={format.id} className="flex items-center space-x-2">
+            <Checkbox
+              id={`format-${format.id}`}
+              checked={selectedFormats.includes(format.id.toString())}
+              onCheckedChange={() => handleFormatChange(format.id.toString())}
+            />
+            <Label htmlFor={`format-${format.id}`}>{format.name}</Label>
+          </div>
+        ))}
+      </FilterSection>
+
+      <FilterSection title="Event Type">
+        <RadioGroup value={selectedType} onValueChange={handleTypeChange}>
+          {types.map((type) => (
+            <div key={type.id} className="flex items-center space-x-2">
+              <RadioGroupItem value={type.id.toString()} id={`type-${type.id}`} />
+              <Label htmlFor={`type-${type.id}`}>{type.name}</Label>
+            </div>
+          ))}
+        </RadioGroup>
+      </FilterSection>
+
       <FilterSection title="Date">
         <RadioGroup value={dateFilter} onValueChange={setDateFilter}>
           {dateOptions.map((option) => (
@@ -94,46 +173,6 @@ export default function SearchFilter() {
         {dateFilter === "pickDate" && (
           <Calendar mode="single" selected={selectedDate} onSelect={setSelectedDate} className="rounded-md border mt-2" />
         )}
-      </FilterSection>
-
-      <FilterSection title="Event Type">
-        <RadioGroup>
-          {types.map((type) => (
-            <div key={type.id} className="flex items-center space-x-2">
-              <RadioGroupItem value={type.id.toString()} id={`type-${type.id}`} />
-              <Label htmlFor={`type-${type.id}`}>{type.name}</Label>
-            </div>
-          ))}
-        </RadioGroup>
-      </FilterSection>
-
-      <FilterSection title="Format" showViewMore>
-        {formats.map((format) => (
-          <div key={format.id} className="flex items-center space-x-2">
-            <Checkbox id={`format-${format.id}`} />
-            <Label htmlFor={`format-${format.id}`}>{format.name}</Label>
-          </div>
-        ))}
-      </FilterSection>
-
-      <FilterSection title="Language">
-        <RadioGroup>
-          {languages.map((language) => (
-            <div key={language.id} className="flex items-center space-x-2">
-              <RadioGroupItem value={language.id.toString()} id={`language-${language.id}`} />
-              <Label htmlFor={`language-${language.id}`}>{language.name}</Label>
-            </div>
-          ))}
-        </RadioGroup>
-      </FilterSection>
-
-      <FilterSection title="Popular Tags" showViewMore>
-        {topTags.map((tag) => (
-          <div key={tag.id} className="flex items-center space-x-2">
-            <Checkbox id={`tag-${tag.id}`} />
-            <Label htmlFor={`tag-${tag.id}`}>{tag.name}</Label>
-          </div>
-        ))}
       </FilterSection>
     </div>
   );

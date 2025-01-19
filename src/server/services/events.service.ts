@@ -89,16 +89,17 @@ interface SearchParams {
   endDate?: string;
 }
 
-export const fetchPublicEvents = async (params?: SearchParams): Promise<EventsResponse> => {
+export const fetchPublicEvents = async (params: SearchParams): Promise<EventsResponse> => {
   try {
-    const searchParams = new URLSearchParams();
+    const headers = await getAuthHeaders();
+    const queryParams = new URLSearchParams();
 
-    if (params?.search) {
-      searchParams.append("search", params.search);
-    }
+    if (params.search) queryParams.set("search", params.search);
+    if (params.categories) queryParams.set("categories", params.categories);
+    if (params.formats) queryParams.set("formats", params.formats);
+    if (params.types) queryParams.set("types", params.types);
 
-    const url = `/events/published${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
-    const { data } = await api.get(url);
+    const { data } = await api.get(`/events/published?${queryParams.toString()}`, { headers });
     return data;
   } catch (error) {
     return ApiErrorHandler.handle<EventsResponse>(error, "Une erreur est survenue lors de la récupération des événements");

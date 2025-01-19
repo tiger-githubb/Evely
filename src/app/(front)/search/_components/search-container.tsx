@@ -2,7 +2,7 @@
 import { SearchEventCard } from "@/components/shared/search/search-event-card";
 import SearchFilter from "@/components/shared/search/search-filter";
 import { SearchMap } from "@/components/shared/search/search-map";
-import { EventGridSkeleton } from "@/components/shared/ui-skeletons";
+import { SearchEventCardSkeleton } from "@/components/shared/ui-skeletons";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { fetchPublicEvents } from "@/server/services/events.service";
@@ -11,6 +11,7 @@ import { FilterIcon, MapIcon, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { useDebounce, useMediaQuery } from "@uidotdev/usehooks";
+import { useSearchParams } from "next/navigation";
 
 // interface SearchContainerProps {
 //   search?: string;
@@ -28,6 +29,8 @@ interface SearchContainerProps {
 }
 
 export default function SearchContainer({ searchTerm }: SearchContainerProps) {
+  const searchParams = useSearchParams();
+
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -38,8 +41,15 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
     const loadEvents = async () => {
       setLoading(true);
       try {
+        const categories = searchParams.get("categories");
+        const formats = searchParams.get("formats");
+        const types = searchParams.get("types");
+
         const response = await fetchPublicEvents({
           search: debouncedSearchTerm,
+          categories: categories || undefined,
+          formats: formats || undefined,
+          types: types || undefined,
         });
         setEvents(response.data);
       } catch (error) {
@@ -50,7 +60,7 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
     };
 
     loadEvents();
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, searchParams]);
 
   return (
     <div className="container mx-auto p-4">
@@ -79,7 +89,15 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Results */}
             <div className="flex flex-col gap-4">
-              {loading ? <EventGridSkeleton /> : events.map((event) => <SearchEventCard key={event.id} event={event} />)}
+              {loading ? (
+                <div className="flex flex-col gap-4">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <SearchEventCardSkeleton key={i} />
+                  ))}
+                </div>
+              ) : (
+                events.map((event) => <SearchEventCard key={event.id} event={event} />)
+              )}{" "}
             </div>
 
             {/* Desktop Map */}

@@ -6,61 +6,48 @@ import { SearchMap } from "@/components/shared/search/search-map";
 import { SearchEventCardSkeleton } from "@/components/shared/ui-skeletons";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import { fetchPublicEvents } from "@/server/services/events.service";
-import { Event } from "@/types/api/event.type";
-import { useQueryClient } from "@tanstack/react-query";
+import { EventsResponse, fetchPublicEvents } from "@/server/services/events.service";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { FilterIcon, MapIcon, RefreshCw, Search, XIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 interface SearchContainerProps {
   searchTerm: string;
 }
 
-export default function SearchContainer({ searchTerm }: SearchContainerProps) {
+export default function SearchContainerClient({ searchTerm }: SearchContainerProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [events, setEvents] = useState<Event[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const { ref, inView } = useInView();
   const isDesktop = useMediaQuery("(min-width: 768px)");
-
-  const queryClient = useQueryClient();
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const handleReset = () => {
     const newParams = new URLSearchParams();
     router.push(`/search?${newParams.toString()}`);
-    queryClient.invalidateQueries({ queryKey: ["events"] });
-    // Emit a custom event to notify other components
     window.dispatchEvent(new CustomEvent("resetFilters"));
   };
+
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
+    queryKey: ["events", searchTerm, searchParams.toString()],
+    queryFn: ({ pageParam = 1 }) =>
+      fetchPublicEvents({
+        search: searchTerm,
+        currentPage: pageParam,
+        ...Object.fromEntries(searchParams.entries()),
+      }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: EventsResponse) => (lastPage.page < lastPage.pages ? lastPage.page + 1 : undefined),
+  });
+
   useEffect(() => {
-    const loadEvents = async () => {
-      setLoading(true);
-      try {
-        const params = {
-          search: searchTerm,
-          categories: searchParams.get("categories") || undefined,
-          formats: searchParams.get("formats") || undefined,
-          types: searchParams.get("types") || undefined,
-          languages: searchParams.get("languages") || undefined,
-          ticketTypes: searchParams.get("ticketTypes") || undefined,
-          startDate: searchParams.get("startDate") || undefined,
-          endDate: searchParams.get("endDate") || undefined,
-        };
-
-        const response = await fetchPublicEvents(params);
-        setEvents(response.data);
-      } catch (error) {
-        console.error("Error loading events:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadEvents();
-  }, [searchTerm, searchParams]);
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
 
   return (
     <div className="container mx-auto p-4">
@@ -85,14 +72,23 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
         <div className="md:col-span-9">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex flex-col gap-4">
-              {loading ? (
+              {isLoading ? (
                 <div className="flex flex-col gap-4">
                   {Array.from({ length: 6 }).map((_, i) => (
                     <SearchEventCardSkeleton key={i} />
                   ))}
                 </div>
-              ) : events.length > 0 ? (
-                events.map((event) => <SearchEventCard key={event.id} event={event} />)
+              ) : data?.pages[0]?.data.length ? (
+                <>
+                  {data.pages.map((page, i) => (
+                    <div key={i} className="flex flex-col gap-4">
+                      {page.data.map((event) => (
+                        <SearchEventCard key={event.id} event={event} />
+                      ))}
+                    </div>
+                  ))}
+                  <div ref={ref} />
+                </>
               ) : (
                 <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
                   <div className="bg-muted/30 rounded-full p-6 mb-6">
@@ -113,7 +109,7 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
 
             {isDesktop && (
               <div className="hidden md:block">
-                <SearchMap events={events} />
+                <SearchMap events={data?.pages.flatMap((page) => page.data) || []} />
               </div>
             )}
           </div>
@@ -132,7 +128,7 @@ export default function SearchContainer({ searchTerm }: SearchContainerProps) {
               <DrawerTitle>Map View</DrawerTitle>
             </DrawerHeader>
             <div className="h-full p-4">
-              <SearchMap events={events} />
+              <SearchMap events={data?.pages.flatMap((page) => page.data) || []} />
             </div>
           </DrawerContent>
         </Drawer>

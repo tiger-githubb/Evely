@@ -78,7 +78,7 @@ export const fetchPublishedEvents = async (): Promise<EventsResponse> => {
   }
 };
 
-interface SearchParams {
+export interface SearchParams {
   search?: string;
   categories?: string;
   formats?: string;
@@ -87,23 +87,23 @@ interface SearchParams {
   ticketTypes?: string;
   startDate?: string;
   endDate?: string;
+  currentPage?: number;
 }
-
 export const fetchPublicEvents = async (params: SearchParams): Promise<EventsResponse> => {
-    try {
-      const headers = await getAuthHeaders();
-      const queryParams = new URLSearchParams();
+  try {
+    const headers = await getAuthHeaders();
+    const queryParams = new URLSearchParams();
 
-      // Ajouter tous les paramètres de manière dynamique
-      Object.entries(params).forEach(([key, value]) => {
-        if (value) queryParams.set(key, value);
-      });
+    // Ajouter tous les paramètres de manière dynamique
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) queryParams.set(key, value);
+    });
 
-      const { data } = await api.get(`/events/published?${queryParams.toString()}`, { headers });
-      return data;
-    } catch (error) {
-      return ApiErrorHandler.handle<EventsResponse>(error, "Une erreur est survenue lors de la récupération des événements");
-    }
+    const { data } = await api.get(`/events/published?${queryParams.toString()}`, { headers });
+    return data;
+  } catch (error) {
+    return ApiErrorHandler.handle<EventsResponse>(error, "Une erreur est survenue lors de la récupération des événements");
+  }
 };
 
 // Fetch single public event by slug (no authentication required)

@@ -1,6 +1,6 @@
 import Section from "@/components/ui/custom/section";
-import { Suspense } from "react";
-import SearchContainer from "./_components/search-container";
+import { SearchErrorBoundary } from "./_components/error-boundary";
+import SearchContainerClient from "./_components/search-container-client";
 
 interface SearchPageProps {
   searchParams: Promise<{
@@ -15,9 +15,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <Section>
-      <Suspense>
-        <SearchContainer searchTerm={searchTerm} />
-      </Suspense>
+      <SearchErrorBoundary>
+        <SearchContainerClient searchTerm={searchTerm} />
+      </SearchErrorBoundary>
     </Section>
   );
 }

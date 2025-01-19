@@ -1,17 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
 import { ChevronDown, ChevronUp, RotateCcw } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 
 interface FilterSectionProps {
-  titleKey: string;
+  title: string;
   children: React.ReactNode;
   showViewMore?: boolean;
   initialItemsToShow?: number;
   hasActiveFilters?: boolean;
   onClear?: () => void;
 }
-
 
 export function FilterSection({
   title,
@@ -30,7 +29,6 @@ export function FilterSection({
 
   return (
     <div className="rounded-lg border p-4">
-
       <div className="flex items-center justify-between mb-3">
         <h4 className="font-semibold">{title}</h4>
         {hasActiveFilters && onClear && (

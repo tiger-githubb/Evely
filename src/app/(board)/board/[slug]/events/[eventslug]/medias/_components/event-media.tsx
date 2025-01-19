@@ -60,7 +60,7 @@ export default function EventMedia({ covers, video }: EventMediaProps) {
                       className="rounded-lg object-cover"
                     />
                   );
-                } catch (e) {
+                } catch {
                   console.error(`Invalid URL: ${cover}`);
                   return null;
                 }

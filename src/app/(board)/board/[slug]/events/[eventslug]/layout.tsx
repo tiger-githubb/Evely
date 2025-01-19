@@ -9,7 +9,7 @@ interface EventLayoutProps {
 }
 
 export default async function EventLayout({ children, params }: EventLayoutProps) {
-  const { slug, eventslug } = params; 
+  const { slug, eventslug } = params;
 
   const eventResponse = await fetchEvent(eventslug); // Fetch event details using both `slug` and `eventslug`
 

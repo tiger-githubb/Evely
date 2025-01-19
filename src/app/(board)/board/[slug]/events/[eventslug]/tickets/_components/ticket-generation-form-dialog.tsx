@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useOrganizationStore } from "@/stores/organization-store";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import TicketGenerationForm from "./ticket-generation-form";
 
@@ -14,6 +15,7 @@ export default function TicketGenerationFormDialog({ eventSlug }: TicketGenerati
   const [open, setOpen] = useState(false);
   const { activeOrganization } = useOrganizationStore();
   const organizationSlug = activeOrganization?.slug;
+  const t = useTranslations("tickets.ticketGeneration");
 
   if (!organizationSlug) {
     return null;
@@ -21,13 +23,13 @@ export default function TicketGenerationFormDialog({ eventSlug }: TicketGenerati
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Créer un ticket</Button>
+      <Button onClick={() => setOpen(true)}>{t("createTicket")}</Button>
 
       {/* Dialog for Ticket Creation Form */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-4xl">
           <DialogHeader>
-            <DialogTitle>Créer un ticket</DialogTitle>
+            <DialogTitle>{t("createTicket")}</DialogTitle>
           </DialogHeader>
           <TicketGenerationForm organizationSlug={organizationSlug} eventSlug={eventSlug} />
         </DialogContent>

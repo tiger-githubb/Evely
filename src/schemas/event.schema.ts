@@ -45,6 +45,7 @@ export const createEventSchema = (t: (key: string) => string) => ({
       .optional(),
     covers: z.array(z.instanceof(File)).optional(),
     video: z.string().optional(),
+    videoUrl: z.string().optional(),
   }),
   update: z.object({
     title: z.string().min(3, t("titleMin")).optional(),
@@ -90,6 +91,7 @@ export const createEventSchema = (t: (key: string) => string) => ({
       .optional(),
     covers: z.array(z.instanceof(File)).optional(),
     video: z.string().optional(),
+    videoUrl: z.string().optional(),
   }),
 });
 

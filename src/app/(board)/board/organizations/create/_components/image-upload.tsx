@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { getImageUrl } from "@/utils/image-utils";
 import { ImageIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
@@ -16,6 +17,7 @@ interface ImageUploadProps {
 }
 
 export function ImageUpload({ value, onChange, className }: ImageUploadProps) {
+  const t = useTranslations("ImageUpload"); // Fetch translations for this component
   const [isDragging, setIsDragging] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -37,7 +39,7 @@ export function ImageUpload({ value, onChange, className }: ImageUploadProps) {
   const onDrop = useCallback(
     (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
       if (rejectedFiles.length > 0) {
-        toast.error("Format de fichier non supporté ou taille trop importante");
+        toast.error(t("invalidFileFormat"));
         return;
       }
 
@@ -45,7 +47,7 @@ export function ImageUpload({ value, onChange, className }: ImageUploadProps) {
         onChange(acceptedFiles[0]);
       }
     },
-    [onChange]
+    [onChange, t]
   );
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -89,9 +91,7 @@ export function ImageUpload({ value, onChange, className }: ImageUploadProps) {
       ) : (
         <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-muted-foreground">
           <ImageIcon className="mb-2 h-10 w-10" />
-          <p className="text-center text-sm">
-            {isDragging ? "Déposez l'image ici..." : "Glissez une image ici ou cliquez pour en sélectionner une"}
-          </p>
+          <p className="text-center text-sm">{isDragging ? t("dropImageHere") : t("clickOrDragImage")}</p>
         </div>
       )}
     </div>

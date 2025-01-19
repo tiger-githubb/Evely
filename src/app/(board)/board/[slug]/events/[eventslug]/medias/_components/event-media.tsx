@@ -1,6 +1,8 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getImageUrl } from "@/utils/image-utils";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 interface EventMediaProps {
@@ -16,7 +18,7 @@ const getVideoEmbed = (video: string) => {
     const match = video.match(youtubeRegex);
     return {
       type: "youtube",
-      embedUrl: `https://www.youtube.com/embed/${match?.[1]}`
+      embedUrl: `https://www.youtube.com/embed/${match?.[1]}`,
     };
   }
 
@@ -24,7 +26,7 @@ const getVideoEmbed = (video: string) => {
     const match = video.match(vimeoRegex);
     return {
       type: "vimeo",
-      embedUrl: `https://player.vimeo.com/video/${match?.[1]}`
+      embedUrl: `https://player.vimeo.com/video/${match?.[1]}`,
     };
   }
 
@@ -32,34 +34,46 @@ const getVideoEmbed = (video: string) => {
 };
 
 export default function EventMedia({ covers, video }: EventMediaProps) {
+  const t = useTranslations("EventMedia");
+
   const videoData = video ? getVideoEmbed(video) : null;
 
   return (
     <div className="space-y-6">
-      <Card className="shadow-sm">
-        <CardHeader>
-          <CardTitle>Covers</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {covers.map((cover, index) => (
-              <Image
-                key={index}
-                src={cover}
-                alt={`Event Cover ${index + 1}`}
-                width={400}
-                height={300}
-                className="rounded-lg object-cover"
-              />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {covers && covers.length > 0 && (
+        <Card className="shadow-sm">
+          <CardHeader>
+            <CardTitle>{t("covers")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {covers.map((cover, index) => {
+                try {
+                  const coverUrl = getImageUrl(cover);
+                  return (
+                    <Image
+                      key={index}
+                      src={coverUrl.toString()}
+                      alt={`${t("eventCover")} ${index + 1}`}
+                      width={400}
+                      height={300}
+                      className="rounded-lg object-cover"
+                    />
+                  );
+                } catch (e) {
+                  console.error(`Invalid URL: ${cover}`);
+                  return null;
+                }
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {videoData && (
         <Card className="shadow-sm">
           <CardHeader>
-            <CardTitle>Event Video</CardTitle>
+            <CardTitle>{t("eventVideo")}</CardTitle>
           </CardHeader>
           <CardContent>
             {videoData.type === "youtube" && (
@@ -87,7 +101,7 @@ export default function EventMedia({ covers, video }: EventMediaProps) {
             {videoData.type === "public" && (
               <video controls className="w-full rounded-lg">
                 <source src={videoData.embedUrl} type="video/mp4" />
-                Your browser does not support the video tag.
+                {t("videoNotSupported")}
               </video>
             )}
           </CardContent>

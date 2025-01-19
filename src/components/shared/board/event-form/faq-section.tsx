@@ -4,15 +4,18 @@ import { Button } from "@/components/ui/button";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { UseFormReturn, useFieldArray } from "react-hook-form";
-import { PlusCircle, Trash2 } from "lucide-react";
 import type { CreateEventType } from "@/schemas/event.schema";
+import { PlusCircle, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { UseFormReturn, useFieldArray } from "react-hook-form";
 
 interface FAQSectionProps {
   form: UseFormReturn<CreateEventType>;
 }
 
 export default function FAQSection({ form }: FAQSectionProps) {
+  const t = useTranslations("faqSection");
+
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "faq",
@@ -21,10 +24,10 @@ export default function FAQSection({ form }: FAQSectionProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">FAQ</h3>
+        <h3 className="text-lg font-medium">{t("sectionTitle")}</h3>
         <Button type="button" variant="outline" size="sm" onClick={() => append({ question: "", response: "" })}>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ajouter une question
+          {t("addQuestion")}
         </Button>
       </div>
 
@@ -37,9 +40,9 @@ export default function FAQSection({ form }: FAQSectionProps) {
                 name={`faq.${index}.question`}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Question</FormLabel>
+                    <FormLabel>{t("questionLabel")}</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input placeholder={t("questionPlaceholder")} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -51,9 +54,9 @@ export default function FAQSection({ form }: FAQSectionProps) {
                 name={`faq.${index}.response`}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Réponse</FormLabel>
+                    <FormLabel>{t("responseLabel")}</FormLabel>
                     <FormControl>
-                      <Textarea {...field} className="resize-none" />
+                      <Textarea placeholder={t("responsePlaceholder")} {...field} className="resize-none" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

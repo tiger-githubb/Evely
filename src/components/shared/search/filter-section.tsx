@@ -1,15 +1,17 @@
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import { ChevronDown, ChevronUp, RotateCcw } from "lucide-react";
 import React, { useState } from "react";
 
 interface FilterSectionProps {
-  title: string;
+  titleKey: string;
   children: React.ReactNode;
   showViewMore?: boolean;
   initialItemsToShow?: number;
   hasActiveFilters?: boolean;
   onClear?: () => void;
 }
+
 
 export function FilterSection({
   title,
@@ -20,6 +22,7 @@ export function FilterSection({
   onClear,
 }: FilterSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const t = useTranslations("searchPage");
 
   const childrenArray = React.Children.toArray(children);
   const hasMore = childrenArray.length > initialItemsToShow;
@@ -27,6 +30,7 @@ export function FilterSection({
 
   return (
     <div className="rounded-lg border p-4">
+
       <div className="flex items-center justify-between mb-3">
         <h4 className="font-semibold">{title}</h4>
         {hasActiveFilters && onClear && (
@@ -42,12 +46,12 @@ export function FilterSection({
             {isExpanded ? (
               <>
                 <ChevronUp className="mr-2 h-4 w-4" />
-                View Less
+                {t("filterSection.viewLess")}
               </>
             ) : (
               <>
                 <ChevronDown className="mr-2 h-4 w-4" />
-                View More
+                {t("filterSection.viewMore")}
               </>
             )}
           </Button>

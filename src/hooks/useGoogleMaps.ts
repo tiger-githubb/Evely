@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
+let isScriptLoaded = false;
 
 export function useGoogleMaps() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -9,6 +11,11 @@ export function useGoogleMaps() {
       return;
     }
 
+    if (isScriptLoaded) {
+      return;
+    }
+
+    isScriptLoaded = true;
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`;
     script.async = true;
@@ -18,7 +25,8 @@ export function useGoogleMaps() {
     document.head.appendChild(script);
 
     return () => {
-      document.head.removeChild(script);
+      // Don't remove the script on cleanup to prevent multiple loads
+      isScriptLoaded = false;
     };
   }, []);
 

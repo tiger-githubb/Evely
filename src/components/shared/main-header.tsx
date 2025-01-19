@@ -21,6 +21,7 @@ import { MobileMenu } from "./mobile-menu";
 import { ModeToggleFront } from "./mode-toggle-front";
 import { SearchForm } from "./search/search-form";
 import LocaleSwitcher from "./translate/LocaleSwitcher";
+import { MobileSearchTrigger } from "./search/mobile-search-trigger";
 
 export const MainHeader = () => {
   const t = useTranslations("Common.Placeholders");
@@ -99,6 +100,8 @@ export const MainHeader = () => {
               </NavigationMenuList>
             </NavigationMenu>
           </div>
+
+          <MobileSearchTrigger />
 
           {/* Theme Toggle, Auth Status, and Mobile Menu */}
           <ModeToggleFront />

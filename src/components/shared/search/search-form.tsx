@@ -17,7 +17,11 @@ interface SearchFormData {
   endDate?: string;
 }
 
-export const SearchForm = () => {
+interface SearchFormProps {
+  onSearchComplete?: () => void;
+}
+
+export const SearchForm = ({ onSearchComplete }: SearchFormProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -48,6 +52,7 @@ export const SearchForm = () => {
 
     try {
       await router.push(`/search?${queryParams.toString()}`);
+      onSearchComplete?.();
     } finally {
       setIsLoading(false);
     }

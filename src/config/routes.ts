@@ -1,6 +1,7 @@
 export const routes = {
   home: "/",
   createEvent: "/events/create",
+  ttdo: "/ttd",
   events: {
     list: "/events",
     details: (slug: string) => `/e/${slug}`,

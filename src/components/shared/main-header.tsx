@@ -102,8 +102,6 @@ export const MainHeader = () => {
           </div>
 
           <MobileSearchTrigger />
-
-          {/* Theme Toggle, Auth Status, and Mobile Menu */}
           <ModeToggleFront />
           <AuthStatus />
           <MobileMenu />
